@@ -14,13 +14,16 @@ module.exports = function(app) {
     // file statici e index.html in app/
     app.use('/', express.static('.'));
 
-    app.get('/api/0.1/find/:string', function (request, response) {
-        doSomething(param, function (data) {
-            response.send(data);
-        });
-    });
+    app.post('/validate', function (request, response) {
+        if (!request.body.url) {
+	    response.status(400).end();
+	    return;
+	}
+	const url = new URL(request.body.url);
 
-    app.get('/dump', function(request, response) {
-        response.sendFile(__dirname + '/export/dump.zip');
+	// TODO:
+	// - get url
+	// - validate all the things
+        response.send({});
     });
 };
