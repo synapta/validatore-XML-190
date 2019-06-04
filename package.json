@@ -1,0 +1,29 @@
+{
+  "name": "validatore-xml-190",
+  "version": "0.0.1",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/synapta/validatore-XML-190.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/synapta/validatore-XML-190/issues"
+  },
+  "homepage": "https://github.com/synapta/validatore-XML-190#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "libxmljs2": "^0.21.3",
+    "morgan": "^1.9.1",
+    "reqwest": "^2.0.5",
+    "xhr2": "^0.2.0"
+  }
+}

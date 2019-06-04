@@ -11,3 +11,25 @@ Come strumento di validazione del suddetto XML, ANAC fornisce tre XML schema:
 - http://dati.anticorruzione.it/schema/datasetIndiceAppaltiL190.xsd
 
 In seguito alla realizzazione del progetto [ContrattiPubblici.org](https://contrattipubblici.org) e di alcune [tesi sull'argomento](https://www.slideshare.net/synapta/analisi-della-qualit-dei-dati-di-contrattipubbliciorg) è emersa l'esigenza di un validatore che potesse superare il concetto di controllo dello schema, focalizzandosi sulla qualità del dato (seguendo alcune delle linee guida della ISO 25024).
+
+## Per cominciare
+
+Per installare le dipendenze esegui
+
+```
+yarn
+```
+
+e per lanciare il server
+
+```
+yarn start
+```
+
+Per validare un XML di test puoi usare [HTTPie](https://httpie.org/) e quindi chiamare il server così
+
+```
+http POST http://localhost:8080/validate url=http://www.example.it/file.xml
+```
+
+Per trovare un link di un file XML da validare si può cercare nella lista pubblicata qui: https://dati.anticorruzione.it/#/l190

@@ -12,6 +12,7 @@ app.use(morgan('common'));
 // Servo path
 require('./routes.js')(app);
 
-var server = app.listen(8080, function() {
-    console.log('Server listening...');
+var port = process.env.PORT || 8080;
+var server = app.listen(port, function() {
+    console.log(`Server listening at port ${port}...`);
 });
