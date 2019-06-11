@@ -394,10 +394,10 @@ isarray@~1.0.0:
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
   integrity sha1-u5NdSFgsuhaMBoNJV6VKPgcSTxE=
 
-libxmljs2@^0.21.3:
-  version "0.21.3"
-  resolved "https://registry.yarnpkg.com/libxmljs2/-/libxmljs2-0.21.3.tgz#0d8e54283d3cc82985dee4bd6bbd5b5a49d7d839"
-  integrity sha512-IzpUUaL/cqwxdSZrZ1IgCGX+JRF/pazHYYRj4e3W9KLoUdcTFgjwabk+nz2iEzuhH4uu8kwSudRXQ1/PUgF9Og==
+libxmljs2@^0.21.4:
+  version "0.21.4"
+  resolved "https://registry.yarnpkg.com/libxmljs2/-/libxmljs2-0.21.4.tgz#e0d35a5f204a885b7bf6124e326f7bc71d6cc17e"
+  integrity sha512-wrei+VRi18OmjT92ZoWThSzXMtW0zS/CYOVSK4LdYrAG4D4buZwkFWjNv7PmpmRvho9GJmy4v1xydpFUEFNOuQ==
   dependencies:
     bindings "~1.5.0"
     nan "~2.14.0"
