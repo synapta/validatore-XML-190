@@ -1,18 +1,17 @@
-var compression = require('compression');
-var express     = require('express');
-var morgan      = require('morgan');
+var express      = require('express');
+var morgan       = require('morgan');
+var bodyParser   = require('body-parser');
 
 var app = express();
-
-// Comprimi risultati delle richieste ove possibile
-// @see https://github.com/expressjs/compression
-app.use(compression());
-// Log
+//NEXT TWO LINES FOR READ BODY FROM POST
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 app.use(morgan('common'));
-// Servo path
+
 require('./routes.js')(app);
 
-var port = process.env.PORT || 8080;
-var server = app.listen(port, function() {
-    console.log(`Server listening at port ${port}...`);
+var server = app.listen(8041, function() {
+    var host = server.address().address;
+    var port = server.address().port;
+    console.log('Server listening at http://%s:%s', host, port);
 });

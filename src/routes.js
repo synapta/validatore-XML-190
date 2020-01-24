@@ -1,47 +1,70 @@
-var express    = require('express');
-var bodyParser = require('body-parser');
-var reqwest = require('reqwest');
-var libxml = require('libxmljs2');
-var fs = require('fs');
+var query = require('./query');
+var downloader = require('./downloader');
+
+var express  = require('express');
+var req = require('request');
 
 module.exports = function(app) {
-    app.use( bodyParser.json() );       // to support JSON-encoded bodies
-    app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-      extended: true
-    }));
+    //app.use('/',express.static('.', { maxAge: maxAge }));
+    app.use('/',express.static('./app'));
 
-    // file statici e index.html in app/
-    app.use('/', express.static('.'));
+    app.get('/guri', function (request, response) {
+        response.sendFile(__dirname + '/app/index.html');
+    });
 
-    var xsd_190_buf = fs.readFileSync('src/static/datasetAppaltiL190.xsd');
-    var xsd_190 = libxml.parseXmlString(xsd_190_buf.toString());
+    app.get('/stat', function (request, response) {
+        response.sendFile(__dirname + '/app/pages/stat.html');
+    });
 
-    app.post('/validate', function (request, response) {
-        if (!request.body.url) {
-            response.status(400).end();
-            return;
-        }
-        const url = new URL(request.body.url);
-        reqwest({
-            url: url.href,
-        }).then(function(resp) {
-            try {
-                var xml_doc = libxml.parseXmlString(resp);
-                var valid = xml_doc.validate(xsd_190);
-                response.send({
-                    'url': url.href,
-                    'valid': valid,
-                    'errors': xml_doc.validationErrors,
-                });
-            } catch(error) {
-                response.send({
-                    'url': url.href,
-                    'valid': false,
-                    'errors': ['File is invalid XML document: ' + error],
-                });
-            }
-        }).fail(function(err, msg) {
-            response.send({});
+    app.get('/modifica', function (request, response) {
+        response.sendFile(__dirname + '/app/pages/modifica.html');
+    });
+
+    app.get('/api/bando/next', function (request, response) {
+        downloader.next(function(body) {
+            response.send(body);
+        })
+    });
+
+    app.get('/api/bando/next/webpage', function (request, response) {
+        downloader.nextBando(request.query.id_fonte, function(body) {
+            response.send(body);
+        })
+    });
+
+    app.get('/api/bando/next/data', function (request, response) {
+        downloader.nextBandoData(request.query.id_fonte, function(body) {
+            response.send(body);
+        })
+    });
+
+    app.post('/api/bando/save', function (request, response) {
+        query.launchSimplePostgresQuery(query.saveGuri(request.body), function () {
+            response.sendStatus(200);
         });
     });
-};
+
+    app.get('/api/bando/stat', function (request, response) {
+        query.launchSimplePostgresQuery(query.statGuri(), function (body) {
+            response.send(body);
+        });
+    });
+
+    app.get('/api/bando/recent', function (request, response) {
+        query.launchSimplePostgresQuery(query.recentGuri(), function (body) {
+            response.send(body);
+        });
+    });
+
+    app.get('/suggestions', function (request, response) {
+        req("https://contrattipubblici.org/archimede/suggestions?q=" + request.query.q, function (error, res, body) {
+            if (error) {
+                response.send(500);
+                return;
+            }
+
+            response.send(body);
+        });
+    });
+
+}
