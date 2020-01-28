@@ -2,13 +2,17 @@
 <head>
   <title>Validatore XML 190</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/grid.min.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/grid.min.css" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/form.css" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/input.css" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/button.css" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/header.css" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/container.css" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/menu.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.css" type="text/css" /> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css" type="text/css" />
+
+
 
 
   <link rel="stylesheet" href="/css/index.css" type="text/css" />
@@ -28,12 +32,16 @@
   <div class="ui grid">
     <div class="ui two column centered grid">
       <h2 class="ui header">Scrivi un link</h2>
-      <div class="ui input">
-        <input type="text" placeholder="Scrivi link...">
-        <i class="inverted circular search link icon"></i>
+      <div class="ui icon input" >
+        <input type="text" placeholder="Scrivi link..." id='search-field'>
+        <i class="inverted circular search link icon" id='load-site'></i>
+        <!-- <button class="ui primary button" >
+            Cerca
+        </button> -->
       </div>
+
       <h2 class="ui header">Oppure carica un file</h2>
-      <button class="ui primary button" onclick="window.location.href='/modifica'">
+      <button class="ui primary button" id='load-file'>
         Carica file
       </button>
   </div>

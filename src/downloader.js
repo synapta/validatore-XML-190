@@ -13,6 +13,8 @@ getData = function (id_fonte, callback) {
     });
 }
 
+exports.getWebPage = getWebPage;
+
 exports.next = function (callback) {
     query.launchSimplePostgresQuery(query.getNextGuri(), function (data) {
         let id = data.rows[0].id_fonte;
