@@ -1,3 +1,8 @@
 #form-bando {
     background-color: #FFEFD5;
 }
+
+.CodeMirror {
+  height: auto;
+  margin: 0 10px 30px 10px;
+}

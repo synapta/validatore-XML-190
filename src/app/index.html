@@ -1,60 +1,70 @@
 <!DOCTYPE html>
 <head>
-  <title>Validatore XML 190</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/grid.min.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/form.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/input.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/button.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/header.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/container.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/menu.css" type="text/css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.css" type="text/css" /> -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css" type="text/css" />
+    <title>Validatore XML 190</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/grid.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/form.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/input.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/button.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/header.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/container.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/menu.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.css" type="text/css" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.47.0/codemirror.min.css">
 
 
-
-
-  <link rel="stylesheet" href="/css/index.css" type="text/css" />
+    <link rel="stylesheet" href="/css/index.css" type="text/css" />
 </head>
 <body>
     <div class="ui small menu">
         <a class="item">
-          <img class="logo" src="/assets/images/xml-logo.png">
+            <img class="logo" src="/assets/images/xml-logo.png">
         </a>
-      <a class="header item">
-        Validatore XML 190
-      </a>
+        <a class="header item">
+            Validatore XML 190
+        </a>
     </div>
 
 
-  <!-- <h1 class="ui header"></h1> -->
-  <div class="ui grid">
-    <div class="ui two column centered grid">
-      <h2 class="ui header">Scrivi un link</h2>
-      <div class="ui icon input" >
-        <input type="text" placeholder="Scrivi link..." id='search-field'>
-        <i class="inverted circular search link icon" id='load-site'></i>
-        <!-- <button class="ui primary button" >
-            Cerca
-        </button> -->
-      </div>
+    <div class="ui grid" id="main">
+        <div class="ui two column centered grid">
+            <h2 class="ui header">Scrivi un link</h2>
+            <div class="ui icon input" >
+                <input type="text" placeholder="Scrivi link..." id='search-field'>
+                <i class="inverted circular search link icon" id='load-site'></i>
+            </div>
 
-      <h2 class="ui header">Oppure carica un file</h2>
-      <button class="ui primary button" id='load-file'>
-        Carica file
-      </button>
-  </div>
-</div>
+            <h2 class="ui header">Oppure carica un file</h2>
+            <button class="ui primary button" id='load-file'>
+                Carica file
+            </button>
+        </div>
+    </div>
+
+    <div class="ui grid" id="modifica" style="display:none">
+        <div class="row">
+            <div class="ten wide column">
+                <textarea id="xml-form"></textarea>
+            </div>
+            <div class="six wide column" id="error-messages">
+                ssssssss
+            </div>
+        </div>
+    </div>
 
 
-  <script src="https://contrattipubblici.org/js/lib/jquery223.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" type="text/javascript"></script>
-  <script src="https://contrattipubblici.org/js/lib/typeahead0105.js" type="text/javascript"></script>
-  <script src="https://contrattipubblici.org/js/lib/underscore183.js" type="text/javascript"></script>
-  <script src="https://contrattipubblici.org/js/lib/mustache072.js" type="text/javascript"></script>
-  <script src="/js/lib/jsonform.js" type="text/javascript"></script>
 
-  <script src="/js/index.js"></script>
+    <script src="https://contrattipubblici.org/js/lib/jquery223.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" type="text/javascript"></script>
+    <script src="https://contrattipubblici.org/js/lib/typeahead0105.js" type="text/javascript"></script>
+    <script src="https://contrattipubblici.org/js/lib/underscore183.js" type="text/javascript"></script>
+    <script src="https://contrattipubblici.org/js/lib/mustache072.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.47.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/mode/xml/xml.js"></script>
+
+    <script src="/js/lib/jsonform.js" type="text/javascript"></script>
+
+    <script src="/js/index.js"></script>
 </body>
 </html>
