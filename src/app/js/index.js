@@ -45,10 +45,15 @@ $('#load-site').click(function () {
         data = formatData(xmlView, data);
         // per marcare del testo
         xmlView.markText({line: 50, ch: 0}, {line: 51, ch: 0}, {className: "styled-error" });
-        
-        $('a50').click( function(e) {
+
+        $('#a50').click( function(e) {
             e.preventDefault();
             xmlView.scrollIntoView({line:51, char:0})
+            return false;
+        });
+        $('#a20').click( function(e) {
+            e.preventDefault();
+            xmlView.scrollIntoView({line:21, char:0})
             return false;
         });
 
