@@ -15,53 +15,85 @@
 // });
 // onclick="window.location.href='/modifica'"
 
+// contratto singolo
 // http://www.comune.terni.it/amministrazione_trasparente/opendata/contratto/1313.xml
+// molti contratti
+// https://www.fnmgroup.it/FNM-theme/Legge190/2018/Legge190-E-Vai_2018.xml
+// oggetti lunghi
+// http://hosting.soluzionipa.it/cardano_al_campo/benefici/appalti/esportazione_appalti_2019.xml
+
+//TODO loading page per aspettare la rispota dal sito, non solo per l'analisi!
 
 $('#load-site').click(function () {
     let url = $("#search-field").val();
     $.ajax({
-       url: "/api/modifica/show/xml-from-site?url=" + encodeURI(url),
-       type: 'GET',
-       success: function(data) {
+        url: "/api/show/xml-from-site?url=" + encodeURI(url),
+        type: 'GET',
+        success: function(data) {
 
-           $('#main').hide();
-           $('#modifica').show();
-           $('#xml-form').text(data);
-           window.myCodeMirror = CodeMirror.fromTextArea(document.getElementById("xml-form"), {
-              lineNumbers: true,
-              lineWrapping: true,
-               mode: 'xml',
-               // viewportMargin: Infinity --carica tutto il file, puoi fare il cerca, ma se è grosso danni
-           });
+        $('#main').hide();
+        $('#show').show();
+        $('#xml-form').text(data);
 
-           data = data.replace(/<\/([^>]+)></g, '</$1>\n<');
-           window.myCodeMirror.setValue(data);
-           //programmatically select all code, this is equivalent to ctrl+a on windows
-           window.myCodeMirror.setSelection({
-               'line':window.myCodeMirror.firstLine(),
-               'ch':0,
-               'sticky':null
-             },{
-               'line':window.myCodeMirror.lastLine() + 1,
-               'ch':0,
-               'sticky':null
-             },
-             {scroll: false});
-             //auto indent the selection
-             window.myCodeMirror.indentSelection("smart");
-             //I tried to fire a mousdown event on the code to unselect everything but it does not work.
-             // $('.CodeMirror-code', $codemirror).trigger('mousedown');
-
-             window.myCodeMirror.setCursor({
-                 'line':window.myCodeMirror.firstLine(),
-             'ch':0,
-             'sticky':null
-            })
-
-
-           // window.myCodeMirror.execCommand(indentAuto);
+        window.myCodeMirror = CodeMirror.fromTextArea(document.getElementById("xml-form"), {
+            lineNumbers: true,
+            lineWrapping: true,
+            mode: 'xml'
+            // viewportMargin: Infinity --carica tutto il file, puoi fare il cerca, ma se è grosso danni
+        });
+        let xmlView = window.myCodeMirror;
+        data = formatData(xmlView, data);
+        // per marcare del testo
+        xmlView.markText({line: 50, ch: 0}, {line: 51, ch: 0}, {className: "styled-error" });
+        
+        $('a50').click( function(e) {
+            e.preventDefault();
+            xmlView.scrollIntoView({line:51, char:0})
+            return false;
+        });
 
 
        }
     });
 });
+
+$('.message .close')
+  .on('click', function() {
+    $(this)
+      .closest('.message')
+      .transition('fade')
+    ;
+  })
+;
+
+
+
+
+formatData = function (xmlView,data) {
+    // bisogna insistere per scollare fra loro tutti i tag
+    data = data.replace(/<([^>]+)><([^\/>]+)>/g, '<$1>\n<$2>');
+    data = data.replace(/<([^>]+)><([^\/>]+)>/g, '<$1>\n<$2>');
+    data = data.replace(/<([^>]+)><([^\/>]+)>/g, '<$1>\n<$2>');
+    data = data.replace(/<\/([^>]+)></g, '</$1>\n<');
+
+
+    xmlView.setValue(data);
+    //indento il codice
+    xmlView.setSelection({
+        'line':xmlView.firstLine(),
+        'ch':0,
+        'sticky':null
+      },{
+        'line':xmlView.lastLine() + 1,
+        'ch':0,
+        'sticky':null
+      },
+      {scroll: false});
+      xmlView.indentSelection("smart");
+      xmlView.setCursor({
+          'line':xmlView.firstLine(),
+      'ch':0,
+      'sticky':null
+     })
+     return data;
+}

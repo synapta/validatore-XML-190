@@ -6,3 +6,5 @@
   height: auto;
   margin: 0 10px 30px 10px;
 }
+.styled-error { background-color: #ff1a1a; }
+.styled-warning { background-color: #ffcc66; }
