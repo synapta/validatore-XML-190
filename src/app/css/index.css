@@ -8,3 +8,4 @@
 }
 .styled-error { background-color: #ff1a1a; }
 .styled-warning { background-color: #ffcc66; }
+.error_line {color:#0000EE; text-decoration: underline}
