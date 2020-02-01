@@ -1,0 +1,14 @@
+{
+  "name": "synapta_x2j",
+  "version": "1.0.0",
+  "gypfile": true,
+  "main": "./build/Release/synapta_x2j",
+  "scripts": {
+    "build": "node-gyp build",
+    "install": "node-gyp rebuild",
+    "start": "node ./index.js"
+  },
+  "dependencies": {
+    "nan": "^2.7.0"
+  }
+}

@@ -1,0 +1,1 @@
+cmd_Release/synapta_x2j.node := ln -f "Release/obj.target/synapta_x2j.node" "Release/synapta_x2j.node" 2>/dev/null || (rm -rf "Release/synapta_x2j.node" && cp -af "Release/obj.target/synapta_x2j.node" "Release/synapta_x2j.node")

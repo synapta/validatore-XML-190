@@ -5,7 +5,6 @@
 // oggetti lunghi
 // http://hosting.soluzionipa.it/cardano_al_campo/benefici/appalti/esportazione_appalti_2019.xml
 
-
 $('#load-site').click(function () {
     $('#main').hide();
     $('#loading').show();
@@ -28,9 +27,27 @@ $('#load-site').click(function () {
             let xmlView = window.myCodeMirror;
             data = formatData(xmlView, data);
 
+            $.ajax({
+                url: '/api/analyze/xml',
+                type: 'post',
+                data: data,
+                contentType: 'text/plain',
+                dataType: "text",
+                success: function () {
+                    alert("Analizzato!");
+
+                },
+                error: function(e) {
+                    alert("Errore nell'analisi :-(");
+                    console.log(e);
+                }
+            });
+
+
+
             // per marcare del testo
-            markLine(xmlView,50,'error')
-            markLine(xmlView,20,'warning')
+            // markLine(xmlView,50,'error')
+            // markLine(xmlView,20,'warning')
 
             $(".error_line").click( function(e) {
                 let line = e.target.textContent;
