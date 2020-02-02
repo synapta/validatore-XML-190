@@ -16,6 +16,7 @@ $('#load-site').click(function () {
 
             $('#loading').hide();
             $('#show').show();
+            $('#loading-lotti').show();
             $('#xml-form').text(data);
 
             window.myCodeMirror = CodeMirror.fromTextArea(document.getElementById("xml-form"), {
@@ -32,8 +33,11 @@ $('#load-site').click(function () {
                 type: 'post',
                 data: data,
                 contentType: 'text/plain',
-                dataType: "text",
-                success: function () {
+                // dataType: "json",
+                success: function (res) {
+                    console.log(res)
+                    $('#loading-lotti').hide();
+                    $('#numero-lotti').text(res);
                     alert("Analizzato!");
 
                 },
