@@ -5,6 +5,18 @@
 // oggetti lunghi
 // http://hosting.soluzionipa.it/cardano_al_campo/benefici/appalti/esportazione_appalti_2019.xml
 
+var returnToHome = function () {
+    $('#loading-lotti').hide();
+    $('#loading').hide();
+    $('#show').hide();
+    $('#main').show();
+    $('#xml-form').val('');
+}
+
+
+$('#home-logo').click(() => returnToHome() );
+$('#home-name').click(() => returnToHome() );
+
 $('#load-site').click(function () {
     $('#main').hide();
     $('#loading').show();
