@@ -45,11 +45,13 @@ $('#load-site').click(function () {
                 type: 'post',
                 data: data,
                 contentType: 'text/plain',
-                // dataType: "json",
+                dataType: "json",
                 success: function (res) {
                     console.log(res)
                     $('#loading-lotti').hide();
-                    $('#numero-lotti').text(res);
+                    $('#numero-lotti').text(res.totLotti);
+                    markAll(xmlView, res.mark);
+                    // markLine(xmlView,res.errori,'error')
                     alert("Analizzato!");
 
                 },
@@ -89,6 +91,13 @@ markLine = function (xmlView,line, type) {
     xmlView.markText({line: line -1, ch: 0}, {line: line , ch: 0}, {className: "styled-"+type });
 }
 
+markAll = function(xmlView, description) {
+    console.log(description)
+    for (let i = 0; i < description.length; i++) {
+        markLine(xmlView,description[i].line, description[i].type)
+    }
+
+}
 
 formatData = function (xmlView,data) {
     // bisogna insistere per scollare fra loro tutti i tag

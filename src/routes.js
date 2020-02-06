@@ -18,7 +18,8 @@ module.exports = function(app) {
 
     app.post('/api/analyze/xml', function (request, response) {
         analyze.analyze(request.body, function(body) {
-            response.send(body.toString());
+            console.log(body)
+            response.send(body);
         })
     });
 }
