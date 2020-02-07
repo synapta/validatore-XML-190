@@ -4,13 +4,15 @@
 // https://www.fnmgroup.it/FNM-theme/Legge190/2018/Legge190-E-Vai_2018.xml
 // oggetti lunghi
 // http://hosting.soluzionipa.it/cardano_al_campo/benefici/appalti/esportazione_appalti_2019.xml
+// contratto singolo senza cig
+// http://livigno.trasparenza-valutazione-merito.it/avcp/c_e621/2013/Dataset_idx_148503.xml
 
 var returnToHome = function () {
     $('#loading-lotti').hide();
     $('#loading').hide();
     $('#show').hide();
     $('#main').show();
-    $('#xml-form').val('');
+    $('#xml-form').text('');
 }
 
 
@@ -50,7 +52,8 @@ $('#load-site').click(function () {
                     console.log(res)
                     $('#loading-lotti').hide();
                     $('#numero-lotti').text(res.totLotti);
-                    markAll(xmlView, res.mark);
+                    addMessages(res.errors)
+                    // markAll(xmlView, res.mark);
                     // markLine(xmlView,res.errori,'error')
                     alert("Analizzato!");
 
@@ -96,18 +99,50 @@ markAll = function(xmlView, description) {
     for (let i = 0; i < description.length; i++) {
         markLine(xmlView,description[i].line, description[i].type)
     }
+}
+addMessages = function (errori) {
+    for (let i = 0; i < errori.length; i++) {
+        $('#messages').text(makeMessage(errori[i].type,errori[i].text,errori[i].line));
+    }
+}
+
+
+makeMessage = function (type,text,line) {
+    let div = '<div class="ui ';
+
+    if (type === 'error') div += 'negative message">';
+    if (type === 'warning') div += 'warning message">';
+        div += `<i class="close icon"></i>
+            <div class="header">
+                Errore: ${text}
+            </div>
+            <p>Linea <span class="error_line">${line}</span> </p>
+        </div>
+        `;
+    return div;
 
 }
 
 formatData = function (xmlView,data) {
     // bisogna insistere per scollare fra loro tutti i tag
-    data = data.replace(/<([^>]+)><([^\/>]+)>/g, '<$1>\n<$2>');
-    data = data.replace(/<([^>]+)><([^\/>]+)>/g, '<$1>\n<$2>');
-    data = data.replace(/<([^>]+)><([^\/>]+)>/g, '<$1>\n<$2>');
-    data = data.replace(/<\/([^>]+)></g, '</$1>\n<');
+    // tag di apertura seguito da uno di chiusura
+    data = data.replace(/<\?([^>]+?)\?>\s*<([^>]+?)>/g, '<?$1?>\n<$2>');
+    data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
+    data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
+    data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
+    data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
+    data = data.replace(/<\/([^>]+?)>\s*</g, '</$1>\n<');
 
-
+    // due tag di chiusura di seguito
+    data = data.replace(/<\/([^>]+?)>\s*<\/([^>]+?)>/g, '</$1>\n</$2>');
+    // data = data.replace(/<\/([^>]+)><\/([^>]+)>/g, '</$1>\n</$2>');
+    // data = data.replace(/<\/([^>]+)><\/([^>]+)>/g, '</$1>\n</$2>');
     xmlView.setValue(data);
+    indentData(xmlView,data);
+    return data;
+}
+
+var indentData = function (xmlView, data) {
     //indento il codice
     xmlView.setSelection({
         'line':xmlView.firstLine(),
@@ -125,5 +160,4 @@ formatData = function (xmlView,data) {
       'ch':0,
       'sticky':null
      })
-     return data;
 }

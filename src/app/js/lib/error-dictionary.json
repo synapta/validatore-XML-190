@@ -1,0 +1,11 @@
+{
+    "errors": {
+        "completezza": {
+            "cig" : { "text": "Il cig è mancante", "type": "error"}
+        }
+    },
+    "warnings": {
+
+    }
+
+}
