@@ -34,17 +34,21 @@ exports.analyze = function (body, cb) {
     }
     let lotti = rendiArray(xmlJSON[firstLevel].data.lotto);
     console.log(lotti[0])
-    let errori = [];
+    let errors = [];
     for (let i = 0; i < lotti.length; i ++) {
-        errori = analyzeLotto(lotti[i]);
+        errors = analyzeLotto(lotti[i]);
     }
+    let totErrors = errors.filter(element => element.type === 'error').length;
+    let totWarnings = errors.filter(element => element.type === 'warning').length;
 
     // console.log(xmlJSON[firstLevel].data.lotto[0])
 
     cb(
         {
             totLotti: totLotti,
-            errors: errori
+            totErrors: totErrors,
+            totWarnings: totWarnings,
+            errors: errors
         }
     )
 }
@@ -64,16 +68,14 @@ var rendiArray = function (obj) {
     }
 }
 
-//TODO alle volte all'interno del tag hai del text, alle volte del CDATA
-
 var analyzeLotto = function (lotto) {
     lotto.partecipanti = rendiArray(lotto.partecipanti);
     lotto.aggiudicatari = rendiArray(lotto.aggiudicatari);
 
-    let datiSingoli = ['cig','oggetto','sceltaContraente', 'importoAggiudicazione', 'importoSommeLiquidate']
-    for (let key in lotto ){
-        console.log(key, presenzaDato(lotto[key]._text),lotto[key]._text);
-    }
+
+    // for (let key in lotto ){
+    //     console.log(key, presenzaDato(lotto[key]._text),lotto[key]._text);
+    // }
     let erroriCompletezza = presenzaDati(lotto);
     console.log(erroriCompletezza);
     return erroriCompletezza;
@@ -104,7 +106,19 @@ var analyzeLotto = function (lotto) {
 var presenzaDati = function (lotto) {
     let errori = [];
     // errorTemplate = {text: '', line: 0, type: 'errore'}
-    if (!presenzaDato(lotto.cig._text)) errori.push(addError(dictionary.errors.completezza.cig, lotto.cig._attributes.linea))
+    let datiSingoli = ['cig','oggetto','sceltaContraente', 'importoAggiudicazione', 'importoSommeLiquidate']
+    for (let i = 0; i < datiSingoli.length; i++) {
+        if (!presenzaDato(lotto[datiSingoli[i]]._text))
+            errori.push(addError(dictionary.errors.completezza[datiSingoli[i]], lotto[datiSingoli[i]]._attributes.linea));
+    }
+    // if (!presenzaDato(lotto.cig._text)) errori.push(addError(dictionary.errors.completezza.cig, lotto.cig._attributes.linea));
+    // if (!presenzaDato(lotto.oggetto._text)) errori.push(addError(dictionary.errors.completezza.oggetto, lotto.oggetto._attributes.linea));
+    // if (!presenzaDato(lotto.sceltaContraente._text))
+    //     errori.push(addError(dictionary.errors.completezza.sceltaContraente, lotto.sceltaContraente._attributes.linea));
+    // if (!presenzaDato(lotto.importoAggiudicazione._text))
+    //     errori.push(addError(dictionary.errors.importoAggiudicazione.oggetto, lotto.importoAggiudicazione._attributes.linea));
+    // if (!presenzaDato(lotto.oggetto._text)) errori.push(addError(dictionary.errors.completezza.oggetto, lotto.oggetto._attributes.linea))
+    // if (!presenzaDato(lotto.oggetto._text)) errori.push(addError(dictionary.errors.completezza.oggetto, lotto.oggetto._attributes.linea))
     return errori;
 }
 

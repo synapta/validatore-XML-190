@@ -1,7 +1,11 @@
 {
     "errors": {
         "completezza": {
-            "cig" : { "text": "Il cig è mancante", "type": "error"}
+            "cig" : { "text": "Il cig è mancante", "type": "error"},
+            "oggetto" : { "text": "L'oggetto è mancante", "type": "error"},
+            "sceltaContraente" : { "text": "La scelta del contraente è mancante", "type": "error"},
+            "importoAggiudicazione" : { "text": "L'importo di aggiudicazione è mancante", "type": "error"},
+            "importoSommeLiquidate" : { "text": "L'importo delle somme liquidate è mancante", "type": "error"}
         }
     },
     "warnings": {

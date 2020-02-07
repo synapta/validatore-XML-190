@@ -1,0 +1,21 @@
+ERRORI
+- richiesta troppo grossa
+"POST /api/analyze/xml HTTP/1.1" 413 1069
+PayloadTooLargeError: request entity too large
+"
+- errori nell'indentazione -> creano problemi nella gestione del tagging delle righe
+(http://www.bologna.aci.it/avcp/00312900376/2015/indice.xml)
+    - gestire i file monoriga (view-source:https://www.comune.poggibonsi.si.it/files/00097460521/2013/Z83082FC0B.xml)
+
+- svuotare la pagina prima di ricaricarla (se passi dalla home fa un append)
+- alle volte all'interno del tag hai del text, alle volte del CDATA
+
+
+FEATURE
+- aggiungi "carica un file"
+- validazione schema
+
+
+MIGLIORIE
+- allargare la buca del link!
+- sul link al mousover lo stile deve essere cursor [AM]

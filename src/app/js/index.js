@@ -1,12 +1,3 @@
-// contratto singolo
-// http://www.comune.terni.it/amministrazione_trasparente/opendata/contratto/1313.xml
-// molti contratti
-// https://www.fnmgroup.it/FNM-theme/Legge190/2018/Legge190-E-Vai_2018.xml
-// oggetti lunghi
-// http://hosting.soluzionipa.it/cardano_al_campo/benefici/appalti/esportazione_appalti_2019.xml
-// contratto singolo senza cig
-// http://livigno.trasparenza-valutazione-merito.it/avcp/c_e621/2013/Dataset_idx_148503.xml
-
 var returnToHome = function () {
     $('#loading-lotti').hide();
     $('#loading').hide();
@@ -52,8 +43,16 @@ $('#load-site').click(function () {
                     console.log(res)
                     $('#loading-lotti').hide();
                     $('#numero-lotti').text(res.totLotti);
+                    $('#numero-errori').text(res.totErrors);
+                    $('#numero-avvisi').text(res.totWarnings);
                     addMessages(res.errors)
-                    // markAll(xmlView, res.mark);
+                    markAll(xmlView, res.errors);
+                    $(".error_line").click( function(e) {
+                        let line = e.target.textContent;
+                        e.preventDefault();
+                        xmlView.scrollIntoView({line:line, char:0})
+                        return false;
+                    });
                     // markLine(xmlView,res.errori,'error')
                     alert("Analizzato!");
 
@@ -70,12 +69,7 @@ $('#load-site').click(function () {
             // markLine(xmlView,50,'error')
             // markLine(xmlView,20,'warning')
 
-            $(".error_line").click( function(e) {
-                let line = e.target.textContent;
-                e.preventDefault();
-                xmlView.scrollIntoView({line:line, char:0})
-                return false;
-            });
+
 
        }
     });
@@ -94,15 +88,15 @@ markLine = function (xmlView,line, type) {
     xmlView.markText({line: line -1, ch: 0}, {line: line , ch: 0}, {className: "styled-"+type });
 }
 
-markAll = function(xmlView, description) {
-    console.log(description)
-    for (let i = 0; i < description.length; i++) {
-        markLine(xmlView,description[i].line, description[i].type)
+markAll = function(xmlView, errori) {
+    // console.log(errori)
+    for (let i = 0; i < errori.length; i++) {
+        markLine(xmlView,errori[i].line, errori[i].type)
     }
 }
 addMessages = function (errori) {
     for (let i = 0; i < errori.length; i++) {
-        $('#messages').text(makeMessage(errori[i].type,errori[i].text,errori[i].line));
+        $('#messagges').append(makeMessage(errori[i].type,errori[i].text,errori[i].line));
     }
 }
 
@@ -124,19 +118,22 @@ makeMessage = function (type,text,line) {
 }
 
 formatData = function (xmlView,data) {
+    console.log(data)
     // bisogna insistere per scollare fra loro tutti i tag
     // tag di apertura seguito da uno di chiusura
     data = data.replace(/<\?([^>]+?)\?>\s*<([^>]+?)>/g, '<?$1?>\n<$2>');
+
     data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
     data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
     data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
     data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
     data = data.replace(/<\/([^>]+?)>\s*</g, '</$1>\n<');
-
+    console.log(data)
     // due tag di chiusura di seguito
     data = data.replace(/<\/([^>]+?)>\s*<\/([^>]+?)>/g, '</$1>\n</$2>');
-    // data = data.replace(/<\/([^>]+)><\/([^>]+)>/g, '</$1>\n</$2>');
-    // data = data.replace(/<\/([^>]+)><\/([^>]+)>/g, '</$1>\n</$2>');
+    data = data.replace(/<\/([^>]+)><\/([^>]+)>/g, '</$1>\n</$2>');
+    data = data.replace(/<\/([^>]+)><\/([^>]+)>/g, '</$1>\n</$2>');
+    console.log(data)
     xmlView.setValue(data);
     indentData(xmlView,data);
     return data;

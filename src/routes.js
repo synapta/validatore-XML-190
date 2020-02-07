@@ -22,4 +22,9 @@ module.exports = function(app) {
             response.send(body);
         })
     });
+
+// http://localhost:8041/xml/test1
+    app.get('/xml/:path', function (request, response) {
+        response.sendFile(__dirname + '/xml/' + request.params.path);
+    });
 }
