@@ -4,6 +4,7 @@ var returnToHome = function () {
     $('#show').hide();
     $('#main').show();
     $('#xml-form').text('');
+    $('#messages').html();
 }
 
 
@@ -17,12 +18,17 @@ $('#load-site').click(function () {
     $.ajax({
         url: "/api/show/xml-from-site?url=" + encodeURI(url),
         type: 'GET',
+        error: function(e) {
+            alert("Url non valido :-(");
+            console.log(e);
+        },
         success: function(data) {
 
             $('#loading').hide();
             $('#show').show();
             $('#loading-lotti').show();
             $('#xml-form').text(data);
+            // window.location.search += 'id=' + encodeURI(url);
 
             window.myCodeMirror = CodeMirror.fromTextArea(document.getElementById("xml-form"), {
                 lineNumbers: true,
@@ -40,7 +46,6 @@ $('#load-site').click(function () {
                 contentType: 'text/plain',
                 dataType: "json",
                 success: function (res) {
-                    console.log(res)
                     $('#loading-lotti').hide();
                     $('#numero-lotti').text(res.totLotti);
                     $('#numero-errori').text(res.totErrors);
@@ -53,7 +58,6 @@ $('#load-site').click(function () {
                         xmlView.scrollIntoView({line:line, char:0})
                         return false;
                     });
-                    // markLine(xmlView,res.errori,'error')
                     alert("Analizzato!");
 
                 },
@@ -62,12 +66,6 @@ $('#load-site').click(function () {
                     console.log(e);
                 }
             });
-
-
-
-            // per marcare del testo
-            // markLine(xmlView,50,'error')
-            // markLine(xmlView,20,'warning')
 
 
 
@@ -84,8 +82,8 @@ $('.message .close')
   })
 ;
 
-markLine = function (xmlView,line, type) {
-    xmlView.markText({line: line -1, ch: 0}, {line: line , ch: 0}, {className: "styled-"+type });
+markLine = function (xmlView, line, type) {
+    xmlView.markText({line: line -1, ch: 0}, {line: parseInt(line), ch: 0}, {className: "styled-"+type });
 }
 
 markAll = function(xmlView, errori) {
@@ -118,7 +116,7 @@ makeMessage = function (type,text,line) {
 }
 
 formatData = function (xmlView,data) {
-    console.log(data)
+    // console.log(data)
     // bisogna insistere per scollare fra loro tutti i tag
     // tag di apertura seguito da uno di chiusura
     data = data.replace(/<\?([^>]+?)\?>\s*<([^>]+?)>/g, '<?$1?>\n<$2>');
@@ -128,14 +126,15 @@ formatData = function (xmlView,data) {
     data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
     data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
     data = data.replace(/<\/([^>]+?)>\s*</g, '</$1>\n<');
-    console.log(data)
+    // console.log(data)
     // due tag di chiusura di seguito
     data = data.replace(/<\/([^>]+?)>\s*<\/([^>]+?)>/g, '</$1>\n</$2>');
     data = data.replace(/<\/([^>]+)><\/([^>]+)>/g, '</$1>\n</$2>');
     data = data.replace(/<\/([^>]+)><\/([^>]+)>/g, '</$1>\n</$2>');
-    console.log(data)
+    // console.log(data)
     xmlView.setValue(data);
     indentData(xmlView,data);
+    data = xmlView.getValue();
     return data;
 }
 

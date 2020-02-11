@@ -2,14 +2,29 @@
     "errors": {
         "completezza": {
             "cig" : { "text": "Il cig è mancante", "type": "error"},
+            "codiceFiscaleProp" : { "text": "Il codice fiscale dell'ente proponente è mancante", "type": "error"},
+            "denominazione" : { "text": "La denominazione dell'ente proponente è mancante", "type": "error"},
             "oggetto" : { "text": "L'oggetto è mancante", "type": "error"},
             "sceltaContraente" : { "text": "La scelta del contraente è mancante", "type": "error"},
             "importoAggiudicazione" : { "text": "L'importo di aggiudicazione è mancante", "type": "error"},
-            "importoSommeLiquidate" : { "text": "L'importo delle somme liquidate è mancante", "type": "error"}
+            "dataInizio" : { "text": "La data di inizio è mancante", "type": "error"},
+            "codiceFiscalePartecipante" : { "text": "Il codice fiscale del partecipante è mancante", "type": "error"},
+            "ragioneSocialePartecipante" : { "text": "La ragione sociale del partecipante è mancante", "type": "error"},
+            "codiceFiscaleAggiudicatario" : { "text": "Il codice fiscale dell'aggiudicatario è mancante", "type": "error"},
+            "ragioneSocialeAggiudicatario" : { "text": "La ragione sociale dell'aggiudicatario è mancante", "type": "error"}
+        },
+        "accuratezzaSemantica" : {
+
+        },
+        "correttezza": {
+            "cig" : {"text": "Il cig immesso non è valido", "type": "error"}
         }
     },
     "warnings": {
-
+        "completezza": {
+            "importoSommeLiquidate" : { "text": "L'importo delle somme liquidate è mancante", "type": "warning"},
+            "dataUltimazione" : { "text": "La data di fine è mancante", "type": "warning"}
+        }
     }
 
 }

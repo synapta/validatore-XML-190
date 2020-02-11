@@ -36,17 +36,25 @@
         <dataInizio>2016-02-19</dataInizio>
         <dataUltimazione>2016-06-10</dataUltimazione>
       </tempiCompletamento>
-      <importoSommeLiquidate>464.02</importoSommeLiquidate>
+      <importoSommeLiquidate></importoSommeLiquidate>
     </lotto>
     <lotto>
           <cig></cig>
           <strutturaProponente>
             <codiceFiscaleProp>83000850145</codiceFiscaleProp>
-            <denominazione>COMUNE DI LIVIGNO</denominazione>
+            <denominazione></denominazione>
           </strutturaProponente>
           <oggetto>B.E. N. 4294 RIPARAZIONE PORTONE GARAGE SANTA MARIA</oggetto>
           <sceltaContraente>08-AFFIDAMENTO IN ECONOMIA - COTTIMO FIDUCIARIO</sceltaContraente>
           <partecipanti>
+            <partecipante>
+              <codiceFiscale></codiceFiscale>
+              <ragioneSociale>IMSA s.r.l.</ragioneSociale>
+            </partecipante>
+            <partecipante>
+              <codiceFiscale></codiceFiscale>
+              <ragioneSociale>IMSA s.r.l.</ragioneSociale>
+            </partecipante>
             <partecipante>
               <codiceFiscale>01827690130</codiceFiscale>
               <ragioneSociale>IMSA s.r.l.</ragioneSociale>
@@ -54,13 +62,21 @@
           </partecipanti>
           <aggiudicatari>
             <aggiudicatario>
+              <codiceFiscale></codiceFiscale>
+              <ragioneSociale>IMSA s.r.l.</ragioneSociale>
+            </aggiudicatario>
+            <aggiudicatario>
+              <codiceFiscale>01827690130</codiceFiscale>
+              <ragioneSociale></ragioneSociale>
+            </aggiudicatario>
+            <aggiudicatario>
               <codiceFiscale>01827690130</codiceFiscale>
               <ragioneSociale>IMSA s.r.l.</ragioneSociale>
             </aggiudicatario>
           </aggiudicatari>
-          <importoAggiudicazione>464.02</importoAggiudicazione>
+          <importoAggiudicazione></importoAggiudicazione>
           <tempiCompletamento>
-            <dataInizio>2016-02-19</dataInizio>
+            <dataInizio></dataInizio>
             <dataUltimazione>2016-06-10</dataUltimazione>
           </tempiCompletamento>
           <importoSommeLiquidate>464.02</importoSommeLiquidate>

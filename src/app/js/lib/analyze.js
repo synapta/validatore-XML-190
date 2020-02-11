@@ -1,6 +1,7 @@
 // var synapta_x2j = require('./synapta_x2j/build/Release/synapta_x2j.node');
 var x2j = require('xml-js');
 var dictionary = require('./error-dictionary.json');
+var utils = require('./utils.js');
 
 exports.analyze = function (body, cb) {
     var lines = body.split('\n');
@@ -33,10 +34,9 @@ exports.analyze = function (body, cb) {
         multiLotto = true;
     }
     let lotti = rendiArray(xmlJSON[firstLevel].data.lotto);
-    console.log(lotti[0])
     let errors = [];
     for (let i = 0; i < lotti.length; i ++) {
-        errors = analyzeLotto(lotti[i]);
+        errors = errors.concat(analyzeLotto(lotti[i]));
     }
     let totErrors = errors.filter(element => element.type === 'error').length;
     let totWarnings = errors.filter(element => element.type === 'warning').length;
@@ -69,16 +69,20 @@ var rendiArray = function (obj) {
 }
 
 var analyzeLotto = function (lotto) {
-    lotto.partecipanti = rendiArray(lotto.partecipanti);
-    lotto.aggiudicatari = rendiArray(lotto.aggiudicatari);
+    lotto.partecipanti.partecipante = rendiArray(lotto.partecipanti.partecipante);
+    lotto.aggiudicatari.aggiudicatario = rendiArray(lotto.aggiudicatari.aggiudicatario);
 
 
     // for (let key in lotto ){
     //     console.log(key, presenzaDato(lotto[key]._text),lotto[key]._text);
     // }
-    let erroriCompletezza = presenzaDati(lotto);
-    console.log(erroriCompletezza);
-    return erroriCompletezza;
+    let erroriTotali = [];
+    erroriTotali = erroriTotali.concat(presenzaDati(lotto));
+    console.log(erroriTotali)
+    erroriTotali.push(valutaCig(lotto));
+    console.log(erroriTotali)
+
+    return erroriTotali;
 
     // cig
     // strutturaProponente
@@ -104,22 +108,45 @@ var analyzeLotto = function (lotto) {
 
 // funzioni di presenza del dato
 var presenzaDati = function (lotto) {
+    // console.log(lotto)
+    // console.log(dictionary.warnings.completezza.importoSommeLiquidate)
     let errori = [];
-    // errorTemplate = {text: '', line: 0, type: 'errore'}
-    let datiSingoli = ['cig','oggetto','sceltaContraente', 'importoAggiudicazione', 'importoSommeLiquidate']
+    let datiSingoli = ['cig','oggetto','sceltaContraente', 'importoAggiudicazione']
     for (let i = 0; i < datiSingoli.length; i++) {
         if (!presenzaDato(lotto[datiSingoli[i]]._text))
             errori.push(addError(dictionary.errors.completezza[datiSingoli[i]], lotto[datiSingoli[i]]._attributes.linea));
     }
-    // if (!presenzaDato(lotto.cig._text)) errori.push(addError(dictionary.errors.completezza.cig, lotto.cig._attributes.linea));
-    // if (!presenzaDato(lotto.oggetto._text)) errori.push(addError(dictionary.errors.completezza.oggetto, lotto.oggetto._attributes.linea));
-    // if (!presenzaDato(lotto.sceltaContraente._text))
-    //     errori.push(addError(dictionary.errors.completezza.sceltaContraente, lotto.sceltaContraente._attributes.linea));
-    // if (!presenzaDato(lotto.importoAggiudicazione._text))
-    //     errori.push(addError(dictionary.errors.importoAggiudicazione.oggetto, lotto.importoAggiudicazione._attributes.linea));
-    // if (!presenzaDato(lotto.oggetto._text)) errori.push(addError(dictionary.errors.completezza.oggetto, lotto.oggetto._attributes.linea))
-    // if (!presenzaDato(lotto.oggetto._text)) errori.push(addError(dictionary.errors.completezza.oggetto, lotto.oggetto._attributes.linea))
+    if (!presenzaDato(lotto.importoSommeLiquidate._text))
+        errori.push(addError(dictionary.warnings.completezza.importoSommeLiquidate, lotto.importoSommeLiquidate._attributes.linea));
+    if (!presenzaDato(lotto.tempiCompletamento.dataInizio._text))
+        errori.push(addError(dictionary.errors.completezza.dataInizio, lotto.tempiCompletamento.dataInizio._attributes.linea));
+    if (!presenzaDato(lotto.tempiCompletamento.dataUltimazione._text))
+        errori.push(addError(dictionary.warnings.completezza.dataUltimazione, lotto.tempiCompletamento.dataUltimazione._attributes.linea));
+    if (!presenzaDato(lotto.strutturaProponente.codiceFiscaleProp._text))
+        errori.push(addError(dictionary.errors.completezza.codiceFiscaleProp, lotto.strutturaProponente.codiceFiscaleProp._attributes.linea));
+    if (!presenzaDato(lotto.strutturaProponente.denominazione._text))
+        errori.push(addError(dictionary.errors.completezza.denominazione, lotto.strutturaProponente.denominazione._attributes.linea));
+    for (let j = 0; j < lotto.partecipanti.partecipante.length; j ++){
+        if (!presenzaDato(lotto.partecipanti.partecipante[j].codiceFiscale._text))
+            errori.push(addError(dictionary.errors.completezza.codiceFiscalePartecipante, lotto.partecipanti.partecipante[j].codiceFiscale._attributes.linea));
+        if (!presenzaDato(lotto.partecipanti.partecipante[j].ragioneSociale._text))
+            errori.push(addError(dictionary.errors.completezza.ragioneSocialePartecipante, lotto.partecipanti.partecipante[j].ragioneSociale._attributes.linea));
+    }
+    for (let j = 0; j < lotto.aggiudicatari.aggiudicatario.length; j ++){
+        if (!presenzaDato(lotto.aggiudicatari.aggiudicatario[j].codiceFiscale._text))
+            errori.push(addError(dictionary.errors.completezza.codiceFiscaleAggiudicatario, lotto.aggiudicatari.aggiudicatario[j].codiceFiscale._attributes.linea));
+        if (!presenzaDato(lotto.aggiudicatari.aggiudicatario[j].ragioneSociale._text))
+            errori.push(addError(dictionary.errors.completezza.ragioneSocialeAggiudicatario, lotto.aggiudicatari.aggiudicatario[j].ragioneSociale._attributes.linea));
+    }
     return errori;
+}
+
+var valutaCig = function (lotto) {
+    let errore;
+    if (!utils.checkCig(lotto.cig._text))
+        errore = addError(dictionary.errors.correttezza.cig, lotto.cig._attributes.linea);
+
+    return errore;
 }
 
 var addError = function (errorRef, line) {
@@ -139,7 +166,7 @@ var presenzaDato = function (dato) {
     }
     if (typeof dato === 'object') {
         for (let key in dato) {
-            console.log('sono un oggetto', dato[key])
+            // console.log('sono un oggetto', dato[key])
             return presenzaDato(dato[key])
         }
     }
