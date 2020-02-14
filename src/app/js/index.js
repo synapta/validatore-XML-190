@@ -16,8 +16,9 @@ var loadAnalysis = function () {
         url: "/api/show/xml-from-site?url=" + encodeURI(url),
         type: 'GET',
         error: function(e) {
-            alert("Url non valido :-(");
+            alert("C'è un problema con l'URL immesso :-(");
             console.log(e);
+            returnToHome();
         },
         success: function(data) {
             $('#xml-form').text();

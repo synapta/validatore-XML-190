@@ -10,9 +10,18 @@ module.exports = function(app) {
 
     app.use(bodyParser.text({ type: 'text/*' }))
 
+    // app.use((err, req, res, next) => {
+    //     res.status(status).send(body).json(err);
+    // });
+
     app.get('/api/show/xml-from-site', function (request, response) {
-        utils.getWebPage(request.query.url, function(body) {
-            response.send(body);
+        utils.getWebPage(request.query.url, function(body,err) {
+            if (err) {
+                console.log(err);
+                response.status(err).send(body);
+            } else {
+                response.send(body);
+            }
         })
     });
 

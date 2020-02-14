@@ -1,7 +1,9 @@
 #form-bando {
     background-color: #FFEFD5;
 }
-
+#home-name {
+    font-weight: 900;
+}
 .CodeMirror {
   height: auto;
   margin: 0 10px 30px 10px;

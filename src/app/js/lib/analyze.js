@@ -1,6 +1,6 @@
 // var synapta_x2j = require('./synapta_x2j/build/Release/synapta_x2j.node');
 var x2j = require('xml-js');
-var dictionary = require('./error-dictionary.json');
+var dict = require('./error-dictionary.json');
 var utils = require('./utils.js');
 
 exports.analyze = function (body, cb) {
@@ -104,34 +104,34 @@ var analyzeLotto = function (lotto) {
 // funzioni di presenza del dato
 var presenzaDati = function (lotto) {
     // console.log(lotto)
-    // console.log(dictionary.warnings.completezza.importoSommeLiquidate)
+    // console.log(dict.warnings.completezza.importoSommeLiquidate)
     let errori = [];
     let datiSingoli = ['cig','oggetto','sceltaContraente', 'importoAggiudicazione']
     for (let i = 0; i < datiSingoli.length; i++) {
         if (!presenzaDato(lotto[datiSingoli[i]]._text))
-            errori.push(addError(dictionary.errors.completezza[datiSingoli[i]], lotto[datiSingoli[i]]._attributes.linea));
+            errori.push(addError(dict.errors.completezza[datiSingoli[i]], lotto[datiSingoli[i]]._attributes.linea));
     }
     if (!presenzaDato(lotto.importoSommeLiquidate._text))
-        errori.push(addError(dictionary.warnings.completezza.importoSommeLiquidate, lotto.importoSommeLiquidate._attributes.linea));
+        errori.push(addError(dict.warnings.completezza.importoSommeLiquidate, lotto.importoSommeLiquidate._attributes.linea));
     if (!presenzaDato(lotto.tempiCompletamento.dataInizio._text))
-        errori.push(addError(dictionary.errors.completezza.dataInizio, lotto.tempiCompletamento.dataInizio._attributes.linea));
+        errori.push(addError(dict.errors.completezza.dataInizio, lotto.tempiCompletamento.dataInizio._attributes.linea));
     if (!presenzaDato(lotto.tempiCompletamento.dataUltimazione._text))
-        errori.push(addError(dictionary.warnings.completezza.dataUltimazione, lotto.tempiCompletamento.dataUltimazione._attributes.linea));
+        errori.push(addError(dict.warnings.completezza.dataUltimazione, lotto.tempiCompletamento.dataUltimazione._attributes.linea));
     if (!presenzaDato(lotto.strutturaProponente.codiceFiscaleProp._text))
-        errori.push(addError(dictionary.errors.completezza.codiceFiscaleProp, lotto.strutturaProponente.codiceFiscaleProp._attributes.linea));
+        errori.push(addError(dict.errors.completezza.codiceFiscaleProp, lotto.strutturaProponente.codiceFiscaleProp._attributes.linea));
     if (!presenzaDato(lotto.strutturaProponente.denominazione._text))
-        errori.push(addError(dictionary.errors.completezza.denominazione, lotto.strutturaProponente.denominazione._attributes.linea));
+        errori.push(addError(dict.errors.completezza.denominazione, lotto.strutturaProponente.denominazione._attributes.linea));
     for (let j = 0; j < lotto.partecipanti.partecipante.length; j ++){
         if (!presenzaDato(lotto.partecipanti.partecipante[j].codiceFiscale._text))
-            errori.push(addError(dictionary.errors.completezza.codiceFiscalePartecipante, lotto.partecipanti.partecipante[j].codiceFiscale._attributes.linea));
+            errori.push(addError(dict.errors.completezza.codiceFiscalePartecipante, lotto.partecipanti.partecipante[j].codiceFiscale._attributes.linea));
         if (!presenzaDato(lotto.partecipanti.partecipante[j].ragioneSociale._text))
-            errori.push(addError(dictionary.errors.completezza.ragioneSocialePartecipante, lotto.partecipanti.partecipante[j].ragioneSociale._attributes.linea));
+            errori.push(addError(dict.errors.completezza.ragioneSocialePartecipante, lotto.partecipanti.partecipante[j].ragioneSociale._attributes.linea));
     }
     for (let j = 0; j < lotto.aggiudicatari.aggiudicatario.length; j ++){
         if (!presenzaDato(lotto.aggiudicatari.aggiudicatario[j].codiceFiscale._text))
-            errori.push(addError(dictionary.errors.completezza.codiceFiscaleAggiudicatario, lotto.aggiudicatari.aggiudicatario[j].codiceFiscale._attributes.linea));
+            errori.push(addError(dict.errors.completezza.codiceFiscaleAggiudicatario, lotto.aggiudicatari.aggiudicatario[j].codiceFiscale._attributes.linea));
         if (!presenzaDato(lotto.aggiudicatari.aggiudicatario[j].ragioneSociale._text))
-            errori.push(addError(dictionary.errors.completezza.ragioneSocialeAggiudicatario, lotto.aggiudicatari.aggiudicatario[j].ragioneSociale._attributes.linea));
+            errori.push(addError(dict.errors.completezza.ragioneSocialeAggiudicatario, lotto.aggiudicatari.aggiudicatario[j].ragioneSociale._attributes.linea));
     }
     return errori;
 }
@@ -139,7 +139,7 @@ var presenzaDati = function (lotto) {
 var valutaCig = function (lotto) {
     let errore;
     if (!utils.checkCig(lotto.cig._text))
-        errore = addError(dictionary.errors.correttezza.cig, lotto.cig._attributes.linea);
+        errore = addError(dict.errors.correttezza.cig, lotto.cig._attributes.linea);
 
     return errore;
 }
