@@ -1,1 +1,0 @@
-cmd_Release/obj.target/synapta_x2j.node := g++ -shared -pthread -rdynamic -m64  -Wl,-soname=synapta_x2j.node -o Release/obj.target/synapta_x2j.node -Wl,--start-group Release/obj.target/synapta_x2j/src/xml2json.o Release/obj.target/synapta_x2j/src/library.o Release/obj.target/synapta_x2j/src/FileInterface.o Release/obj.target/synapta_x2j/src/StringInterface.o -Wl,--end-group 

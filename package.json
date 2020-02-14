@@ -18,12 +18,11 @@
   },
   "homepage": "https://github.com/synapta/validatore-XML-190#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "compression": "^1.7.4",
-    "express": "^4.17.1",
-    "libxmljs2": "^0.21.4",
-    "morgan": "^1.9.1",
-    "reqwest": "^2.0.5",
-    "xhr2": "^0.2.0"
+      "body-parser": "^1.19.0",
+      "express": "^4.17.1",
+      "morgan": "^1.9.1",
+      "pg": "^7.11.0",
+      "request": "^2.88.0",
+      "xml-js": "^1.6.11"
   }
 }

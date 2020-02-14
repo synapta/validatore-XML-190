@@ -1,17 +1,14 @@
 var returnToHome = function () {
+    $('#xml-form').text('');
     $('#loading-lotti').hide();
     $('#loading').hide();
     $('#show').hide();
     $('#main').show();
-    $('#xml-form').text('');
-    $('#messages').html();
+    $('#messagges').html('');
+    window.myCodeMirror.toTextArea();
 }
 
-
-$('#home-logo').click(() => returnToHome() );
-$('#home-name').click(() => returnToHome() );
-
-$('#load-site').click(function () {
+var loadAnalysis = function () {
     $('#main').hide();
     $('#loading').show();
     let url = $("#search-field").val();
@@ -23,7 +20,7 @@ $('#load-site').click(function () {
             console.log(e);
         },
         success: function(data) {
-
+            $('#xml-form').text();
             $('#loading').hide();
             $('#show').show();
             $('#loading-lotti').show();
@@ -66,12 +63,21 @@ $('#load-site').click(function () {
                     console.log(e);
                 }
             });
-
-
-
        }
     });
+}
+
+$('#home-logo').click(() => returnToHome() );
+$('#home-name').click(() => returnToHome() );
+
+
+$('#load-site').click(() => loadAnalysis() );
+$("#search-field").keyup(function(event) {
+    if (event.keyCode === 13) {
+        loadAnalysis();
+    }
 });
+
 
 $('.message .close')
   .on('click', function() {

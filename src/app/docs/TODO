@@ -15,11 +15,13 @@ PayloadTooLargeError: request entity too large
 FEATURE
 - aggiungi "carica un file"
 - validazione schema
+- quando sono sopra il testo dell'xml evidenziato perché c'è un errore vorrei poter andare a leggere qual era questo errore (link al messaggio, o in qualche modo il messaggio segue il testo)
+- vorrei poter dare consigli su come risolvere gli errori e spiegazioni sul perché quello è un errore o no (come lo mostro?)
 
 
 MIGLIORIE
-- allargare la buca del link!
-- sul link al mousover lo stile deve essere cursor [AM]
 - sarebbe carino invece che costruire l'html in modo poco leggibile per i messaggi, tu costruissi lo stesso div e poi ci inietti
 la classe che è la roba che cambia nella struttura del div [AM]
 - puoi aggiungere un parametro nell'url quando passi alla pagina di analisi dove ti indica l'url dell'xml cercato [AM]
+- errori nell'ordine migliore
+- raggruppamento di errori simili

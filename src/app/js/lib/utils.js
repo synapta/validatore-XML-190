@@ -1,3 +1,11 @@
+const request = require('request');
+
+exports.getWebPage = function (url, callback) {
+    request(url, function (error, response, body) {
+        callback(body);
+    });
+}
+
 
 smartCigValidity = function (string) {
     var checkStr = string.toUpperCase().substring(1,3);

@@ -42,15 +42,13 @@ exports.analyze = function (body, cb) {
     let totWarnings = errors.filter(element => element.type === 'warning').length;
 
     // console.log(xmlJSON[firstLevel].data.lotto[0])
-
-    cb(
-        {
-            totLotti: totLotti,
-            totErrors: totErrors,
-            totWarnings: totWarnings,
-            errors: errors
-        }
-    )
+    let output = {
+                totLotti: totLotti,
+                totErrors: totErrors,
+                totWarnings: totWarnings,
+                errors: errors
+            };
+    cb(output);
 }
 
 
@@ -78,10 +76,7 @@ var analyzeLotto = function (lotto) {
     // }
     let erroriTotali = [];
     erroriTotali = erroriTotali.concat(presenzaDati(lotto));
-    console.log(erroriTotali)
     erroriTotali.push(valutaCig(lotto));
-    console.log(erroriTotali)
-
     return erroriTotali;
 
     // cig

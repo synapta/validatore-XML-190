@@ -1,4 +1,4 @@
-var downloader = require('./downloader');
+var utils = require('./app/js/lib/utils.js')
 var analyze = require('./app/js/lib/analyze.js')
 
 var express  = require('express');
@@ -11,14 +11,13 @@ module.exports = function(app) {
     app.use(bodyParser.text({ type: 'text/*' }))
 
     app.get('/api/show/xml-from-site', function (request, response) {
-        downloader.getWebPage(request.query.url, function(body) {
+        utils.getWebPage(request.query.url, function(body) {
             response.send(body);
         })
     });
 
     app.post('/api/analyze/xml', function (request, response) {
         analyze.analyze(request.body, function(body) {
-            console.log(body)
             response.send(body);
         })
     });
