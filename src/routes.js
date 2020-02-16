@@ -15,12 +15,22 @@ module.exports = function(app) {
     // });
 
     app.get('/api/show/xml-from-site', function (request, response) {
-        utils.getWebPage(request.query.url, function(body,err) {
+        utils.getWebPage(request.query.url, function(err, statusCode, body) {
             if (err) {
                 console.log(err);
-                response.status(err).send(body);
+                response.status(400).send(err.message);
+            } else if (statusCode !== 200) {
+                response.status(statusCode).send();
             } else {
-                response.send(body);
+                console.log("Download OK!");
+                analyze.fileType(body, function(errMessage) {
+                    if (errMessage) {
+                        response.status(400).send(errMessage);
+                    } else {
+                        response.send(body);
+                        console.log("XSD OK!")
+                    }
+                })
             }
         })
     });
@@ -32,7 +42,12 @@ module.exports = function(app) {
     });
 
 // http://localhost:8041/xml/test1
+// http://localhost:8041/xml/file.zip
     app.get('/xml/:path', function (request, response) {
+        response.sendFile(__dirname + '/xml/' + request.params.path);
+    });
+
+    app.post('/xml/:path', function (request, response) {
         response.sendFile(__dirname + '/xml/' + request.params.path);
     });
 }

@@ -1,8 +1,12 @@
 const request = require('request');
 
 exports.getWebPage = function (url, callback) {
-    request(url, function (error, response, body) {
-        callback(body,error);
+    request.post({url: url}, function(error, response, body){
+        if (error) {
+            callback(error, null, body);
+            return;
+        }
+        callback(error, response.statusCode, body);
     });
 }
 

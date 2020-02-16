@@ -2,6 +2,44 @@
 var x2j = require('xml-js');
 var dict = require('./error-dictionary.json');
 var utils = require('./utils.js');
+var xsd = require('xsd-schema-validator');
+var fs = require('fs');
+var xsdPath = '/home/soti/workspace/validatore-XML-190/src/app/assets/schema.xsd'
+
+var mmm = require('mmmagic'),
+    Magic = mmm.Magic;
+
+
+
+
+exports.fileType = function (body,cb) {
+    var buf = new Buffer(body);
+    var magic = new Magic(mmm.MAGIC_MIME_TYPE);
+    magic.detect(buf, function(err, mimeType) {
+        if (err) throw err;
+        var errorLog = {};
+        if (mimeType !== 'text/xml') {
+            errorLog.header = "Il file non è del tipo giusto :-(";
+            errorLog.text = "Il link è di file che non è un XML."
+            if (mimeType === "text/html") errorLog.text = "Il link è di una pagina HTML.";
+            if (mimeType === "application/zip") errorLog.text = "Il link è di un file compresso.";
+            console.log("mime type of file: ", mimeType);
+            cb(errorLog)
+        } else {
+            console.log("MIME OK!")
+            xsd.validateXML(body, xsdPath, function(err, result) {
+                //il bello è dentro result, lascia perdere err
+                if (result.valid) {
+                    cb(undefined)
+                } else {
+                    cb(errorLog) //TODO
+                }
+            });
+        }
+        // console.log(body)
+    });
+}
+
 
 exports.analyze = function (body, cb) {
     var lines = body.split('\n');

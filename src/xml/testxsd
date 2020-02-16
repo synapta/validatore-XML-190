@@ -76,7 +76,7 @@
           </aggiudicatari>
           <importoAggiudicazione>12</importoAggiudicazione>
           <tempiCompletamento>
-            <dataInizio>2016-06-10</dataInizio>
+            <dataInizio></dataInizio>
             <dataUltimazione>2016-06-10</dataUltimazione>
           </tempiCompletamento>
           <importoSommeLiquidate>464.02</importoSommeLiquidate>

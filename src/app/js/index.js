@@ -4,11 +4,13 @@ var returnToHome = function () {
     $('#loading').hide();
     $('#show').hide();
     $('#main').show();
-    $('#messagges').html('');
-    window.myCodeMirror.toTextArea();
+    $('#messages').html('');
+    // window.myCodeMirror.toTextArea();
 }
 
 var loadAnalysis = function () {
+    $('#custom-error').html('');
+    // $('#error-under-search').hide();
     $('#main').hide();
     $('#loading').show();
     let url = $("#search-field").val();
@@ -16,60 +18,76 @@ var loadAnalysis = function () {
         url: "/api/show/xml-from-site?url=" + encodeURI(url),
         type: 'GET',
         error: function(e) {
-            alert("C'è un problema con l'URL immesso :-(");
+            makeErrorUnderSearch("C'è un problema con l'URL immesso :-(","");
+            // alert();
             console.log(e);
             returnToHome();
         },
         success: function(data) {
-            $('#xml-form').text();
-            $('#loading').hide();
-            $('#show').show();
-            $('#loading-lotti').show();
-            $('#xml-form').text(data);
-            // window.location.search += 'id=' + encodeURI(url);
+                    $('#xml-form').text();
+                    $('#loading').hide();
+                    $('#show').show();
+                    $('#loading-lotti').show();
+                    $('#xml-form').text(data);
+                    // window.location.search += 'id=' + encodeURI(url);
+                    // setParam('url',url)
 
-            window.myCodeMirror = CodeMirror.fromTextArea(document.getElementById("xml-form"), {
-                lineNumbers: true,
-                lineWrapping: true,
-                mode: 'xml'
-                // viewportMargin: Infinity --carica tutto il file, puoi fare il cerca, ma se è grosso danni
-            });
-            let xmlView = window.myCodeMirror;
-            data = formatData(xmlView, data);
-
-            $.ajax({
-                url: '/api/analyze/xml',
-                type: 'post',
-                data: data,
-                contentType: 'text/plain',
-                dataType: "json",
-                success: function (res) {
-                    $('#loading-lotti').hide();
-                    $('#numero-lotti').text(res.totLotti);
-                    $('#numero-errori').text(res.totErrors);
-                    $('#numero-avvisi').text(res.totWarnings);
-                    addMessages(res.errors)
-                    markAll(xmlView, res.errors);
-                    $(".error_line").click( function(e) {
-                        let line = e.target.textContent;
-                        e.preventDefault();
-                        xmlView.scrollIntoView({line:line, char:0})
-                        return false;
+                    window.myCodeMirror = CodeMirror.fromTextArea(document.getElementById("xml-form"), {
+                        lineNumbers: true,
+                        lineWrapping: true,
+                        mode: 'xml'
+                        // viewportMargin: Infinity --carica tutto il file, puoi fare il cerca, ma se è grosso danni
                     });
-                    alert("Analizzato!");
+                    let xmlView = window.myCodeMirror;
+                    data = formatData(xmlView, data);
 
-                },
-                error: function(e) {
-                    alert("Errore nell'analisi :-(");
-                    console.log(e);
-                }
-            });
-       }
+                    $.ajax({
+                        url: '/api/analyze/xml',
+                        type: 'post',
+                        data: data,
+                        contentType: 'text/plain',
+                        dataType: "json",
+                        success: function (res) {
+                            $('#loading-lotti').hide();
+                            $('#numero-lotti').text(res.totLotti);
+                            $('#numero-errori').text(res.totErrors);
+                            $('#numero-avvisi').text(res.totWarnings);
+                            addMessages(res.errors)
+                            markAll(xmlView, res.errors);
+                            $(".error_line").click( function(e) {
+                                let line = e.target.textContent;
+                                e.preventDefault();
+                                xmlView.scrollIntoView({line:line, char:0})
+                                return false;
+                            });
+                            alert("Analizzato!");
+                            // $('.message .close')
+                            //   .on('click', function() {
+                            //     $(this)
+                            //       .closest('.message')
+                            //       .transition('fade')
+                            //     ;
+                            //   })
+                            // ;
+
+                        },
+                        error: function(e) {
+                            alert("Errore nell'analisi :-(");
+                            console.log(e);
+                        }
+                    });
+        }
     });
 }
 
-$('#home-logo').click(() => returnToHome() );
-$('#home-name').click(() => returnToHome() );
+$('#home-logo').click(() => {
+    returnToHome();
+    $('#custom-error').html('');
+});
+$('#home-name').click(() => {
+    returnToHome();
+    $('#custom-error').html('');
+});
 
 
 $('#load-site').click(() => loadAnalysis() );
@@ -101,9 +119,27 @@ markAll = function(xmlView, errori) {
 }
 addMessages = function (errori) {
     for (let i = 0; i < errori.length; i++) {
-        $('#messagges').append(makeMessage(errori[i].type,errori[i].text,errori[i].line));
+        $('#messages').append(makeMessage(errori[i].type,errori[i].text,errori[i].line));
     }
 }
+
+makeErrorUnderSearch = function (header, text) {
+    let div = `
+<div class="ui negative message">
+    <i class="close icon"></i>
+    <div class="header">
+    ${header}
+    </div>
+    <p>${text}</p>
+</div>`;
+    $('#custom-error').html(div);
+    // $('#text-error-under-search').text(text);
+    // $('#header-error-under-search').text(header);
+}
+
+// makeError = function (idH,idP) {
+//     return
+// }
 
 
 makeMessage = function (type,text,line) {
@@ -163,4 +199,36 @@ var indentData = function (xmlView, data) {
       'ch':0,
       'sticky':null
      })
+}
+
+setParam = function (name, value) {
+    var l = window.location;
+
+    /* build params */
+    var params = {};
+    var x = /(?:\??)([^=&?]+)=?([^&?]*)/g;
+    var s = l.search;
+    for(var r = x.exec(s); r; r = x.exec(s))
+    {
+        r[1] = decodeURIComponent(r[1]);
+        if (!r[2]) r[2] = '%%';
+        params[r[1]] = r[2];
+    }
+
+    /* set param */
+    params[name] = encodeURIComponent(value);
+
+    /* build search */
+    var search = [];
+    for(var i in params)
+    {
+        var p = encodeURIComponent(i);
+        var v = params[i];
+        if (v != '%%') p += '=' + v;
+        search.push(p);
+    }
+    search = search.join('&');
+
+    /* execute search */
+    l.search = search;
 }
