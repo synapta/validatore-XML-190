@@ -16,15 +16,18 @@ module.exports = function(app) {
 
     app.get('/api/show/xml-from-site', function (request, response) {
         utils.getWebPage(request.query.url, function(err, statusCode, body) {
-            if (err) {
+            if (err || statusCode !== 200) {
                 console.log(err);
-                response.status(400).send(err.message);
-            } else if (statusCode !== 200) {
-                response.status(statusCode).send();
+                let errorLog = {};
+                errorLog.header = "C'è un problema con l'URL immesso :-(";
+                errorLog.text = "";
+                errorLog.progression = 0;
+                response.status(400).send(errorLog);
             } else {
                 console.log("Download OK!");
-                analyze.fileType(body, function(errMessage) {
+                analyze.validateFile(body, function(errMessage) {
                     if (errMessage) {
+                        // console.log(errMessage.text)
                         response.status(400).send(errMessage);
                     } else {
                         response.send(body);

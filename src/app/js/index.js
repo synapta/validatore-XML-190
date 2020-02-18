@@ -5,6 +5,8 @@ var returnToHome = function () {
     $('#show').hide();
     $('#main').show();
     $('#messages').html('');
+    $('#progress-steps').html('');
+    $('#show-results').toggleClass( "ui primary active button" ).toggleClass( "ui primary disabled button" );
     // window.myCodeMirror.toTextArea();
 }
 
@@ -18,66 +20,74 @@ var loadAnalysis = function () {
         url: "/api/show/xml-from-site?url=" + encodeURI(url),
         type: 'GET',
         error: function(e) {
-            makeErrorUnderSearch("C'è un problema con l'URL immesso :-(","");
-            // alert();
-            console.log(e);
-            returnToHome();
+            makeProgressionSteps(e.responseJSON.progression)
+            makeErrorUnderSearch(e.responseJSON.header,e.responseJSON.text);
+            $('#loading').hide();
+            $('#main').show();
+            // console.log(e);
+            // returnToHome();
         },
         success: function(data) {
-                    $('#xml-form').text();
-                    $('#loading').hide();
-                    $('#show').show();
-                    $('#loading-lotti').show();
-                    $('#xml-form').text(data);
-                    // window.location.search += 'id=' + encodeURI(url);
-                    // setParam('url',url)
+            makeProgressionSteps()
+            // document.getElementById('show-results').classList.add('active');
+            $('#show-results').toggleClass( "ui primary disabled button" ).toggleClass( "ui primary active button" );
 
-                    window.myCodeMirror = CodeMirror.fromTextArea(document.getElementById("xml-form"), {
-                        lineNumbers: true,
-                        lineWrapping: true,
-                        mode: 'xml'
-                        // viewportMargin: Infinity --carica tutto il file, puoi fare il cerca, ma se è grosso danni
-                    });
-                    let xmlView = window.myCodeMirror;
-                    data = formatData(xmlView, data);
+            $('#loading').hide();
+            $('#main').show();
 
-                    $.ajax({
-                        url: '/api/analyze/xml',
-                        type: 'post',
-                        data: data,
-                        contentType: 'text/plain',
-                        dataType: "json",
-                        success: function (res) {
-                            $('#loading-lotti').hide();
-                            $('#numero-lotti').text(res.totLotti);
-                            $('#numero-errori').text(res.totErrors);
-                            $('#numero-avvisi').text(res.totWarnings);
-                            addMessages(res.errors)
-                            markAll(xmlView, res.errors);
-                            $(".error_line").click( function(e) {
-                                let line = e.target.textContent;
-                                e.preventDefault();
-                                xmlView.scrollIntoView({line:line, char:0})
-                                return false;
-                            });
-                            alert("Analizzato!");
-                            // $('.message .close')
-                            //   .on('click', function() {
-                            //     $(this)
-                            //       .closest('.message')
-                            //       .transition('fade')
-                            //     ;
-                            //   })
-                            // ;
-
-                        },
-                        error: function(e) {
-                            alert("Errore nell'analisi :-(");
-                            console.log(e);
-                        }
-                    });
+            $('#show-results').click(() => {
+                showResults(data);
+            })
         }
     });
+}
+
+let showResults = function (data) {
+    $('#xml-form').text();
+    $('#main').hide();
+    // $('#loading').hide();
+    $('#show').show();
+    $('#loading-lotti').show();
+    $('#xml-form').text(data);
+    // window.location.search += 'id=' + encodeURI(url);
+    // setParam('url',url)
+
+    window.myCodeMirror = CodeMirror.fromTextArea(document.getElementById("xml-form"), {
+        lineNumbers: true,
+        lineWrapping: true,
+        mode: 'xml'
+        // viewportMargin: Infinity --carica tutto il file, puoi fare il cerca, ma se è grosso danni
+    });
+    let xmlView = window.myCodeMirror;
+    data = formatData(xmlView, data);
+
+    $.ajax({
+        url: '/api/analyze/xml',
+        type: 'post',
+        data: data,
+        contentType: 'text/plain',
+        dataType: "json",
+        success: function (res) {
+            $('#loading-lotti').hide();
+            $('#numero-lotti').text(res.totLotti);
+            $('#numero-errori').text(res.totErrors);
+            $('#numero-avvisi').text(res.totWarnings);
+            addMessages(res.errors)
+            markAll(xmlView, res.errors);
+            $(".error_line").click( function(e) {
+                let line = e.target.textContent;
+                e.preventDefault();
+                xmlView.scrollIntoView({line:line, char:0})
+                return false;
+            });
+            alert("Analizzato!");
+        },
+        error: function(e) {
+            alert("Errore nell'analisi :-(");
+            console.log(e);
+        }
+    });
+
 }
 
 $('#home-logo').click(() => {
@@ -122,6 +132,40 @@ addMessages = function (errori) {
         $('#messages').append(makeMessage(errori[i].type,errori[i].text,errori[i].line));
     }
 }
+
+makeProgressionSteps = function (step) {
+    let div = "";
+    let status = [];
+    if (step === 0) status = ['disabled ','disabled ','disabled ']
+    if (step === 1) status = ['completed ','active ','disabled ']
+    if (step === 2) status = ['completed ','completed ','active ']
+    if (step === undefined) status = ['completed ','completed ','completed ']
+    div = `<div class="ui tablet stackable steps">
+    <div class="${status[0]}step">
+        <i class="cloud download icon"></i>
+        <div class="content">
+            <div class="title">Download</div>
+            <div class="description">Scarico il file dal sito</div>
+        </div>
+    </div>
+    <div class="${status[1]}step">
+        <i class="file code outline icon"></i>
+        <div class="content">
+            <div class="title">Tipo file</div>
+            <div class="description">Controllo che il file sia un XML</div>
+        </div>
+    </div>
+    <div class="${status[2]}step">
+        <i class="file code outline icon"></i>
+        <div class="content">
+            <div class="title">Validazione XSD</div>
+            <div class="description">Controllo che il file validi lo schema XSD</div>
+        </div>
+    </div>
+</div>`
+    $('#progress-steps').html(div);
+}
+
 
 makeErrorUnderSearch = function (header, text) {
     let div = `

@@ -10,33 +10,57 @@ var mmm = require('mmmagic'),
     Magic = mmm.Magic;
 
 
-
-
-exports.fileType = function (body,cb) {
-    var buf = new Buffer(body);
-    var magic = new Magic(mmm.MAGIC_MIME_TYPE);
+var detectMIME = function (body, cb) {
+    let buf = new Buffer(body);
+    let magic = new Magic(mmm.MAGIC_MIME_TYPE);
     magic.detect(buf, function(err, mimeType) {
         if (err) throw err;
-        var errorLog = {};
         if (mimeType !== 'text/xml') {
+            let errorLog = {};
             errorLog.header = "Il file non è del tipo giusto :-(";
             errorLog.text = "Il link è di file che non è un XML."
             if (mimeType === "text/html") errorLog.text = "Il link è di una pagina HTML.";
             if (mimeType === "application/zip") errorLog.text = "Il link è di un file compresso.";
+            // if (mimeType === "application/vnd.ms-excel") errorLog.text = "Il link è di un file xml prodotto con excel.";
+            // if (mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                // errorLog.text = "Il link è di un file xml prodotto con excel.";
+
             console.log("mime type of file: ", mimeType);
+            errorLog.progression = 1;
+            cb(errorLog)
+        } else {
+            cb(undefined)
+        }
+
+    });
+}
+
+exports.validateFile = function (body,cb) {
+    detectMIME(body, (errorLog) => {
+        if (errorLog) {
             cb(errorLog)
         } else {
             console.log("MIME OK!")
-            xsd.validateXML(body, xsdPath, function(err, result) {
-                //il bello è dentro result, lascia perdere err
-                if (result.valid) {
-                    cb(undefined)
-                } else {
-                    cb(errorLog) //TODO
-                }
-            });
+            validateXML(body,cb);
         }
-        // console.log(body)
+    })
+}
+
+var validateXML = function (body, cb) {
+    xsd.validateXML(body, xsdPath, function(err, result) {
+        if (result.valid) {
+            cb(undefined)
+        } else {
+            let errorLog = {};
+            errorLog.header = "L'XML non valida lo schema XSD :-(";
+            errorLog.text = "";
+            errorLog.progression = 2;
+            for (let i = 0; i < result.messages.length; i++){
+                errorLog.text += result.messages[i] + '<br>';
+            }
+            console.log(errorLog.text)
+            cb(errorLog)
+        }
     });
 }
 

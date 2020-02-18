@@ -13,8 +13,6 @@ PayloadTooLargeError: request entity too large
 - non si chiudono più i messaggi
 
 FEATURE
-- aggiungi "carica un file"
-- validazione schema
 - quando sono sopra il testo dell'xml evidenziato perché c'è un errore vorrei poter andare a leggere qual era questo errore (link al messaggio, o in qualche modo il messaggio segue il testo)
 - vorrei poter dare consigli su come risolvere gli errori e spiegazioni sul perché quello è un errore o no (come lo mostro?)
 
@@ -27,5 +25,6 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - raggruppamento di errori simili
 
 TODO
-- analisi dell'XSD
+- analisi dell'XSD OK
 - id degli errori (così che sia più corta la sintassi per arrivarci)
+- aggiungere il controllo di mime type per i file prodotti con excel
