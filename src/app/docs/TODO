@@ -23,6 +23,10 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - puoi aggiungere un parametro nell'url quando passi alla pagina di analisi dove ti indica l'url dell'xml cercato [AM]
 - errori nell'ordine migliore
 - raggruppamento di errori simili
+- trova un nome migliore per l'applicazione
+- footer con data e nome
+
+
 
 TODO
 - analisi dell'XSD OK

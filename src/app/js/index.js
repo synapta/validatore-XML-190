@@ -1,20 +1,45 @@
-var returnToHome = function () {
-    $('#xml-form').text('');
-    $('#loading-lotti').hide();
-    $('#loading').hide();
-    $('#show').hide();
-    $('#main').show();
-    $('#messages').html('');
-    $('#progress-steps').html('');
-    $('#show-results').toggleClass( "ui primary active button" ).toggleClass( "ui primary disabled button" );
-    // window.myCodeMirror.toTextArea();
+var pageStatus = function (status) {
+    switch (status) {
+        case 'homepage':
+            $('#xml-form').text('');
+            $('#loading-lotti').hide();
+            $('#loading').hide();
+            $('#show').hide();
+            $('#main').show();
+            $('#messages').html('');
+            $('#progress-steps').html('');
+            $('#show-results').toggleClass( "ui primary active button" ).toggleClass( "ui primary disabled button" );
+            // window.myCodeMirror.toTextArea();
+            break;
+        case 'loading':
+            $('#custom-error').html('');
+            // $('#error-under-search').hide();
+            $('#main').hide();
+            $('#loading').show();
+            break;
+        case 'show-steps-with-error':
+            $('#loading').hide();
+            $('#main').show();
+            break;
+        case 'show-steps-successful':
+            $('#show-results').toggleClass( "ui primary disabled button" ).toggleClass( "ui primary active button" );
+            $('#loading').hide();
+            $('#main').show();
+            break;
+        case 'show-analysis':
+            $('#xml-form').text();
+            $('#main').hide();
+            $('#show').show();
+            $('#loading-lotti').show();
+            break;
+        // case 'loading':
+        //
+        //     break;
+    }
 }
 
 var loadAnalysis = function () {
-    $('#custom-error').html('');
-    // $('#error-under-search').hide();
-    $('#main').hide();
-    $('#loading').show();
+    pageStatus('loading')
     let url = $("#search-field").val();
     $.ajax({
         url: "/api/show/xml-from-site?url=" + encodeURI(url),
@@ -22,18 +47,13 @@ var loadAnalysis = function () {
         error: function(e) {
             makeProgressionSteps(e.responseJSON.progression)
             makeErrorUnderSearch(e.responseJSON.header,e.responseJSON.text);
-            $('#loading').hide();
-            $('#main').show();
+            pageStatus('show-steps-with-error')
             // console.log(e);
-            // returnToHome();
         },
         success: function(data) {
             makeProgressionSteps()
             // document.getElementById('show-results').classList.add('active');
-            $('#show-results').toggleClass( "ui primary disabled button" ).toggleClass( "ui primary active button" );
-
-            $('#loading').hide();
-            $('#main').show();
+            pageStatus('show-steps-successful')
 
             $('#show-results').click(() => {
                 showResults(data);
@@ -43,11 +63,7 @@ var loadAnalysis = function () {
 }
 
 let showResults = function (data) {
-    $('#xml-form').text();
-    $('#main').hide();
-    // $('#loading').hide();
-    $('#show').show();
-    $('#loading-lotti').show();
+    pageStatus('show-analysis');
     $('#xml-form').text(data);
     // window.location.search += 'id=' + encodeURI(url);
     // setParam('url',url)
@@ -91,11 +107,11 @@ let showResults = function (data) {
 }
 
 $('#home-logo').click(() => {
-    returnToHome();
+    pageStatus('homepage');
     $('#custom-error').html('');
 });
 $('#home-name').click(() => {
-    returnToHome();
+    pageStatus('homepage');
     $('#custom-error').html('');
 });
 
@@ -162,7 +178,11 @@ makeProgressionSteps = function (step) {
             <div class="description">Controllo che il file validi lo schema XSD</div>
         </div>
     </div>
-</div>`
+</div>
+<br>
+<button class="ui primary disabled button" id='show-results'>
+    Procedi
+</button>`
     $('#progress-steps').html(div);
 }
 
@@ -170,7 +190,6 @@ makeProgressionSteps = function (step) {
 makeErrorUnderSearch = function (header, text) {
     let div = `
 <div class="ui negative message">
-    <i class="close icon"></i>
     <div class="header">
     ${header}
     </div>
