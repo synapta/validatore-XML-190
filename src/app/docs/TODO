@@ -11,6 +11,8 @@ PayloadTooLargeError: request entity too large
 - alle volte all'interno del tag hai del text, alle volte del CDATA
 - se ho un errore più bloccante, quelli dopo non li valuto! es. se il dato manca è inutile che mi sforzi di controllare se è corretto!
 - non si chiudono più i messaggi
+- se analizzo una roba, ma non clicco procedi e poi ne analizzo un'altra si accodano uno dopo l'altra
+- se una roba è mancante ma non c'è la riga, dovrei per lo meno dire in che lotto dovrebbe essere!
 
 FEATURE
 - quando sono sopra il testo dell'xml evidenziato perché c'è un errore vorrei poter andare a leggere qual era questo errore (link al messaggio, o in qualche modo il messaggio segue il testo)
@@ -31,4 +33,6 @@ la classe che è la roba che cambia nella struttura del div [AM]
 TODO
 - analisi dell'XSD OK
 - id degli errori (così che sia più corta la sintassi per arrivarci)
-- aggiungere il controllo di mime type per i file prodotti con excel
+- aggiungere il controllo di mime type per i file prodotti con excel -> non facile, passano il mime type test
+    - www.comunefosdinovo.it/download_2015_comune.xml?h=634ed9133d133968ddf82630d55c486868c2c7bb
+    - http://www.bonificanurra.it/pubblicazioni/tabella7.xml

@@ -4,14 +4,15 @@ var dict = require('./error-dictionary.json');
 var utils = require('./utils.js');
 var xsd = require('xsd-schema-validator');
 var fs = require('fs');
-var xsdPath = '/home/soti/workspace/validatore-XML-190/src/app/assets/schema.xsd'
+var _ = require('lodash');
+var xsdPath = __dirname + '/../../assets/schema.xsd'
 
 var mmm = require('mmmagic'),
     Magic = mmm.Magic;
 
 
 var detectMIME = function (body, cb) {
-    let buf = new Buffer(body);
+    let buf = Buffer.from(body);
     let magic = new Magic(mmm.MAGIC_MIME_TYPE);
     magic.detect(buf, function(err, mimeType) {
         if (err) throw err;
@@ -35,17 +36,6 @@ var detectMIME = function (body, cb) {
     });
 }
 
-exports.validateFile = function (body,cb) {
-    detectMIME(body, (errorLog) => {
-        if (errorLog) {
-            cb(errorLog)
-        } else {
-            console.log("MIME OK!")
-            validateXML(body,cb);
-        }
-    })
-}
-
 var validateXML = function (body, cb) {
     xsd.validateXML(body, xsdPath, function(err, result) {
         if (result.valid) {
@@ -63,6 +53,18 @@ var validateXML = function (body, cb) {
         }
     });
 }
+
+exports.validateFile = function (body,cb) {
+    detectMIME(body, (errorLog) => {
+        if (errorLog) {
+            cb(errorLog)
+        } else {
+            console.log("MIME OK!")
+            validateXML(body,cb);
+        }
+    })
+}
+
 
 
 exports.analyze = function (body, cb) {
@@ -131,6 +133,7 @@ var rendiArray = function (obj) {
 var analyzeLotto = function (lotto) {
     lotto.partecipanti.partecipante = rendiArray(lotto.partecipanti.partecipante);
     lotto.aggiudicatari.aggiudicatario = rendiArray(lotto.aggiudicatari.aggiudicatario);
+    // console.log(lotto.aggiudicatari)
 
 
     // for (let key in lotto ){
@@ -172,31 +175,54 @@ var presenzaDati = function (lotto) {
     for (let i = 0; i < datiSingoli.length; i++) {
         if (!presenzaDato(lotto[datiSingoli[i]]._text))
             errori.push(addError(dict.errors.completezza[datiSingoli[i]], lotto[datiSingoli[i]]._attributes.linea));
+
     }
-    if (!presenzaDato(lotto.importoSommeLiquidate._text))
-        errori.push(addError(dict.warnings.completezza.importoSommeLiquidate, lotto.importoSommeLiquidate._attributes.linea));
-    if (!presenzaDato(lotto.tempiCompletamento.dataInizio._text))
-        errori.push(addError(dict.errors.completezza.dataInizio, lotto.tempiCompletamento.dataInizio._attributes.linea));
-    if (!presenzaDato(lotto.tempiCompletamento.dataUltimazione._text))
-        errori.push(addError(dict.warnings.completezza.dataUltimazione, lotto.tempiCompletamento.dataUltimazione._attributes.linea));
-    if (!presenzaDato(lotto.strutturaProponente.codiceFiscaleProp._text))
-        errori.push(addError(dict.errors.completezza.codiceFiscaleProp, lotto.strutturaProponente.codiceFiscaleProp._attributes.linea));
-    if (!presenzaDato(lotto.strutturaProponente.denominazione._text))
-        errori.push(addError(dict.errors.completezza.denominazione, lotto.strutturaProponente.denominazione._attributes.linea));
+    if (!presenzaDato(getValue(lotto,'importoSommeLiquidate')))
+        errori.push(addError(dict.warnings.completezza.importoSommeLiquidate, getLine(lotto,'importoSommeLiquidate')));
+    if (!presenzaDato(getValue(lotto, 'tempiCompletamento.dataInizio')))
+        errori.push(addError(dict.errors.completezza.dataInizio, getLine(lotto,'tempiCompletamento.dataInizio')));
+    if (!presenzaDato(getValue(lotto,'tempiCompletamento.dataUltimazione')))
+        errori.push(addError(dict.warnings.completezza.dataUltimazione, getLine(lotto,'tempiCompletamento.dataUltimazione')));
+    if (!presenzaDato(getValue(lotto,'strutturaProponente.codiceFiscaleProp')))
+        errori.push(addError(dict.errors.completezza.codiceFiscaleProp, getLine(lotto,'strutturaProponente.codiceFiscaleProp')));
+    if (!presenzaDato(getValue(lotto,'strutturaProponente.denominazione')))
+        errori.push(addError(dict.errors.completezza.denominazione, getLine(lotto,'strutturaProponente.denominazione')));
     for (let j = 0; j < lotto.partecipanti.partecipante.length; j ++){
-        if (!presenzaDato(lotto.partecipanti.partecipante[j].codiceFiscale._text))
-            errori.push(addError(dict.errors.completezza.codiceFiscalePartecipante, lotto.partecipanti.partecipante[j].codiceFiscale._attributes.linea));
-        if (!presenzaDato(lotto.partecipanti.partecipante[j].ragioneSociale._text))
-            errori.push(addError(dict.errors.completezza.ragioneSocialePartecipante, lotto.partecipanti.partecipante[j].ragioneSociale._attributes.linea));
+        if (!presenzaDato(getValue(lotto,`partecipanti.partecipante[${j}].codiceFiscale`)))
+            errori.push(addError(dict.errors.completezza.codiceFiscalePartecipante, getLine(lotto,'partecipanti.partecipante[j].codiceFiscale')));
+        if (!presenzaDato(getValue(lotto,`partecipanti.partecipante[${j}].ragioneSociale`)))
+            errori.push(addError(dict.errors.completezza.ragioneSocialePartecipante, getLine(lotto,'partecipanti.partecipante[j].ragioneSociale')));
     }
     for (let j = 0; j < lotto.aggiudicatari.aggiudicatario.length; j ++){
-        if (!presenzaDato(lotto.aggiudicatari.aggiudicatario[j].codiceFiscale._text))
-            errori.push(addError(dict.errors.completezza.codiceFiscaleAggiudicatario, lotto.aggiudicatari.aggiudicatario[j].codiceFiscale._attributes.linea));
-        if (!presenzaDato(lotto.aggiudicatari.aggiudicatario[j].ragioneSociale._text))
-            errori.push(addError(dict.errors.completezza.ragioneSocialeAggiudicatario, lotto.aggiudicatari.aggiudicatario[j].ragioneSociale._attributes.linea));
+        if (!presenzaDato(getValue(lotto,`aggiudicatari.aggiudicatario[${j}].codiceFiscale`)))
+            errori.push(addError(dict.errors.completezza.codiceFiscaleAggiudicatario, getLine(lotto,'aggiudicatari.aggiudicatario[j].codiceFiscale')));
+        if (!presenzaDato(getValue(lotto,`aggiudicatari.aggiudicatario[${j}].ragioneSociale`)))
+            errori.push(addError(dict.errors.completezza.ragioneSocialeAggiudicatario, getLine(lotto,'aggiudicatari.aggiudicatario[j].ragioneSociale')));
     }
     return errori;
 }
+
+var getValue = function (lotto, child) {
+    let otherTags = ['._cdata'];
+    let path = child + '._text';
+    let value = _.get(lotto, path);
+    if (!value) {
+        for (let i = 0 ; i < otherTags.length; i ++) {
+            value = _.get(lotto, child + otherTags[i]);
+            if (value) return value;
+        }
+        return undefined;
+    }
+    return value;
+}
+
+var getLine = function (lotto, child) {
+    let path = child + '._attributes.linea';
+    let line = _.get(lotto, path);
+    return line;
+    // if (!line) return undefined;
+}
+
 
 var valutaCig = function (lotto) {
     let errore;

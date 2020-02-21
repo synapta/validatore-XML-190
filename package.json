@@ -25,6 +25,7 @@
       "request": "^2.88.0",
       "xml-js": "^1.6.11",
       "mmmagic": "latest",
-      "xsd-schema-validator": "latest"
+      "xsd-schema-validator": "latest",
+      "lodash": "latest"
   }
 }

@@ -165,7 +165,7 @@ makeProgressionSteps = function (step) {
         </div>
     </div>
     <div class="${status[1]}step">
-        <i class="file code outline icon"></i>
+        <i class="file outline icon"></i>
         <div class="content">
             <div class="title">Tipo file</div>
             <div class="description">Controllo che il file sia un XML</div>
