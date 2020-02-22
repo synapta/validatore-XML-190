@@ -74,12 +74,12 @@
               <ragioneSociale>IMSA s.r.l.</ragioneSociale>
             </aggiudicatario>
           </aggiudicatari>
-          <importoAggiudicazione>12</importoAggiudicazione>
+          <importoAggiudicazione></importoAggiudicazione>
           <tempiCompletamento>
             <dataInizio>2016-06-10</dataInizio>
             <dataUltimazione>2016-06-10</dataUltimazione>
           </tempiCompletamento>
-          <importoSommeLiquidate>464.02</importoSommeLiquidate>
+          <importoSommeLiquidate></importoSommeLiquidate>
         </lotto>
   </data>
 </ns2:pubblicazione>

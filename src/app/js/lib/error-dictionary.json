@@ -1,29 +1,29 @@
 {
     "errors": {
         "completezza": {
-            "cig" : { "text": "Il cig è mancante", "type": "error"},
-            "codiceFiscaleProp" : { "text": "Il codice fiscale dell'ente proponente è mancante", "type": "error"},
-            "denominazione" : { "text": "La denominazione dell'ente proponente è mancante", "type": "error"},
-            "oggetto" : { "text": "L'oggetto è mancante", "type": "error"},
-            "sceltaContraente" : { "text": "La scelta del contraente è mancante", "type": "error"},
-            "importoAggiudicazione" : { "text": "L'importo di aggiudicazione è mancante", "type": "error"},
-            "dataInizio" : { "text": "La data di inizio è mancante", "type": "error"},
-            "codiceFiscalePartecipante" : { "text": "Il codice fiscale del partecipante è mancante", "type": "error"},
-            "ragioneSocialePartecipante" : { "text": "La ragione sociale del partecipante è mancante", "type": "error"},
-            "codiceFiscaleAggiudicatario" : { "text": "Il codice fiscale dell'aggiudicatario è mancante", "type": "error"},
-            "ragioneSocialeAggiudicatario" : { "text": "La ragione sociale dell'aggiudicatario è mancante", "type": "error"}
+            "cig" : { "text": "Il cig è mancante", "type": "error", "code": "ECM01"},
+            "codiceFiscaleProp" : { "text": "Il codice fiscale dell'ente proponente è mancante", "type": "error", "code": "ECM02"},
+            "denominazione" : { "text": "La denominazione dell'ente proponente è mancante", "type": "error", "code": "ECM03"},
+            "oggetto" : { "text": "L'oggetto è mancante", "type": "error", "code": "ECM04"},
+            "sceltaContraente" : { "text": "La scelta del contraente è mancante", "type": "error", "code": "ECM05"},
+            "importoAggiudicazione" : { "text": "L'importo di aggiudicazione è mancante", "type": "error", "code": "ECM06"},
+            "dataInizio" : { "text": "La data di inizio è mancante", "type": "error", "code": "ECM07"},
+            "codiceFiscalePartecipante" : { "text": "Il codice fiscale del partecipante è mancante", "type": "error", "code": "ECM08"},
+            "ragioneSocialePartecipante" : { "text": "La ragione sociale del partecipante è mancante", "type": "error", "code": "ECM09"},
+            "codiceFiscaleAggiudicatario" : { "text": "Il codice fiscale dell'aggiudicatario è mancante", "type": "error", "code": "ECM10"},
+            "ragioneSocialeAggiudicatario" : { "text": "La ragione sociale dell'aggiudicatario è mancante", "type": "error", "code": "ECM11"}
         },
         "accuratezzaSemantica" : {
 
         },
         "correttezza": {
-            "cig" : {"text": "Il cig immesso non è valido", "type": "error"}
+            "cig" : {"text": "Il cig immesso non è valido", "type": "error", "code": "ECR01"}
         }
     },
     "warnings": {
         "completezza": {
-            "importoSommeLiquidate" : { "text": "L'importo delle somme liquidate è mancante", "type": "warning"},
-            "dataUltimazione" : { "text": "La data di fine è mancante", "type": "warning"}
+            "importoSommeLiquidate" : { "text": "L'importo delle somme liquidate è mancante", "type": "warning", "code": "WCM01"},
+            "dataUltimazione" : { "text": "La data di fine è mancante", "type": "warning", "code": "WCM02"}
         }
     }
 

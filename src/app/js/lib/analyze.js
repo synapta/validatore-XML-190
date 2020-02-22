@@ -5,7 +5,7 @@ var utils = require('./utils.js');
 var xsd = require('xsd-schema-validator');
 var fs = require('fs');
 var _ = require('lodash');
-var xsdPath = __dirname + '/../../assets/schema.xsd'
+var xsdPath = __dirname + '/../../assets/schema-tolerant.xsd'
 
 var mmm = require('mmmagic'),
     Magic = mmm.Magic;
@@ -133,73 +133,51 @@ var rendiArray = function (obj) {
 var analyzeLotto = function (lotto) {
     lotto.partecipanti.partecipante = rendiArray(lotto.partecipanti.partecipante);
     lotto.aggiudicatari.aggiudicatario = rendiArray(lotto.aggiudicatari.aggiudicatario);
-    // console.log(lotto.aggiudicatari)
 
 
-    // for (let key in lotto ){
-    //     console.log(key, presenzaDato(lotto[key]._text),lotto[key]._text);
-    // }
     let erroriTotali = [];
     erroriTotali = erroriTotali.concat(presenzaDati(lotto));
-    erroriTotali.push(valutaCig(lotto));
+    useTest(utils.checkCig,erroriTotali,lotto,{field:'cig',code:'ECR01'})
     return erroriTotali;
-
-    // cig
-    // strutturaProponente
-    // strutturaProponente.codiceFiscaleProp
-    // strutturaProponente.denominazione
-    // oggetto
-    // sceltaContraente
-    // partecipanti
-    // partecipanti.partecipante
-    // partecipanti.partecipante.codiceFiscale
-    // partecipanti.partecipante.ragioneSociale
-    // aggiudicatari
-    // aggiudicatari.aggiudicatario
-    // aggiudicatari.aggiudicatario.codiceFiscale
-    // aggiudicatari.aggiudicatario.ragioneSociale
-    // importoAggiudicazione
-    // tempiCompletamento
-    // tempiCompletamento.dataInizio
-    // tempiCompletamento.dataUltimazione
-    // importoSommeLiquidate
 
 }
 
 // funzioni di presenza del dato
 var presenzaDati = function (lotto) {
-    // console.log(lotto)
-    // console.log(dict.warnings.completezza.importoSommeLiquidate)
     let errori = [];
-    let datiSingoli = ['cig','oggetto','sceltaContraente', 'importoAggiudicazione']
-    for (let i = 0; i < datiSingoli.length; i++) {
-        if (!presenzaDato(lotto[datiSingoli[i]]._text))
-            errori.push(addError(dict.errors.completezza[datiSingoli[i]], lotto[datiSingoli[i]]._attributes.linea));
-
-    }
-    if (!presenzaDato(getValue(lotto,'importoSommeLiquidate')))
-        errori.push(addError(dict.warnings.completezza.importoSommeLiquidate, getLine(lotto,'importoSommeLiquidate')));
-    if (!presenzaDato(getValue(lotto, 'tempiCompletamento.dataInizio')))
-        errori.push(addError(dict.errors.completezza.dataInizio, getLine(lotto,'tempiCompletamento.dataInizio')));
-    if (!presenzaDato(getValue(lotto,'tempiCompletamento.dataUltimazione')))
-        errori.push(addError(dict.warnings.completezza.dataUltimazione, getLine(lotto,'tempiCompletamento.dataUltimazione')));
-    if (!presenzaDato(getValue(lotto,'strutturaProponente.codiceFiscaleProp')))
-        errori.push(addError(dict.errors.completezza.codiceFiscaleProp, getLine(lotto,'strutturaProponente.codiceFiscaleProp')));
-    if (!presenzaDato(getValue(lotto,'strutturaProponente.denominazione')))
-        errori.push(addError(dict.errors.completezza.denominazione, getLine(lotto,'strutturaProponente.denominazione')));
-    for (let j = 0; j < lotto.partecipanti.partecipante.length; j ++){
-        if (!presenzaDato(getValue(lotto,`partecipanti.partecipante[${j}].codiceFiscale`)))
-            errori.push(addError(dict.errors.completezza.codiceFiscalePartecipante, getLine(lotto,'partecipanti.partecipante[j].codiceFiscale')));
-        if (!presenzaDato(getValue(lotto,`partecipanti.partecipante[${j}].ragioneSociale`)))
-            errori.push(addError(dict.errors.completezza.ragioneSocialePartecipante, getLine(lotto,'partecipanti.partecipante[j].ragioneSociale')));
-    }
-    for (let j = 0; j < lotto.aggiudicatari.aggiudicatario.length; j ++){
-        if (!presenzaDato(getValue(lotto,`aggiudicatari.aggiudicatario[${j}].codiceFiscale`)))
-            errori.push(addError(dict.errors.completezza.codiceFiscaleAggiudicatario, getLine(lotto,'aggiudicatari.aggiudicatario[j].codiceFiscale')));
-        if (!presenzaDato(getValue(lotto,`aggiudicatari.aggiudicatario[${j}].ragioneSociale`)))
-            errori.push(addError(dict.errors.completezza.ragioneSocialeAggiudicatario, getLine(lotto,'aggiudicatari.aggiudicatario[j].ragioneSociale')));
+    let fieldsToTest = [
+        {field: 'cig', code: 'ECM01'},
+        {field: 'strutturaProponente.codiceFiscaleProp', code: 'ECM02'},
+        {field: 'strutturaProponente.denominazione', code: 'ECM03'},
+        {field: 'oggetto', code: 'ECM04'},
+        {field: 'sceltaContraente', code: 'ECM05'},
+        {field: 'importoAggiudicazione', code: 'ECM06'},
+        {field: 'importoSommeLiquidate', code: 'WCM01'},
+        {field: 'tempiCompletamento.dataInizio', code: 'ECM07'},
+        {field: 'tempiCompletamento.dataUltimazione', code: 'WCM02'},
+        {field: 'partecipanti.partecipante._array.codiceFiscale', code: 'ECM08', length: lotto.partecipanti.partecipante.length},
+        {field: 'partecipanti.partecipante._array.ragioneSociale', code: 'ECM09', length: lotto.partecipanti.partecipante.length},
+        {field: 'aggiudicatari.aggiudicatario._array.codiceFiscale', code: 'ECM10', length: lotto.aggiudicatari.aggiudicatario.length},
+        {field: 'aggiudicatari.aggiudicatario._array.ragioneSociale', code: 'ECM11', length: lotto.aggiudicatari.aggiudicatario.length}
+    ];
+    for (let i = 0; i < fieldsToTest.length; i++) {
+        useTest(presenzaDato,errori,lotto,fieldsToTest[i])
     }
     return errori;
+}
+
+var useTest = function (testFunction,errori,lotto,row) {
+    if (row.length) {
+        for (let j = 0; j < row.length; j ++){
+            let currentLine = row.field.replace('_array',j)
+            if (!testFunction(getValue(lotto,currentLine)))
+                errori.push(addError(row.code, getLine(lotto,currentLine)));
+        }
+    } else {
+        if (!testFunction(getValue(lotto,row.field)))
+            errori.push(addError(row.code, getLine(lotto,row.field)));
+    }
+
 }
 
 var getValue = function (lotto, child) {
@@ -216,25 +194,37 @@ var getValue = function (lotto, child) {
     return value;
 }
 
+
 var getLine = function (lotto, child) {
     let path = child + '._attributes.linea';
     let line = _.get(lotto, path);
     return line;
-    // if (!line) return undefined;
 }
 
 
-var valutaCig = function (lotto) {
-    let errore;
-    if (!utils.checkCig(lotto.cig._text))
-        errore = addError(dict.errors.correttezza.cig, lotto.cig._attributes.linea);
 
-    return errore;
+var addError = function (errorCode, line) {
+    let definition = findKey(dict,errorCode)
+    return {text:definition.text, type:definition.type, line };
 }
 
-var addError = function (errorRef, line) {
-    return {text:errorRef.text, type:errorRef.type, line };
-}
+
+var findKey = function(obj,code) {
+    for (let p in obj) {
+        if (p === 'code') {
+            if (obj[p] == code) {
+                return obj;
+            }
+        } else if (obj[p] instanceof Object) {
+            if (obj.hasOwnProperty(p)) {
+                tRet = findKey(obj[p],code);
+                if (tRet) { return tRet; }
+            }
+        }
+    }
+    return false;
+};
+
 
 var presenzaDato = function (dato) {
     if (dato === null || dato === undefined) return false;
