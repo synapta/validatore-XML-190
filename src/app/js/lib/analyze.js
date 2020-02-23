@@ -137,7 +137,7 @@ var analyzeLotto = function (lotto) {
 
     let erroriTotali = [];
     erroriTotali = erroriTotali.concat(presenzaDati(lotto));
-    useTest(utils.checkCig,erroriTotali,lotto,{field:'cig',code:'ECR01'})
+    erroriTotali = erroriTotali.concat(useTest(utils.checkCig,lotto,{field:'cig',code:'ECR01'}))
     return erroriTotali;
 
 }
@@ -155,28 +155,37 @@ var presenzaDati = function (lotto) {
         {field: 'importoSommeLiquidate', code: 'WCM01'},
         {field: 'tempiCompletamento.dataInizio', code: 'ECM07'},
         {field: 'tempiCompletamento.dataUltimazione', code: 'WCM02'},
-        {field: 'partecipanti.partecipante._array.codiceFiscale', code: 'ECM08', length: lotto.partecipanti.partecipante.length},
-        {field: 'partecipanti.partecipante._array.ragioneSociale', code: 'ECM09', length: lotto.partecipanti.partecipante.length},
-        {field: 'aggiudicatari.aggiudicatario._array.codiceFiscale', code: 'ECM10', length: lotto.aggiudicatari.aggiudicatario.length},
-        {field: 'aggiudicatari.aggiudicatario._array.ragioneSociale', code: 'ECM11', length: lotto.aggiudicatari.aggiudicatario.length}
+        {field: 'partecipanti.partecipante._array.codiceFiscale', code: 'ECM08'},
+        {field: 'partecipanti.partecipante._array.ragioneSociale', code: 'ECM09'},
+        {field: 'aggiudicatari.aggiudicatario._array.codiceFiscale', code: 'ECM10'},
+        {field: 'aggiudicatari.aggiudicatario._array.ragioneSociale', code: 'ECM11'}
     ];
     for (let i = 0; i < fieldsToTest.length; i++) {
-        useTest(presenzaDato,errori,lotto,fieldsToTest[i])
+        errori = errori.concat(useTest(presenzaDato,lotto,fieldsToTest[i]))
     }
     return errori;
 }
 
-var useTest = function (testFunction,errori,lotto,row) {
-    if (row.length) {
-        for (let j = 0; j < row.length; j ++){
+var useTest = function (testFunction,lotto,row) {
+    let errors = [];
+    if (row.field.match('_array')) {
+        let length = 0;
+        var match = /_array/.exec(row.field);
+        let path = row.field.substring(0, match.index);
+        length = _.get(lotto, path + 'length');
+        if (testFunction.name === 'presenzaDato' && length === undefined) {
+            errors.push(addError(row.code, getLine(lotto,currentLine)));
+        }
+        for (let j = 0; j < length; j ++){
             let currentLine = row.field.replace('_array',j)
             if (!testFunction(getValue(lotto,currentLine)))
-                errori.push(addError(row.code, getLine(lotto,currentLine)));
+                errors.push(addError(row.code, getLine(lotto,currentLine)));
         }
     } else {
         if (!testFunction(getValue(lotto,row.field)))
-            errori.push(addError(row.code, getLine(lotto,row.field)));
+            errors.push(addError(row.code, getLine(lotto,row.field)));
     }
+    return errors;
 
 }
 
@@ -205,7 +214,7 @@ var getLine = function (lotto, child) {
 
 var addError = function (errorCode, line) {
     let definition = findKey(dict,errorCode)
-    return {text:definition.text, type:definition.type, line };
+    return {text:definition.text, type:definition.type, details:definition.details, line };
 }
 
 
@@ -239,7 +248,6 @@ var presenzaDato = function (dato) {
     }
     if (typeof dato === 'object') {
         for (let key in dato) {
-            // console.log('sono un oggetto', dato[key])
             return presenzaDato(dato[key])
         }
     }

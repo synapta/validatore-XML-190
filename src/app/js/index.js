@@ -26,11 +26,20 @@ var pageStatus = function (status) {
             $('#loading').hide();
             $('#main').show();
             break;
-        case 'show-analysis':
+        case 'analyse':
             $('#xml-form').text();
             $('#main').hide();
             $('#show').show();
             $('#loading-lotti').show();
+            break;
+        case 'show-analysis':
+            $('.ui.accordion').accordion('refresh');
+            $('.message .close')
+                .on('click', function() {
+                    $(this)
+                    .closest('.message')
+                    .transition('fade');
+            });
             break;
         // case 'loading':
         //
@@ -63,7 +72,7 @@ var loadAnalysis = function () {
 }
 
 let showResults = function (data) {
-    pageStatus('show-analysis');
+    pageStatus('analyse');
     $('#xml-form').text(data);
     // window.location.search += 'id=' + encodeURI(url);
     // setParam('url',url)
@@ -84,6 +93,7 @@ let showResults = function (data) {
         contentType: 'text/plain',
         dataType: "json",
         success: function (res) {
+
             $('#loading-lotti').hide();
             $('#numero-lotti').text(res.totLotti);
             $('#numero-errori').text(res.totErrors);
@@ -97,6 +107,7 @@ let showResults = function (data) {
                 return false;
             });
             alert("Analizzato!");
+            pageStatus('show-analysis');
         },
         error: function(e) {
             alert("Errore nell'analisi :-(");
@@ -124,14 +135,9 @@ $("#search-field").keyup(function(event) {
 });
 
 
-$('.message .close')
-  .on('click', function() {
-    $(this)
-      .closest('.message')
-      .transition('fade')
-    ;
-  })
-;
+
+
+
 
 markLine = function (xmlView, line, type) {
     xmlView.markText({line: line -1, ch: 0}, {line: parseInt(line), ch: 0}, {className: "styled-"+type });
@@ -145,7 +151,7 @@ markAll = function(xmlView, errori) {
 }
 addMessages = function (errori) {
     for (let i = 0; i < errori.length; i++) {
-        $('#messages').append(makeMessage(errori[i].type,errori[i].text,errori[i].line));
+        $('#messages').append(makeMessage(errori[i]));
     }
 }
 
@@ -205,16 +211,25 @@ makeErrorUnderSearch = function (header, text) {
 // }
 
 
-makeMessage = function (type,text,line) {
+makeMessage = function (errorObj) {
     let div = '<div class="ui ';
 
-    if (type === 'error') div += 'negative message">';
-    if (type === 'warning') div += 'warning message">';
+    if (errorObj.type === 'error') div += 'negative message">';
+    if (errorObj.type === 'warning') div += 'warning message">';
         div += `<i class="close icon"></i>
             <div class="header">
-                Errore: ${text}
+                Errore: ${errorObj.text}
             </div>
-            <p>Linea <span class="error_line">${line}</span> </p>
+            <p>Linea <span class="error_line">${errorObj.line}</span> </p>
+            <div class="ui fluid accordion">
+                <div class="title">
+                    <i class="dropdown icon"></i>
+                    Dettagli
+                </div>
+                    <div class="content">
+                        <p>${errorObj.details}</p>
+                    </div>
+            </div>
         </div>
         `;
     return div;

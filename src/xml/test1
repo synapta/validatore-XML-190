@@ -47,22 +47,10 @@
           <oggetto>B.E. N. 4294 RIPARAZIONE PORTONE GARAGE SANTA MARIA</oggetto>
           <sceltaContraente>08-AFFIDAMENTO IN ECONOMIA - COTTIMO FIDUCIARIO</sceltaContraente>
           <partecipanti>
-            <partecipante>
-              <codiceFiscale>82004870414</codiceFiscale>
-              <ragioneSociale>IMSA s.r.l.</ragioneSociale>
-            </partecipante>
-            <partecipante>
-              <codiceFiscale>82004870414</codiceFiscale>
-              <ragioneSociale>IMSA s.r.l.</ragioneSociale>
-            </partecipante>
-            <partecipante>
-              <codiceFiscale>01827690130</codiceFiscale>
-              <ragioneSociale>IMSA s.r.l.</ragioneSociale>
-            </partecipante>
           </partecipanti>
           <aggiudicatari>
             <aggiudicatario>
-              <codiceFiscale>82004870414</codiceFiscale>
+              <codiceFiscale></codiceFiscale>
               <ragioneSociale>IMSA s.r.l.</ragioneSociale>
             </aggiudicatario>
             <aggiudicatario>

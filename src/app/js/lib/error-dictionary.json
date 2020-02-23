@@ -1,29 +1,43 @@
 {
     "errors": {
         "completezza": {
-            "cig" : { "text": "Il cig è mancante", "type": "error", "code": "ECM01"},
-            "codiceFiscaleProp" : { "text": "Il codice fiscale dell'ente proponente è mancante", "type": "error", "code": "ECM02"},
-            "denominazione" : { "text": "La denominazione dell'ente proponente è mancante", "type": "error", "code": "ECM03"},
-            "oggetto" : { "text": "L'oggetto è mancante", "type": "error", "code": "ECM04"},
-            "sceltaContraente" : { "text": "La scelta del contraente è mancante", "type": "error", "code": "ECM05"},
-            "importoAggiudicazione" : { "text": "L'importo di aggiudicazione è mancante", "type": "error", "code": "ECM06"},
-            "dataInizio" : { "text": "La data di inizio è mancante", "type": "error", "code": "ECM07"},
-            "codiceFiscalePartecipante" : { "text": "Il codice fiscale del partecipante è mancante", "type": "error", "code": "ECM08"},
-            "ragioneSocialePartecipante" : { "text": "La ragione sociale del partecipante è mancante", "type": "error", "code": "ECM09"},
-            "codiceFiscaleAggiudicatario" : { "text": "Il codice fiscale dell'aggiudicatario è mancante", "type": "error", "code": "ECM10"},
-            "ragioneSocialeAggiudicatario" : { "text": "La ragione sociale dell'aggiudicatario è mancante", "type": "error", "code": "ECM11"}
+            "cig" : { "text": "Il cig è mancante", "type": "error", "code": "ECM01",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "codiceFiscaleProp" : { "text": "Il codice fiscale dell'ente proponente è mancante", "type": "error", "code": "ECM02",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "denominazione" : { "text": "La denominazione dell'ente proponente è mancante", "type": "error", "code": "ECM03",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "oggetto" : { "text": "L'oggetto è mancante", "type": "error", "code": "ECM04",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "sceltaContraente" : { "text": "La scelta del contraente è mancante", "type": "error", "code": "ECM05",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "importoAggiudicazione" : { "text": "L'importo di aggiudicazione è mancante", "type": "error", "code": "ECM06",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "dataInizio" : { "text": "La data di inizio è mancante", "type": "error", "code": "ECM07",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "codiceFiscalePartecipante" : { "text": "Il codice fiscale del partecipante è mancante", "type": "error", "code": "ECM08",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "ragioneSocialePartecipante" : { "text": "La ragione sociale del partecipante è mancante", "type": "error", "code": "ECM09",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "codiceFiscaleAggiudicatario" : { "text": "Il codice fiscale dell'aggiudicatario è mancante", "type": "error", "code": "ECM10",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "ragioneSocialeAggiudicatario" : { "text": "La ragione sociale dell'aggiudicatario è mancante", "type": "error", "code": "ECM11",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
         },
         "accuratezzaSemantica" : {
 
         },
         "correttezza": {
-            "cig" : {"text": "Il cig immesso non è valido", "type": "error", "code": "ECR01"}
+            "cig" : {"text": "Il cig immesso non è valido", "type": "error", "code": "ECR01",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
         }
     },
     "warnings": {
         "completezza": {
-            "importoSommeLiquidate" : { "text": "L'importo delle somme liquidate è mancante", "type": "warning", "code": "WCM01"},
-            "dataUltimazione" : { "text": "La data di fine è mancante", "type": "warning", "code": "WCM02"}
+            "importoSommeLiquidate" : { "text": "L'importo delle somme liquidate è mancante", "type": "warning", "code": "WCM01",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "dataUltimazione" : { "text": "La data di fine è mancante", "type": "warning", "code": "WCM02",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
         }
     }
 
