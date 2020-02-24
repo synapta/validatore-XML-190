@@ -12,7 +12,7 @@
   </metadata>
   <data>
     <lotto>
-      <cig></cig>
+      <cig>asd</cig>
       <strutturaProponente>
         <codiceFiscaleProp>83000850145</codiceFiscaleProp>
         <denominazione>COMUNE DI LIVIGNO</denominazione>
@@ -24,6 +24,22 @@
           <codiceFiscale>01827690130</codiceFiscale>
           <ragioneSociale>IMSA s.r.l.</ragioneSociale>
         </partecipante>
+        <partecipante>
+          <codiceFiscale>01827690130</codiceFiscale>
+          <ragioneSociale>IMSA s.r.l.</ragioneSociale>
+        </partecipante>
+        <partecipante>
+          <codiceFiscale>01827690130</codiceFiscale>
+          <ragioneSociale>IMSA s.r.l.</ragioneSociale>
+        </partecipante>
+        <partecipante>
+          <codiceFiscale>01827690130</codiceFiscale>
+          <ragioneSociale>IMSA s.r.l.</ragioneSociale>
+        </partecipante>
+        <partecipante>
+          <codiceFiscale>01827690130</codiceFiscale>
+          <ragioneSociale>IMSA s.r.l.</ragioneSociale>
+        </partecipante<name />
       </partecipanti>
       <aggiudicatari>
         <aggiudicatario>
@@ -39,10 +55,10 @@
       <importoSommeLiquidate>12</importoSommeLiquidate>
     </lotto>
     <lotto>
-          <cig></cig>
+          <cig>asd</cig>
           <strutturaProponente>
             <codiceFiscaleProp>83000850145</codiceFiscaleProp>
-            <denominazione></denominazione>
+            <denominazione>asd</denominazione>
           </strutturaProponente>
           <oggetto>B.E. N. 4294 RIPARAZIONE PORTONE GARAGE SANTA MARIA</oggetto>
           <sceltaContraente>08-AFFIDAMENTO IN ECONOMIA - COTTIMO FIDUCIARIO</sceltaContraente>
@@ -50,7 +66,7 @@
           </partecipanti>
           <aggiudicatari>
             <aggiudicatario>
-              <codiceFiscale></codiceFiscale>
+              <codiceFiscale>asd</codiceFiscale>
               <ragioneSociale>IMSA s.r.l.</ragioneSociale>
             </aggiudicatario>
             <aggiudicatario>
@@ -58,16 +74,16 @@
               <ragioneSociale></ragioneSociale>
             </aggiudicatario>
             <aggiudicatario>
-              <codiceFiscale>01827690130</codiceFiscale>
+              <codiceFiscale></codiceFiscale>
               <ragioneSociale>IMSA s.r.l.</ragioneSociale>
             </aggiudicatario>
           </aggiudicatari>
-          <importoAggiudicazione></importoAggiudicazione>
+          <importoAggiudicazione>123</importoAggiudicazione>
           <tempiCompletamento>
             <dataInizio>2016-06-10</dataInizio>
             <dataUltimazione>2016-06-10</dataUltimazione>
           </tempiCompletamento>
-          <importoSommeLiquidate></importoSommeLiquidate>
+          <importoSommeLiquidate>123</importoSommeLiquidate>
         </lotto>
   </data>
 </ns2:pubblicazione>

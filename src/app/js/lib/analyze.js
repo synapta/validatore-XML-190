@@ -85,9 +85,7 @@ exports.analyze = function (body, cb) {
         newBody += newLine;
         if (i !== lines.length - 1 ) newBody += '\n';
     }
-    // console.log(newBody)
     var xmlJSON = JSON.parse(x2j.xml2json(newBody, {compact: true, spaces: 4}));
-    // console.log(xmlJSON)
     // c'è il primo livello (singolo) dell'XML che non è sempre uguale (spesso 'legge190:pubblicazione')
     var firstLevel;
     for (var key in xmlJSON) firstLevel = key;
@@ -99,13 +97,17 @@ exports.analyze = function (body, cb) {
     }
     let lotti = rendiArray(xmlJSON[firstLevel].data.lotto);
     let errors = [];
+    for (let j = 0; j < lotti.length; j ++) {
+        let incremented = j + 1;
+        lotti[j].lottoNumber = incremented;
+        lotti[j].startLine = getLine(lotti[j],'')
+    }
     for (let i = 0; i < lotti.length; i ++) {
         errors = errors.concat(analyzeLotto(lotti[i]));
     }
     let totErrors = errors.filter(element => element.type === 'error').length;
     let totWarnings = errors.filter(element => element.type === 'warning').length;
 
-    // console.log(xmlJSON[firstLevel].data.lotto[0])
     let output = {
                 totLotti: totLotti,
                 totErrors: totErrors,
@@ -133,7 +135,6 @@ var rendiArray = function (obj) {
 var analyzeLotto = function (lotto) {
     lotto.partecipanti.partecipante = rendiArray(lotto.partecipanti.partecipante);
     lotto.aggiudicatari.aggiudicatario = rendiArray(lotto.aggiudicatari.aggiudicatario);
-
 
     let erroriTotali = [];
     erroriTotali = erroriTotali.concat(presenzaDati(lotto));
@@ -174,16 +175,17 @@ var useTest = function (testFunction,lotto,row) {
         let path = row.field.substring(0, match.index);
         length = _.get(lotto, path + 'length');
         if (testFunction.name === 'presenzaDato' && length === undefined) {
-            errors.push(addError(row.code, getLine(lotto,currentLine)));
-        }
-        for (let j = 0; j < length; j ++){
-            let currentLine = row.field.replace('_array',j)
-            if (!testFunction(getValue(lotto,currentLine)))
-                errors.push(addError(row.code, getLine(lotto,currentLine)));
+            errors.push(addError(row.code, undefined , lotto));
+        } else {
+            for (let j = 0; j < length; j ++){
+                let currentLine = row.field.replace('_array',j)
+                if (!testFunction(getValue(lotto,currentLine)))
+                    errors.push(addError(row.code, getLine(lotto,currentLine),lotto));
+            }
         }
     } else {
         if (!testFunction(getValue(lotto,row.field)))
-            errors.push(addError(row.code, getLine(lotto,row.field)));
+            errors.push(addError(row.code, getLine(lotto,row.field),lotto));
     }
     return errors;
 
@@ -205,16 +207,19 @@ var getValue = function (lotto, child) {
 
 
 var getLine = function (lotto, child) {
-    let path = child + '._attributes.linea';
+    let path = '';
+    path = child + '._attributes.linea';
+    if (child === '') path = '_attributes.linea';
     let line = _.get(lotto, path);
     return line;
 }
 
 
 
-var addError = function (errorCode, line) {
+var addError = function (errorCode, line,lotto) {
     let definition = findKey(dict,errorCode)
-    return {text:definition.text, type:definition.type, details:definition.details, line };
+    return {text:definition.text, type:definition.type, details:definition.details, line:line,
+        lottoNumber:lotto.lottoNumber, startLine:lotto.startLine };
 }
 
 

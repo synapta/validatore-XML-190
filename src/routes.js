@@ -40,6 +40,7 @@ module.exports = function(app) {
 
     app.post('/api/analyze/xml', function (request, response) {
         analyze.analyze(request.body, function(body) {
+            console.log("Analisi OK")
             response.send(body);
         })
     });

@@ -76,7 +76,6 @@ let showResults = function (data) {
     $('#xml-form').text(data);
     // window.location.search += 'id=' + encodeURI(url);
     // setParam('url',url)
-
     window.myCodeMirror = CodeMirror.fromTextArea(document.getElementById("xml-form"), {
         lineNumbers: true,
         lineWrapping: true,
@@ -85,7 +84,6 @@ let showResults = function (data) {
     });
     let xmlView = window.myCodeMirror;
     data = formatData(xmlView, data);
-
     $.ajax({
         url: '/api/analyze/xml',
         type: 'post',
@@ -100,8 +98,15 @@ let showResults = function (data) {
             $('#numero-avvisi').text(res.totWarnings);
             addMessages(res.errors)
             markAll(xmlView, res.errors);
-            $(".error_line").click( function(e) {
+            $(".link_line").click( function(e) {
+                console.log(e)
                 let line = e.target.textContent;
+                e.preventDefault();
+                xmlView.scrollIntoView({line:line, char:0})
+                return false;
+            });
+            $(".link_lotto").click( function(e) {
+                let line = e.target.dataset.position;
                 e.preventDefault();
                 xmlView.scrollIntoView({line:line, char:0})
                 return false;
@@ -136,17 +141,16 @@ $("#search-field").keyup(function(event) {
 
 
 
-
-
-
 markLine = function (xmlView, line, type) {
     xmlView.markText({line: line -1, ch: 0}, {line: parseInt(line), ch: 0}, {className: "styled-"+type });
 }
 
 markAll = function(xmlView, errori) {
-    // console.log(errori)
+    console.log(errori)
     for (let i = 0; i < errori.length; i++) {
-        markLine(xmlView,errori[i].line, errori[i].type)
+        let line = errori[i].line;
+        if (errori[i].line === undefined) line = errori[i].startLine;
+        markLine(xmlView,line, errori[i].type)
     }
 }
 addMessages = function (errori) {
@@ -202,25 +206,21 @@ makeErrorUnderSearch = function (header, text) {
     <p>${text}</p>
 </div>`;
     $('#custom-error').html(div);
-    // $('#text-error-under-search').text(text);
-    // $('#header-error-under-search').text(header);
 }
 
-// makeError = function (idH,idP) {
-//     return
-// }
 
 
 makeMessage = function (errorObj) {
     let div = '<div class="ui ';
-
+    let coordinates = `Lotto <span class="link_lotto" data-position="${errorObj.startLine}">` + errorObj.lottoNumber + '</span>';
+    if (errorObj.line !== undefined) coordinates += ', linea <span class="link_line">' + errorObj.line + '</span>';
     if (errorObj.type === 'error') div += 'negative message">';
     if (errorObj.type === 'warning') div += 'warning message">';
         div += `<i class="close icon"></i>
             <div class="header">
                 Errore: ${errorObj.text}
             </div>
-            <p>Linea <span class="error_line">${errorObj.line}</span> </p>
+            <p>${coordinates}</p>
             <div class="ui fluid accordion">
                 <div class="title">
                     <i class="dropdown icon"></i>
