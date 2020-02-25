@@ -218,7 +218,7 @@ var getLine = function (lotto, child) {
 
 var addError = function (errorCode, line,lotto) {
     let definition = findKey(dict,errorCode)
-    return {text:definition.text, type:definition.type, details:definition.details, line:line,
+    return {text:definition.text, type:definition.type, code:errorCode, details:definition.details, line:line,
         lottoNumber:lotto.lottoNumber, startLine:lotto.startLine };
 }
 

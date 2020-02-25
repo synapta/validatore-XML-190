@@ -9,7 +9,7 @@ var pageStatus = function (status) {
             $('#messages').html('');
             $('#progress-steps').html('');
             $('#show-results').toggleClass( "ui primary active button" ).toggleClass( "ui primary disabled button" );
-            // window.myCodeMirror.toTextArea();
+            if (window.myCodeMirror !== undefined) window.myCodeMirror.toTextArea();
             break;
         case 'loading':
             $('#custom-error').html('');
@@ -79,6 +79,7 @@ let showResults = function (data) {
     window.myCodeMirror = CodeMirror.fromTextArea(document.getElementById("xml-form"), {
         lineNumbers: true,
         lineWrapping: true,
+        readOnly: true,
         mode: 'xml'
         // viewportMargin: Infinity --carica tutto il file, puoi fare il cerca, ma se è grosso danni
     });
@@ -146,7 +147,7 @@ markLine = function (xmlView, line, type) {
 }
 
 markAll = function(xmlView, errori) {
-    console.log(errori)
+    // console.log(errori)
     for (let i = 0; i < errori.length; i++) {
         let line = errori[i].line;
         if (errori[i].line === undefined) line = errori[i].startLine;
@@ -154,9 +155,63 @@ markAll = function(xmlView, errori) {
     }
 }
 addMessages = function (errori) {
-    for (let i = 0; i < errori.length; i++) {
-        $('#messages').append(makeMessage(errori[i]));
+    let errorMap = groupBy(errori, errore => errore.code );
+    let errorIter = errorMap.values();
+
+    for (let i = 0; i < errorMap.size; i++) {
+        let groupedError = errorIter.next().value;
+        let errObj = groupedError[0];
+        let lottoMap = groupBy(groupedError, errore => errore.lottoNumber);
+        let lottoIter = lottoMap.values();
+        let positions = [];
+        for (let j = 0; j < lottoMap.size; j ++) {
+            let coordinates = {};
+            let groupedLotto = lottoIter.next().value;
+            let linee = groupedLotto.map(errore => errore.line)
+            coordinates.lottoNumber = groupedLotto[0].lottoNumber;
+            coordinates.startLine = groupedLotto[0].startLine;
+            coordinates.linee = linee.sort(function(a, b){return a - b});
+            positions.push(coordinates);
+        }
+        groupedError.positions = positions;
+        $('#messages').append(makeMessage(groupedError));
     }
+}
+
+makeMessage = function (errorObj) {
+    let div = '<div class="ui ';
+    let coordinates = '';
+    for (let i = 0; i < errorObj.positions.length; i++){
+        coordinates += `Lotto <span class="link_lotto" data-position="${errorObj.positions[i].startLine}">`
+                            + errorObj.positions[i].lottoNumber + '</span>';
+        for (let j = 0; j < errorObj.positions[i].linee.length; j ++) {
+            if (j === 0 && errorObj.positions[i].linee[0] !== undefined) coordinates += ', linea ';
+            if (errorObj.positions[i].linee[j] !== undefined) coordinates += '<span class="link_line">' + errorObj.positions[i].linee[j] + '</span> ';
+        }
+        if (errorObj.positions[i].linee.length > 0) coordinates += '<br>';
+
+    }
+
+    if (errorObj[0].type === 'error') div += 'negative message">';
+    if (errorObj[0].type === 'warning') div += 'warning message">';
+        div += `<i class="close icon"></i>
+            <div class="header">
+                ${errorObj.length} Errore/i: ${errorObj[0].text}
+            </div>
+            <p>${coordinates}</p>
+            <div class="ui fluid accordion">
+                <div class="title">
+                    <i class="dropdown icon"></i>
+                    Dettagli
+                </div>
+                    <div class="content">
+                        <p>${errorObj[0].details}</p>
+                    </div>
+            </div>
+        </div>
+        `;
+    return div;
+
 }
 
 makeProgressionSteps = function (step) {
@@ -208,33 +263,21 @@ makeErrorUnderSearch = function (header, text) {
     $('#custom-error').html(div);
 }
 
-
-
-makeMessage = function (errorObj) {
-    let div = '<div class="ui ';
-    let coordinates = `Lotto <span class="link_lotto" data-position="${errorObj.startLine}">` + errorObj.lottoNumber + '</span>';
-    if (errorObj.line !== undefined) coordinates += ', linea <span class="link_line">' + errorObj.line + '</span>';
-    if (errorObj.type === 'error') div += 'negative message">';
-    if (errorObj.type === 'warning') div += 'warning message">';
-        div += `<i class="close icon"></i>
-            <div class="header">
-                Errore: ${errorObj.text}
-            </div>
-            <p>${coordinates}</p>
-            <div class="ui fluid accordion">
-                <div class="title">
-                    <i class="dropdown icon"></i>
-                    Dettagli
-                </div>
-                    <div class="content">
-                        <p>${errorObj.details}</p>
-                    </div>
-            </div>
-        </div>
-        `;
-    return div;
-
+function groupBy(list, keyGetter) {
+    const map = new Map();
+    list.forEach((item) => {
+        const key = keyGetter(item).toString();
+        const collection = map.get(key);
+        if (!collection) {
+            map.set(key, [item]);
+        } else {
+            map.get(key).push(item);
+        }
+    });
+    return map;
 }
+
+
 
 formatData = function (xmlView,data) {
     // console.log(data)

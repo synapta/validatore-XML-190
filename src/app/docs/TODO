@@ -7,16 +7,16 @@ PayloadTooLargeError: request entity too large
 (http://www.bologna.aci.it/avcp/00312900376/2015/indice.xml)
     - gestire i file monoriga (view-source:https://www.comune.poggibonsi.si.it/files/00097460521/2013/Z83082FC0B.xml)
 
-- svuotare la pagina prima di ricaricarla (se passi dalla home fa un append)
-- alle volte all'interno del tag hai del text, alle volte del CDATA
+
+- alle volte all'interno del tag hai del text, alle volte del CDATA, controllare se esistono altri tipi!
 - se ho un errore più bloccante, quelli dopo non li valuto! es. se il dato manca è inutile che mi sforzi di controllare se è corretto!
 - non si chiudono più i messaggi
-- se analizzo una roba, ma non clicco procedi e poi ne analizzo un'altra si accodano uno dopo l'altra
-- se una roba è mancante ma non c'è la riga, dovrei per lo meno dire in che lotto dovrebbe essere!
+
+
 
 FEATURE
 - quando sono sopra il testo dell'xml evidenziato perché c'è un errore vorrei poter andare a leggere qual era questo errore (link al messaggio, o in qualche modo il messaggio segue il testo)
-- vorrei poter dare consigli su come risolvere gli errori e spiegazioni sul perché quello è un errore o no (come lo mostro?)
+
 
 
 MIGLIORIE
@@ -24,7 +24,6 @@ MIGLIORIE
 la classe che è la roba che cambia nella struttura del div [AM]
 - puoi aggiungere un parametro nell'url quando passi alla pagina di analisi dove ti indica l'url dell'xml cercato [AM]
 - errori nell'ordine migliore
-- raggruppamento di errori simili
 - trova un nome migliore per l'applicazione
 - footer con data e nome
 - pagina/messaggio/alert con "informazioni sull'applicazione"
@@ -32,11 +31,11 @@ la classe che è la roba che cambia nella struttura del div [AM]
 
 
 TODO
-- aggiungere il numero di lotto nei messaggio
 - scrivere i testi per gli approfondimenti
 - aggiungere il controllo di mime type per i file prodotti con excel -> non facile, passano il mime type test
     - www.comunefosdinovo.it/download_2015_comune.xml?h=634ed9133d133968ddf82630d55c486868c2c7bb
     - http://www.bonificanurra.it/pubblicazioni/tabella7.xml
+- se il lotto non ha alcun errore -> messaggio di successo!
 
 
 
@@ -46,6 +45,21 @@ NOTE
 FATTI
 - analisi dell'XSD
 - aggiungere più informazioni negli errori con un "approfondisci"
+- allargare la buca del link!
+- raggruppamento di errori simili
+- aggiungere il numero di lotto nei messaggio
+- sul link al mousover lo stile deve essere cursor [AM]
+- id degli errori (così che sia più corta la sintassi per arrivarci)
+- se una roba è mancante ma non c'è la riga, dovrei per lo meno dire in che lotto dovrebbe essere!
+- se analizzo una roba, ma non clicco procedi e poi ne analizzo un'altra si accodano uno dopo l'altra
+- svuotare la pagina prima di ricaricarla (se passi dalla home fa un append)
+- il testo nel box di testo non deve essere modificabile!
+
+
+
+
+
+
 
 
 --
