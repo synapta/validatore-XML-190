@@ -15,37 +15,31 @@
       <cig>asd</cig>
       <strutturaProponente>
         <codiceFiscaleProp>83000850145</codiceFiscaleProp>
-        <denominazione>COMUNE DI LIVIGNO</denominazione>
+        <denominazione>COM</denominazione>
       </strutturaProponente>
-      <oggetto>B.E. N. 4294 RIPARAZIONE PORTONE GARAGE SANTA MARIA</oggetto>
+      <oggetto>4294 RIPARAZIONE PORTONE GARAGE</oggetto>
       <sceltaContraente>08-AFFIDAMENTO IN ECONOMIA - COTTIMO FIDUCIARIO</sceltaContraente>
       <partecipanti>
         <partecipante>
-          <codiceFiscale></codiceFiscale>
           <ragioneSociale>IMSA s.r.l.</ragioneSociale>
         </partecipante>
         <partecipante>
           <codiceFiscale></codiceFiscale>
-          <ragioneSociale>IMSA s.r.l.</ragioneSociale>
+          <ragioneSociale>I</ragioneSociale>
         </partecipante>
         <partecipante>
           <codiceFiscale>01827690130</codiceFiscale>
           <ragioneSociale>IMSA s.r.l.</ragioneSociale>
         </partecipante>
         <partecipante>
-          <codiceFiscale>01827690130</codiceFiscale>
           <ragioneSociale>IMSA s.r.l.</ragioneSociale>
         </partecipante>
         <partecipante>
-          <codiceFiscale>01827690130</codiceFiscale>
+          <codiceFiscale></codiceFiscale>
           <ragioneSociale>IMSA s.r.l.</ragioneSociale>
         </partecipante>
       </partecipanti>
       <aggiudicatari>
-        <aggiudicatario>
-          <codiceFiscale>01827690130</codiceFiscale>
-          <ragioneSociale>IMSA s.r.l.</ragioneSociale>
-        </aggiudicatario>
       </aggiudicatari>
       <importoAggiudicazione>464.02</importoAggiudicazione>
       <tempiCompletamento>
@@ -75,7 +69,7 @@
             </aggiudicatario>
             <aggiudicatario>
               <codiceFiscale></codiceFiscale>
-              <ragioneSociale>IMSA s.r.l.</ragioneSociale>
+              <ragioneSociale>IMS</ragioneSociale>
             </aggiudicatario>
           </aggiudicatari>
           <importoAggiudicazione>123</importoAggiudicazione>

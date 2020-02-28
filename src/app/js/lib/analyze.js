@@ -1,6 +1,8 @@
 // var synapta_x2j = require('./synapta_x2j/build/Release/synapta_x2j.node');
 var x2j = require('xml-js');
 var dict = require('./error-dictionary.json');
+var fun = require('./test-functions.js');
+var tl = require('./test-list.js');
 var utils = require('./utils.js');
 var xsd = require('xsd-schema-validator');
 var fs = require('fs');
@@ -65,9 +67,7 @@ exports.validateFile = function (body,cb) {
     })
 }
 
-
-
-exports.analyze = function (body, cb) {
+var convertXMLToJSON = function (body) {
     var lines = body.split('\n');
     var newBody = '';
     for (var i = 0; i < lines.length; i++){
@@ -85,7 +85,10 @@ exports.analyze = function (body, cb) {
         newBody += newLine;
         if (i !== lines.length - 1 ) newBody += '\n';
     }
-    var xmlJSON = JSON.parse(x2j.xml2json(newBody, {compact: true, spaces: 4}));
+    return xmlJSON = JSON.parse(x2j.xml2json(newBody, {compact: true, spaces: 4}));
+}
+
+var extractLotti = function (xmlJSON) {
     // c'è il primo livello (singolo) dell'XML che non è sempre uguale (spesso 'legge190:pubblicazione')
     var firstLevel;
     for (var key in xmlJSON) firstLevel = key;
@@ -95,7 +98,14 @@ exports.analyze = function (body, cb) {
         totLotti = xmlJSON[firstLevel].data.lotto.length;
         multiLotto = true;
     }
-    let lotti = rendiArray(xmlJSON[firstLevel].data.lotto);
+    return {lotti: rendiArray(xmlJSON[firstLevel].data.lotto), totLotti: totLotti};
+}
+
+exports.analyze = function (body, cb) {
+    let xmlJSON = convertXMLToJSON(body);
+    let obj = extractLotti(xmlJSON);
+    let lotti = obj.lotti;
+    let totLotti = obj.totLotti;
     let errors = [];
     for (let j = 0; j < lotti.length; j ++) {
         let incremented = j + 1;
@@ -132,64 +142,7 @@ var rendiArray = function (obj) {
     }
 }
 
-var analyzeLotto = function (lotto) {
-    lotto.partecipanti.partecipante = rendiArray(lotto.partecipanti.partecipante);
-    lotto.aggiudicatari.aggiudicatario = rendiArray(lotto.aggiudicatari.aggiudicatario);
 
-    let erroriTotali = [];
-    erroriTotali = erroriTotali.concat(presenzaDati(lotto));
-    erroriTotali = erroriTotali.concat(useTest(utils.checkCig,lotto,{field:'cig',code:'ECR01'}))
-    return erroriTotali;
-
-}
-
-// funzioni di presenza del dato
-var presenzaDati = function (lotto) {
-    let errori = [];
-    let fieldsToTest = [
-        {field: 'cig', code: 'ECM01'},
-        {field: 'strutturaProponente.codiceFiscaleProp', code: 'ECM02'},
-        {field: 'strutturaProponente.denominazione', code: 'ECM03'},
-        {field: 'oggetto', code: 'ECM04'},
-        {field: 'sceltaContraente', code: 'ECM05'},
-        {field: 'importoAggiudicazione', code: 'ECM06'},
-        {field: 'importoSommeLiquidate', code: 'WCM01'},
-        {field: 'tempiCompletamento.dataInizio', code: 'ECM07'},
-        {field: 'tempiCompletamento.dataUltimazione', code: 'WCM02'},
-        {field: 'partecipanti.partecipante._array.codiceFiscale', code: 'ECM08'},
-        {field: 'partecipanti.partecipante._array.ragioneSociale', code: 'ECM09'},
-        {field: 'aggiudicatari.aggiudicatario._array.codiceFiscale', code: 'ECM10'},
-        {field: 'aggiudicatari.aggiudicatario._array.ragioneSociale', code: 'ECM11'}
-    ];
-    for (let i = 0; i < fieldsToTest.length; i++) {
-        errori = errori.concat(useTest(presenzaDato,lotto,fieldsToTest[i]))
-    }
-    return errori;
-}
-
-var useTest = function (testFunction,lotto,row) {
-    let errors = [];
-    if (row.field.match('_array')) {
-        let length = 0;
-        var match = /_array/.exec(row.field);
-        let path = row.field.substring(0, match.index);
-        length = _.get(lotto, path + 'length');
-        if (testFunction.name === 'presenzaDato' && length === undefined) {
-            errors.push(addError(row.code, undefined , lotto));
-        } else {
-            for (let j = 0; j < length; j ++){
-                let currentLine = row.field.replace('_array',j)
-                if (!testFunction(getValue(lotto,currentLine)))
-                    errors.push(addError(row.code, getLine(lotto,currentLine),lotto));
-            }
-        }
-    } else {
-        if (!testFunction(getValue(lotto,row.field)))
-            errors.push(addError(row.code, getLine(lotto,row.field),lotto));
-    }
-    return errors;
-
-}
 
 var getValue = function (lotto, child) {
     let otherTags = ['._cdata'];
@@ -240,29 +193,61 @@ var findKey = function(obj,code) {
 };
 
 
-var presenzaDato = function (dato) {
-    if (dato === null || dato === undefined) return false;
-    if (dato === '') return false;
-    if (Array.isArray(dato)) {
-        if (dato.length === 0) return false;
-        for (let i = 0; i < dato.length; i++) {
-            for (let key in dato[i]) {
-                return presenzaDato(dato[i][key])
-            }
-        }
-    }
-    if (typeof dato === 'object') {
-        for (let key in dato) {
-            return presenzaDato(dato[key])
-        }
-    }
 
-    return true;
+
+presenzaDato = fun.presenzaDato;
+checkCig = utils.checkCig;
+lunghezzaRagioneSociale = fun.lunghezzaRagioneSociale;
+lunghezzaOggetto = fun.lunghezzaOggetto;
+
+var analyzeLotto = function (lotto) {
+    lotto.partecipanti.partecipante = rendiArray(lotto.partecipanti.partecipante);
+    lotto.aggiudicatari.aggiudicatario = rendiArray(lotto.aggiudicatari.aggiudicatario);
+
+    let erroriTotali = [];
+    erroriTotali = erroriTotali.concat(useTest(lotto, tl.presenzaDati));
+    erroriTotali = erroriTotali.concat(useTest(lotto, tl.validitaCig));
+    erroriTotali = erroriTotali.concat(useTest(lotto, tl.lunghezzaRagioneSociale));
+    erroriTotali = erroriTotali.concat(useTest(lotto, tl.lunghezzaOggetto));
+    return erroriTotali;
+
 }
 
+var useTest = function (lotto, options) {
+    let errori = [];
+    let fieldsToTest = options.fieldsToTest;
+    let testName = _.get(this, options.testName);
+    for (let i = 0; i < fieldsToTest.length; i++) {
+        errori = errori.concat(useTestOnField(testName,lotto,fieldsToTest[i]))
+    }
+    return errori;
+}
 
-// funzioni sul formato dei dati
+var useTestOnField = function (testFunction,lotto,row) {
+    let errors = [];
+    if (row.field.match('_array')) {
+        let length = 0;
+        var match = /_array/.exec(row.field);
+        let path = row.field.substring(0, match.index);
+        length = _.get(lotto, path + 'length');
+        let only_array = row.field.match(/_array$/) ? true : false;
+        if (testFunction.name === 'presenzaDato' && length === undefined) {
+            errors.push(addError(row.code, undefined , lotto));
+        } else {
+            if (only_array) return [];
+            for (let j = 0; j < length; j ++){
+                let currentLine = row.field.replace('_array',j)
+                if (!testFunction(getValue(lotto,currentLine)))
+                    errors.push(addError(row.code, getLine(lotto,currentLine),lotto));
+            }
+        }
+    } else {
+        if (!testFunction(getValue(lotto,row.field)))
+            errors.push(addError(row.code, getLine(lotto,row.field),lotto));
+    }
+    return errors;
 
+}
 
 
 // funzioni di data quality

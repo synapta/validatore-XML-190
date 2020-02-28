@@ -185,8 +185,12 @@ makeMessage = function (errorObj) {
         coordinates += `Lotto <span class="link_lotto" data-position="${errorObj.positions[i].startLine}">`
                             + errorObj.positions[i].lottoNumber + '</span>';
         for (let j = 0; j < errorObj.positions[i].linee.length; j ++) {
-            if (j === 0 && errorObj.positions[i].linee[0] !== undefined) coordinates += ', linea ';
-            if (errorObj.positions[i].linee[j] !== undefined) coordinates += '<span class="link_line">' + errorObj.positions[i].linee[j] + '</span> ';
+            if (j === 0) coordinates += ', linea ';
+            if (errorObj.positions[i].linee[j] !== undefined) {
+                coordinates += '<span class="link_line">' + errorObj.positions[i].linee[j] + '</span> ';
+            } else {
+                coordinates += 'mancante '
+            }
         }
         if (errorObj.positions[i].linee.length > 0) coordinates += '<br>';
 

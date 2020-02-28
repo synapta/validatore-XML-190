@@ -37,6 +37,20 @@
             "importoSommeLiquidate" : { "text": "L'importo delle somme liquidate è mancante", "type": "warning", "code": "WCM01",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
             "dataUltimazione" : { "text": "La data di fine è mancante", "type": "warning", "code": "WCM02",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "aggiudicatari" : { "text": "Non ci sono aggiudicatari", "type": "warning", "code": "WCM03",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "partecipanti" : { "text": "Non ci sono partecipanti", "type": "warning", "code": "WCM04",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
+        },
+        "correttezza": {
+            "ragioneSociale" : {"text": "La ragione sociale dell'ente proponente è troppo corta", "type": "warning", "code": "WCR01",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "ragioneSocialePartecipante" : {"text": "La ragione sociale del partecipante è troppo corta", "type": "warning", "code": "WCR02",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "ragioneSocialeAggiudicatario" : {"text": "La ragione sociale dell'aggiudicatario è troppo corta", "type": "warning", "code": "WCR03",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "oggetto" : {"text": "L'oggetto è troppo corto", "type": "warning", "code": "WCR04",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
         }
     }
