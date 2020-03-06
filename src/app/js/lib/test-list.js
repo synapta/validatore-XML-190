@@ -39,7 +39,6 @@ exports.presenzaDati = {
     ]
 };
 
-
 exports.validitaCig = {
     testName: 'checkCig',
     fieldsToTest: [
@@ -56,7 +55,6 @@ exports.lunghezzaRagioneSociale = {
     ]
 };
 
-
 exports.lunghezzaOggetto = {
     testName: 'lunghezzaOggetto',
     fieldsToTest: [
@@ -64,7 +62,28 @@ exports.lunghezzaOggetto = {
     ]
 };
 
+exports.importoNullo = {
+    testName: 'importoNullo',
+    fieldsToTest: [
+        {field: 'importoAggiudicazione', code: 'WCR05'}
+    ]
+};
 
+exports.importoTroppoGrande = {
+    testName: 'importoTroppoGrande',
+    fieldsToTest: [
+        {field: 'importoAggiudicazione', code: 'WCR06'},
+        {field: 'importoSommeLiquidate', code: 'WCR07'}
+    ]
+};
+
+exports.importoNegativo = {
+    testName: 'importoNegativo',
+    fieldsToTest: [
+        {field: 'importoAggiudicazione', code: 'ECR02'},
+        {field: 'importoSommeLiquidate', code: 'ECR03'}
+    ]
+};
 
 
 

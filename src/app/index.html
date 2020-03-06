@@ -2,14 +2,6 @@
 <head>
     <title>Validatore XML 190</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/grid.min.css" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/form.css" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/input.css" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/button.css" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/header.css" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/container.css" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/menu.css" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.css" type="text/css" /> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.47.0/codemirror.min.css">
 
@@ -24,6 +16,25 @@
         <a class="header item" id='home-name'>
             Validatore XML 190
         </a>
+        <!-- <div class="ui dropdown">
+          <div class="text">Test files</div>
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item">New</div>
+            <div class="item">
+              <span class="description">ctrl + o</span>
+              Open...
+            </div>
+            <div class="item">
+              <span class="description">ctrl + s</span>
+              Save as...
+            </div>
+            <div class="item">
+              <span class="description">ctrl + r</span>
+              Rename
+            </div>
+          </div>
+        </div> -->
     </div>
 
 
@@ -49,7 +60,7 @@
         </div>
     </div>
 
-<div class="ui massive text loader" style="display:none" id='loading'>Scarico il file...</div>
+<div class="ui massive text loader" style="display:none" id='loading'></div>
 
     <div class="ui grid" id="show" style="display:none">
         <div class="row">
@@ -66,7 +77,6 @@
                 <div class="ui statistics">
                     <div class="statistic">
                         <div class="value" id='numero-lotti'>
-                          <div class="ui text loader" style="display:none" id='loading-lotti'>Calcolo...</div>
                         </div>
                         <div class="label">
                           Lotti
@@ -93,18 +103,13 @@
                 <i class="flag outline icon"></i>
                 Messaggi
                 </h4>
-                <div id='messages'>
-                    <!-- <div class="ui negative message">
-                        <i class="close icon"></i>
-                        <div class="header">
-                            Errore: importo troppo piccolo x3
-                        </div>
-                        Alla linea: <span class="error_line">50</span>, <span class="error_line">100</span>,
-                        <span class="error_line">80</span>
-                    </div> -->
-                </div>
+                <div id='messages'></div>
 
             </div>
+            <button class="ui labeled icon button" id='scroll-to-top' style="display:none">
+                Torna in alto
+                <i class="arrow up icon"></i>
+            </button>
         </div>
     </div>
 

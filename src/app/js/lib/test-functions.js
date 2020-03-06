@@ -14,7 +14,6 @@ exports.presenzaDato = function (dato) {
             return presenzaDato(dato[key])
         }
     }
-
     return true;
 }
 
@@ -29,6 +28,63 @@ exports.lunghezzaRagioneSociale = function (nome) {
 exports.lunghezzaOggetto = function (oggetto) {
     if (oggetto === undefined || oggetto === null) return true;
     let parole = oggetto.split(' ');
-    if (parole.length < 6) return false;
+    if (parole.length < 5) return false;
     return true;
 }
+
+// se l'importo è nullo
+exports.importoNullo = function (importo) {
+    if (importo === undefined || importo === null) return true;
+    if (isNaN(importo)) return true;
+    if (parseFloat(importo) === 0) return false;
+    return true;
+}
+
+// se gli importi sono negativi o troppo grandi
+exports.importoTroppoGrande = function (importo) {
+    if (importo === undefined || importo === null) return true;
+    if (isNaN(importo)) return true;
+    if ( parseFloat(importo) > 10000000000) return false;
+    return true;
+}
+
+// se gli importi sono negativi o troppo grandi
+exports.importoNegativo = function (importo) {
+    if (importo === undefined || importo === null) return true;
+    if (isNaN(importo)) return true;
+    if ( parseFloat(importo) < 0) return false;
+    return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//

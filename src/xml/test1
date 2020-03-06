@@ -46,7 +46,7 @@
         <dataInizio>2016-02-19</dataInizio>
         <dataUltimazione>2016-06-10</dataUltimazione>
       </tempiCompletamento>
-      <importoSommeLiquidate>12</importoSommeLiquidate>
+      <importoSommeLiquidate>-12</importoSommeLiquidate>
     </lotto>
     <lotto>
           <cig>asd</cig>

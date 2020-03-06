@@ -29,6 +29,10 @@
         },
         "correttezza": {
             "cig" : {"text": "Il cig immesso non è valido", "type": "error", "code": "ECR01",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "importoAggiudicazione" : {"text": "L'importo di aggiudicazione è negativo", "type": "error", "code": "ECR02",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "importoSommeLiquidate" : {"text": "L'importo delle somme liquidate è negativo", "type": "error", "code": "ECR03",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
         }
     },
@@ -51,6 +55,12 @@
             "ragioneSocialeAggiudicatario" : {"text": "La ragione sociale dell'aggiudicatario è troppo corta", "type": "warning", "code": "WCR03",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
             "oggetto" : {"text": "L'oggetto è troppo corto", "type": "warning", "code": "WCR04",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "importoAggiudicazione" : {"text": "L'importo di aggiudicazione è nullo", "type": "warning", "code": "WCR05",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "importoAggiudicazione" : {"text": "L'importo di aggiudicazione è maggiore di 10 miliardi", "type": "warning", "code": "WCR06",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "importoSommeLiquidate" : {"text": "L'importo delle somme liquidate è maggiore di 10 miliardi", "type": "warning", "code": "WCR07",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
         }
     }

@@ -1,6 +1,3 @@
-#form-bando {
-    background-color: #FFEFD5;
-}
 #home-name {
     font-weight: 900;
 }
@@ -12,3 +9,12 @@
 .styled-warning { background-color: #ffcc66;}
 .link_line {color:#0000EE; text-decoration: underline; cursor: pointer;}
 .link_lotto {color:#0000EE; text-decoration: underline; cursor: pointer;}
+#scroll-to-top {
+  text-align: center;
+  border-radius: 4px;
+  margin: 30px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  transition: background-color .3s;
+}

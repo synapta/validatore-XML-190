@@ -200,6 +200,10 @@ checkCig = utils.checkCig;
 lunghezzaRagioneSociale = fun.lunghezzaRagioneSociale;
 lunghezzaOggetto = fun.lunghezzaOggetto;
 
+importoNullo = fun.importoNullo;
+importoTroppoGrande = fun.importoTroppoGrande;
+importoNegativo = fun.importoNegativo;
+
 var analyzeLotto = function (lotto) {
     lotto.partecipanti.partecipante = rendiArray(lotto.partecipanti.partecipante);
     lotto.aggiudicatari.aggiudicatario = rendiArray(lotto.aggiudicatari.aggiudicatario);
@@ -209,6 +213,9 @@ var analyzeLotto = function (lotto) {
     erroriTotali = erroriTotali.concat(useTest(lotto, tl.validitaCig));
     erroriTotali = erroriTotali.concat(useTest(lotto, tl.lunghezzaRagioneSociale));
     erroriTotali = erroriTotali.concat(useTest(lotto, tl.lunghezzaOggetto));
+    erroriTotali = erroriTotali.concat(useTest(lotto, tl.importoNullo));
+    erroriTotali = erroriTotali.concat(useTest(lotto, tl.importoTroppoGrande));
+    erroriTotali = erroriTotali.concat(useTest(lotto, tl.importoNegativo));
     return erroriTotali;
 
 }
