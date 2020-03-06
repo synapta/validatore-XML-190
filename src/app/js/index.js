@@ -2,7 +2,7 @@ var pageStatus = function (status) {
     switch (status) {
         case 'homepage':
             $('#xml-form').text('');
-            $('#loading-lotti').hide();
+            // $('#loading-lotti').hide();
             $('#loading').hide();
             $('#show').hide();
             $('#main').show();
@@ -13,9 +13,9 @@ var pageStatus = function (status) {
             break;
         case 'loading':
             $('#custom-error').html('');
-            // $('#error-under-search').hide();
             $('#main').hide();
             $('#loading').show();
+            $('#loading').html("Scarico il file...");
             break;
         case 'show-steps-with-error':
             $('#loading').hide();
@@ -26,13 +26,20 @@ var pageStatus = function (status) {
             $('#loading').hide();
             $('#main').show();
             break;
-        case 'analyse':
+        case 'loading-analysis':
+            $('#custom-error').html('');
+            $('#main').hide();
+            $('#show-results').hide();
+            $('#loading').show();
+            $('#loading').html("Analizzo il file...");
+            break;
+        case 'show-analysis1':
+            $('#loading').hide();
             $('#xml-form').text();
             $('#main').hide();
             $('#show').show();
-            $('#loading-lotti').show();
             break;
-        case 'show-analysis':
+        case 'show-analysis2':
             $('.ui.accordion').accordion('refresh');
             $('.message .close')
                 .on('click', function() {
@@ -40,10 +47,24 @@ var pageStatus = function (status) {
                     .closest('.message')
                     .transition('fade');
             });
+            $('#scroll-to-top').hide();
+            jQuery(document).ready(function() {
+                var btn = $('#scroll-to-top');
+
+                $(window).scroll(function() {
+                if ($(window).scrollTop() > 400) {
+                    btn.show();
+                } else {
+                    btn.hide();
+                }
+                });
+
+                btn.on('click', function(e) {
+                    e.preventDefault();
+                    $('html, body').animate({scrollTop:0}, '300');
+                });
+            });
             break;
-        // case 'loading':
-        //
-        //     break;
     }
 }
 
@@ -65,6 +86,7 @@ var loadAnalysis = function () {
             pageStatus('show-steps-successful')
 
             $('#show-results').click(() => {
+                pageStatus('loading-analysis');
                 showResults(data);
             })
         }
@@ -72,28 +94,29 @@ var loadAnalysis = function () {
 }
 
 let showResults = function (data) {
-    pageStatus('analyse');
+
     $('#xml-form').text(data);
     // window.location.search += 'id=' + encodeURI(url);
     // setParam('url',url)
     window.myCodeMirror = CodeMirror.fromTextArea(document.getElementById("xml-form"), {
         lineNumbers: true,
         lineWrapping: true,
+        autoRefresh:true,
         readOnly: true,
         mode: 'xml'
         // viewportMargin: Infinity --carica tutto il file, puoi fare il cerca, ma se è grosso danni
     });
     let xmlView = window.myCodeMirror;
+    xmlView.refresh();
     data = formatData(xmlView, data);
     $.ajax({
         url: '/api/analyze/xml',
-        type: 'post',
+        type: 'POST',
         data: data,
         contentType: 'text/plain',
         dataType: "json",
         success: function (res) {
-
-            $('#loading-lotti').hide();
+            pageStatus('show-analysis1');
             $('#numero-lotti').text(res.totLotti);
             $('#numero-errori').text(res.totErrors);
             $('#numero-avvisi').text(res.totWarnings);
@@ -101,19 +124,19 @@ let showResults = function (data) {
             markAll(xmlView, res.errors);
             $(".link_line").click( function(e) {
                 console.log(e)
-                let line = e.target.textContent;
+                let line = parseInt(e.target.textContent) + 20;
                 e.preventDefault();
-                xmlView.scrollIntoView({line:line, char:0})
+                xmlView.scrollIntoView({line: line, char: 0})
                 return false;
             });
             $(".link_lotto").click( function(e) {
-                let line = e.target.dataset.position;
+                let line = parseInt(e.target.dataset.position) + 20;
                 e.preventDefault();
-                xmlView.scrollIntoView({line:line, char:0})
+                xmlView.scrollIntoView({line: line, char: 0})
                 return false;
             });
             alert("Analizzato!");
-            pageStatus('show-analysis');
+            pageStatus('show-analysis2');
         },
         error: function(e) {
             alert("Errore nell'analisi :-(");
@@ -139,7 +162,6 @@ $("#search-field").keyup(function(event) {
         loadAnalysis();
     }
 });
-
 
 
 markLine = function (xmlView, line, type) {
@@ -321,39 +343,34 @@ var indentData = function (xmlView, data) {
       xmlView.indentSelection("smart");
       xmlView.setCursor({
           'line':xmlView.firstLine(),
-      'ch':0,
-      'sticky':null
+          'ch':0,
+          'sticky':null
      })
 }
 
 setParam = function (name, value) {
     var l = window.location;
-
     /* build params */
     var params = {};
     var x = /(?:\??)([^=&?]+)=?([^&?]*)/g;
     var s = l.search;
-    for(var r = x.exec(s); r; r = x.exec(s))
-    {
+    for(var r = x.exec(s); r; r = x.exec(s)) {
         r[1] = decodeURIComponent(r[1]);
         if (!r[2]) r[2] = '%%';
         params[r[1]] = r[2];
     }
-
     /* set param */
     params[name] = encodeURIComponent(value);
 
     /* build search */
     var search = [];
-    for(var i in params)
-    {
+    for(var i in params) {
         var p = encodeURIComponent(i);
         var v = params[i];
         if (v != '%%') p += '=' + v;
         search.push(p);
     }
     search = search.join('&');
-
     /* execute search */
     l.search = search;
 }
