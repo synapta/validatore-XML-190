@@ -16,7 +16,7 @@ smartCigValidity = function (string) {
     var cigBody = string.toUpperCase().substring(3,10);
     var cigProg = parseInt(cigBody,16);
     var cigCheck = cigProg*211%251;
-    cigCheck = cigCheck.toString(16).toUpperCase();
+    cigCheck = cigCheck.toString(16).toUpperCase().padStart(2, '0');
     if (cigCheck === checkStr){
     return true;
     } else {
