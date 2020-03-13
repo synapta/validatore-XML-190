@@ -27,13 +27,23 @@
         "accuratezzaSemantica" : {
 
         },
+        "coerenza" : {
+            "dataInizioEFine" : {"text": "La data di inizio è successivo alla data di fine", "type": "error", "code": "ECO01",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
+        },
         "correttezza": {
             "cig" : {"text": "Il cig immesso non è valido", "type": "error", "code": "ECR01",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
             "importoAggiudicazione" : {"text": "L'importo di aggiudicazione è negativo", "type": "error", "code": "ECR02",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
             "importoSommeLiquidate" : {"text": "L'importo delle somme liquidate è negativo", "type": "error", "code": "ECR03",
-                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "codiceFiscaleProp" : {"text": "Il codice fiscale/partita iva della struttura proponente non è valido", "type": "error", "code": "ECR04",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> controlla che il numero di caratteri sia quello giusto e che non ci siano altri caratteri, spazi inclusi, oltre al codice."},
+            "codiceFiscalePartecipante" : {"text": "Il codice fiscale/partita iva del partecipante non è valido", "type": "error", "code": "ECR05",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> controlla che il numero di caratteri sia quello giusto e che non ci siano altri caratteri, spazi inclusi, oltre al codice."},
+            "codiceFiscaleAggiudicatario" : {"text": "Il codice fiscale/partita iva dell'aggiudicatario non è valido", "type": "error", "code": "ECR06",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> controlla che il numero di caratteri sia quello giusto e che non ci siano altri caratteri, spazi inclusi, oltre al codice."}
         }
     },
     "warnings": {
@@ -62,7 +72,12 @@
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
             "importoSommeLiquidate" : {"text": "L'importo delle somme liquidate è maggiore di 10 miliardi", "type": "warning", "code": "WCR07",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
+        },
+        "coerenza" : {
+            "importoAggiudicazioneELiquidato" : {"text": "L'importo liquidato è più del doppio di quello di aggiudicazione", "type": "warning", "code": "WCO01",
+            "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
         }
     }
+
 
 }

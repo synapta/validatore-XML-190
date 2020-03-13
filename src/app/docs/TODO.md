@@ -84,12 +84,12 @@ la classe che è la roba che cambia nella struttura del div [AM]
 
 ### multi campo singolo lotto
 - [ ] [warn] almeno un lotto
-- [ ] data fine >= data inizio
+- [X] data fine >= data inizio
 - [ ] pa stessa tra partecipanti
-- [ ] [warn] importo liquidato <= 20% * importo + importo
+- [X] [warn] importo liquidato >= 2* importo
 - [ ] vincitore uguale a pa banditrice
-- [ ] soldi coerenti col tipo di procedura
-- [ ] nome azienda non coerente con la piva
+- [ ] (later) soldi coerenti col tipo di procedura
+- [ ] (later) nome azienda non coerente con la piva
 - [ ] pagato ma nessun partecipante
 - [ ] vincitori non coerenti col tipo di procedura / oggetto (difficile)
 - [ ] l'aggiudicatario deve essere tra i partecipanti

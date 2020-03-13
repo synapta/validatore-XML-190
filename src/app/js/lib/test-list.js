@@ -46,6 +46,15 @@ exports.validitaCig = {
     ]
 };
 
+exports.validitaCf = {
+    testName: 'validitaCf',
+    fieldsToTest: [
+        {field: 'strutturaProponente.codiceFiscaleProp', code: 'ECR04'},
+        {field: 'partecipanti.partecipante._array.codiceFiscale', code: 'ECR05'},
+        {field: 'aggiudicatari.aggiudicatario._array.codiceFiscale', code: 'ECR06'}
+    ]
+};
+
 exports.lunghezzaRagioneSociale = {
     testName: 'lunghezzaRagioneSociale',
     fieldsToTest: [
@@ -86,7 +95,19 @@ exports.importoNegativo = {
 };
 
 
+exports.coerenzaDate = {
+    testName: 'coerenzaDate',
+    fieldsToTest: [
+        {fields: {dataFine: 'tempiCompletamento.dataUltimazione', dataInizio: 'tempiCompletamento.dataInizio'}, code: 'ECO01'},
+    ]
+};
 
+exports.coerenzaImporti = {
+    testName: 'coerenzaImporti',
+    fieldsToTest: [
+        {fields: {importoAggiudicazione: 'importoAggiudicazione', importoLiquidato: 'importoSommeLiquidate'}, code: 'WCO01'},
+    ]
+};
 
 
 

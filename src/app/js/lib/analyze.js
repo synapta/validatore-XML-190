@@ -93,19 +93,14 @@ var extractLotti = function (xmlJSON) {
     var firstLevel;
     for (var key in xmlJSON) firstLevel = key;
     var totLotti = 1;
-    var multiLotto = false;
-    if (Array.isArray(xmlJSON[firstLevel].data.lotto)) {
-        totLotti = xmlJSON[firstLevel].data.lotto.length;
-        multiLotto = true;
-    }
-    return {lotti: rendiArray(xmlJSON[firstLevel].data.lotto), totLotti: totLotti};
+    // if (Array.isArray(xmlJSON[firstLevel].data.lotto)) totLotti = xmlJSON[firstLevel].data.lotto.length;
+    return rendiArray(xmlJSON[firstLevel].data.lotto);
 }
 
 exports.analyze = function (body, cb) {
     let xmlJSON = convertXMLToJSON(body);
-    let obj = extractLotti(xmlJSON);
-    let lotti = obj.lotti;
-    let totLotti = obj.totLotti;
+    let lotti = extractLotti(xmlJSON);
+    let totLotti = lotti.length;
     let errors = [];
     for (let j = 0; j < lotti.length; j ++) {
         let incremented = j + 1;
@@ -204,6 +199,11 @@ importoNullo = fun.importoNullo;
 importoTroppoGrande = fun.importoTroppoGrande;
 importoNegativo = fun.importoNegativo;
 
+coerenzaDate = fun.coerenzaDate;
+coerenzaImporti = fun.coerenzaImporti;
+
+
+
 var analyzeLotto = function (lotto) {
     lotto.partecipanti.partecipante = rendiArray(lotto.partecipanti.partecipante);
     lotto.aggiudicatari.aggiudicatario = rendiArray(lotto.aggiudicatari.aggiudicatario);
@@ -216,6 +216,8 @@ var analyzeLotto = function (lotto) {
     erroriTotali = erroriTotali.concat(useTest(lotto, tl.importoNullo));
     erroriTotali = erroriTotali.concat(useTest(lotto, tl.importoTroppoGrande));
     erroriTotali = erroriTotali.concat(useTest(lotto, tl.importoNegativo));
+    erroriTotali = erroriTotali.concat(useTest(lotto, tl.coerenzaDate));
+    erroriTotali = erroriTotali.concat(useTest(lotto, tl.coerenzaImporti));
     return erroriTotali;
 
 }
@@ -232,6 +234,17 @@ var useTest = function (lotto, options) {
 
 var useTestOnField = function (testFunction,lotto,row) {
     let errors = [];
+    if (row.fields !== undefined) {
+        let objFields = {};
+        for (var key in row.fields) {
+            if (row.fields.hasOwnProperty(key)) {
+                objFields[key] = getValue(lotto,row.fields[key]);
+            }
+        }
+        if (!testFunction(objFields))
+            errors.push(addError(row.code, getLine(lotto,row.fields[key]),lotto));
+    return errors;
+    }
     if (row.field.match('_array')) {
         let length = 0;
         var match = /_array/.exec(row.field);
@@ -253,13 +266,4 @@ var useTestOnField = function (testFunction,lotto,row) {
             errors.push(addError(row.code, getLine(lotto,row.field),lotto));
     }
     return errors;
-
-}
-
-
-// funzioni di data quality
-var dqDataRange = function (date) {
-    if (new Date(date) > new Date('2100-01-01 00:00:00')) return false;
-    if (new Date(date) < new Date('2000-01-01 00:00:00')) return false;
-    return true;
 }
