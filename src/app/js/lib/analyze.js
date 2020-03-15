@@ -203,7 +203,6 @@ coerenzaDate = fun.coerenzaDate;
 coerenzaImporti = fun.coerenzaImporti;
 
 
-
 var analyzeLotto = function (lotto) {
     lotto.partecipanti.partecipante = rendiArray(lotto.partecipanti.partecipante);
     lotto.aggiudicatari.aggiudicatario = rendiArray(lotto.aggiudicatari.aggiudicatario);
