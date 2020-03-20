@@ -20,6 +20,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - gestire meglio il messaggio che riguarda le righe mancanti
 - footer con data e nome
 - pagina/messaggio/alert con "informazioni sull'applicazione"
+- aggiungi lista dei file di test da servire in modo comodo lato front end
 - quando sono sopra il testo dell'xml evidenziato perché c'è un errore vorrei poter andare a leggere qual era questo errore (link al messaggio, o in qualche modo il messaggio segue il testo)
 
 
@@ -28,9 +29,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - aggiungere il controllo di mime type per i file prodotti con excel -> non facile, passano il mime type test
     - www.comunefosdinovo.it/download_2015_comune.xml?h=634ed9133d133968ddf82630d55c486868c2c7bb
     - http://www.bonificanurra.it/pubblicazioni/tabella7.xml
-- se il lotto non ha alcun errore -> messaggio di successo!
 - un po' di testing con link veri!
-- aggiungi lista dei file di test da servire in modo comodo lato front end
 - se la lista di lotti con errori è molto lunga magari servirebbe una preview e poi puoi allargare
 
 
@@ -50,6 +49,8 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - se analizzo una roba, ma non clicco procedi e poi ne analizzo un'altra si accodano uno dopo l'altra
 - svuotare la pagina prima di ricaricarla (se passi dalla home fa un append)
 - il testo nel box di testo non deve essere modificabile!
+- se il lotto non ha alcun errore -> messaggio di successo!
+
 
 
 ## Lista test

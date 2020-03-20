@@ -33,6 +33,12 @@ var pageStatus = function (status) {
             $('#loading').show();
             $('#loading').html("Analizzo il file...");
             break;
+        case 'show-success':
+            $('#loading').hide();
+            $('#xml-form').text();
+            $('#main').show();
+            $('#show').hide();
+            break;
         case 'show-analysis1':
             $('#loading').hide();
             $('#xml-form').text();
@@ -76,7 +82,7 @@ var loadAnalysis = function () {
         type: 'GET',
         error: function(e) {
             makeProgressionSteps(e.responseJSON.progression)
-            makeErrorUnderSearch(e.responseJSON.header,e.responseJSON.text);
+            makeMessageUnderSearch(e.responseJSON.header,e.responseJSON.text, 'negative');
             pageStatus('show-steps-with-error')
             // console.log(e);
         },
@@ -116,27 +122,31 @@ let showResults = function (data) {
         contentType: 'text/plain',
         dataType: "json",
         success: function (res) {
-            pageStatus('show-analysis1');
-            $('#numero-lotti').text(res.totLotti);
-            $('#numero-errori').text(res.totErrors);
-            $('#numero-avvisi').text(res.totWarnings);
-            addMessages(res.errors)
-            markAll(xmlView, res.errors);
-            $(".link_line").click( function(e) {
-                console.log(e)
-                let line = parseInt(e.target.textContent) + 20;
-                e.preventDefault();
-                xmlView.scrollIntoView({line: line, char: 0})
-                return false;
-            });
-            $(".link_lotto").click( function(e) {
-                let line = parseInt(e.target.dataset.position) + 20;
-                e.preventDefault();
-                xmlView.scrollIntoView({line: line, char: 0})
-                return false;
-            });
-            alert("Analizzato!");
-            pageStatus('show-analysis2');
+            if (res.totErrors === 0 && res.totWarnings === 0) {
+                pageStatus('show-success');
+                makeMessageUnderSearch("Successo!", "L'analisi è andata a buon fine e non sono stati trovati errori. <br>Si può procedere con una nuova analisi.", 'positive')
+            } else {
+                pageStatus('show-analysis1');
+                $('#numero-lotti').text(res.totLotti);
+                $('#numero-errori').text(res.totErrors);
+                $('#numero-avvisi').text(res.totWarnings);
+                addMessages(res.errors)
+                markAll(xmlView, res.errors);
+                $(".link_line").click( function(e) {
+                    console.log(e)
+                    let line = parseInt(e.target.textContent) + 20;
+                    e.preventDefault();
+                    xmlView.scrollIntoView({line: line, char: 0})
+                    return false;
+                });
+                $(".link_lotto").click( function(e) {
+                    let line = parseInt(e.target.dataset.position) + 20;
+                    e.preventDefault();
+                    xmlView.scrollIntoView({line: line, char: 0})
+                    return false;
+                });
+                pageStatus('show-analysis2');
+            }
         },
         error: function(e) {
             alert("Errore nell'analisi :-(");
@@ -278,9 +288,9 @@ makeProgressionSteps = function (step) {
 }
 
 
-makeErrorUnderSearch = function (header, text) {
+makeMessageUnderSearch = function (header, text, type) {
     let div = `
-<div class="ui negative message">
+<div class="ui ${type} message">
     <div class="header">
     ${header}
     </div>
