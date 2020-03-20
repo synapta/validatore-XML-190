@@ -75,6 +75,7 @@ var pageStatus = function (status) {
 }
 
 var loadAnalysis = function () {
+    pageStatus('homepage')
     pageStatus('loading')
     let url = $("#search-field").val();
     $.ajax({
@@ -100,7 +101,8 @@ var loadAnalysis = function () {
 }
 
 let showResults = function (data) {
-
+    data = sanitizeComments(data);
+    console.log(data)
     $('#xml-form').text(data);
     // window.location.search += 'id=' + encodeURI(url);
     // setParam('url',url)
@@ -173,6 +175,10 @@ $("#search-field").keyup(function(event) {
     }
 });
 
+sanitizeComments = function (string) {
+    let sanitized = string.replace(/<!--.*?-->/g, '');
+    return sanitized;
+}
 
 markLine = function (xmlView, line, type) {
     xmlView.markText({line: line -1, ch: 0}, {line: parseInt(line), ch: 0}, {className: "styled-"+type });

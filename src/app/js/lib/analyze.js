@@ -38,7 +38,7 @@ var detectMIME = function (body, cb) {
     });
 }
 
-var validateXML = function (body, cb) {
+var xsdValidation = function (body, cb) {
     xsd.validateXML(body, xsdPath, function(err, result) {
         if (result.valid) {
             cb(undefined)
@@ -62,7 +62,7 @@ exports.validateFile = function (body,cb) {
             cb(errorLog)
         } else {
             console.log("MIME OK!")
-            validateXML(body,cb);
+            xsdValidation(body,cb);
         }
     })
 }
