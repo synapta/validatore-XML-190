@@ -201,6 +201,7 @@ importoNegativo = fun.importoNegativo;
 
 coerenzaDate = fun.coerenzaDate;
 coerenzaImporti = fun.coerenzaImporti;
+validitaCf = fun.validitaCf;
 
 
 var analyzeLotto = function (lotto) {
@@ -217,6 +218,8 @@ var analyzeLotto = function (lotto) {
     erroriTotali = erroriTotali.concat(useTest(lotto, tl.importoNegativo));
     erroriTotali = erroriTotali.concat(useTest(lotto, tl.coerenzaDate));
     erroriTotali = erroriTotali.concat(useTest(lotto, tl.coerenzaImporti));
+    erroriTotali = erroriTotali.concat(useTest(lotto, tl.validitaCf));
+
     return erroriTotali;
 
 }

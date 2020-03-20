@@ -70,7 +70,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - [X] [warn] ragonesocialeprop >=3 caratteri
 - [X] [warn] oggetto con almeno 5 parole distinte (parola = cosa separata da spazi)
 - [ ] [warn] più di 1000 partecipanti
-- [ ] codfiscprop regex
+- [X] codfiscprop regex
 - [ ] [warn] caratteri utf-8
 - [ ] scelta contraente da elenco
 - [ ] importo formato NNNNNNNNN.DD (non inizia per 0)

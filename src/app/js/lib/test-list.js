@@ -94,7 +94,6 @@ exports.importoNegativo = {
     ]
 };
 
-
 exports.coerenzaDate = {
     testName: 'coerenzaDate',
     fieldsToTest: [
@@ -109,9 +108,14 @@ exports.coerenzaImporti = {
     ]
 };
 
-
-
-
+exports.validitaCf = {
+    testName: 'validitaCf',
+    fieldsToTest: [
+        {field: 'strutturaProponente.codiceFiscaleProp', code: 'ECR04'},
+        {field: 'partecipanti.partecipante._array.codiceFiscale', code: 'ECR05'},
+        {field: 'aggiudicatari.aggiudicatario._array.codiceFiscale', code: 'ECR06'}
+    ]
+};
 
 
 
