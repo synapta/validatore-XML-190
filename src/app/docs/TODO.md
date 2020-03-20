@@ -50,6 +50,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - svuotare la pagina prima di ricaricarla (se passi dalla home fa un append)
 - il testo nel box di testo non deve essere modificabile!
 - se il lotto non ha alcun errore -> messaggio di successo!
+- gestiti i commenti nell'XML
 
 
 

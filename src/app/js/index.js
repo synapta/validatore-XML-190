@@ -85,13 +85,16 @@ var loadAnalysis = function () {
             makeProgressionSteps(e.responseJSON.progression)
             makeMessageUnderSearch(e.responseJSON.header,e.responseJSON.text, 'negative');
             pageStatus('show-steps-with-error')
-            // console.log(e);
         },
         success: function(data) {
+            let haveComments = false;
+            // prima di parsificare l'xml tolgo i commenti perché rompono la libreria xml-js
+            let sanitizedData = sanitizeComments(data);
+            if (data !== sanitizedData) haveComments = true;
+            data = sanitizedData;
             makeProgressionSteps()
-            // document.getElementById('show-results').classList.add('active');
             pageStatus('show-steps-successful')
-
+            if (haveComments) makeMessageUnderSearch('Attenzione', HTMLEncode(`È richiesto dalle linee guida di non usare commenti nel file (indicati da "<!-- testo del commento-->"), per la visualizzazione dell'analisi sono stati eliminati.`), 'warning')
             $('#show-results').click(() => {
                 pageStatus('loading-analysis');
                 showResults(data);
@@ -101,11 +104,8 @@ var loadAnalysis = function () {
 }
 
 let showResults = function (data) {
-    data = sanitizeComments(data);
-    console.log(data)
     $('#xml-form').text(data);
-    // window.location.search += 'id=' + encodeURI(url);
-    // setParam('url',url)
+
     window.myCodeMirror = CodeMirror.fromTextArea(document.getElementById("xml-form"), {
         lineNumbers: true,
         lineWrapping: true,
@@ -127,6 +127,7 @@ let showResults = function (data) {
             if (res.totErrors === 0 && res.totWarnings === 0) {
                 pageStatus('show-success');
                 makeMessageUnderSearch("Successo!", "L'analisi è andata a buon fine e non sono stati trovati errori. <br>Si può procedere con una nuova analisi.", 'positive')
+
             } else {
                 pageStatus('show-analysis1');
                 $('#numero-lotti').text(res.totLotti);
@@ -322,7 +323,6 @@ function groupBy(list, keyGetter) {
 
 
 formatData = function (xmlView,data) {
-    // console.log(data)
     // bisogna insistere per scollare fra loro tutti i tag
     // tag di apertura seguito da uno di chiusura
     data = data.replace(/<\?([^>]+?)\?>\s*<([^>]+?)>/g, '<?$1?>\n<$2>');
@@ -332,12 +332,10 @@ formatData = function (xmlView,data) {
     data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
     data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
     data = data.replace(/<\/([^>]+?)>\s*</g, '</$1>\n<');
-    // console.log(data)
     // due tag di chiusura di seguito
     data = data.replace(/<\/([^>]+?)>\s*<\/([^>]+?)>/g, '</$1>\n</$2>');
     data = data.replace(/<\/([^>]+)><\/([^>]+)>/g, '</$1>\n</$2>');
     data = data.replace(/<\/([^>]+)><\/([^>]+)>/g, '</$1>\n</$2>');
-    // console.log(data)
     xmlView.setValue(data);
     indentData(xmlView,data);
     data = xmlView.getValue();
@@ -362,6 +360,9 @@ var indentData = function (xmlView, data) {
           'ch':0,
           'sticky':null
      })
+}
+function HTMLEncode(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 }
 
 setParam = function (name, value) {
