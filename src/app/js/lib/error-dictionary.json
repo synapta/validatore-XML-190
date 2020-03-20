@@ -31,6 +31,18 @@
             "dataInizioEFine" : {"text": "La data di inizio è successivo alla data di fine", "type": "error", "code": "ECO01",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
         },
+        "sintassi" : {
+            "importoAggiudicazione" : {"text": "L'importo di aggiudicazione ha un errore di sintassi", "type": "error", "code": "ESI01",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "importoSommeLiquidate" : {"text": "L'importo delle somme liquidate ha un errore di sintassi", "type": "error", "code": "ESI02",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
+        },
+        "formato" : {
+            "importoAggiudicazione" : {"text": "L'importo di aggiudicazione non è nel giusto formato", "type": "error", "code": "EFO01",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "importoSommeLiquidate" : {"text": "L'importo delle somme liquidate non è nel giusto formato", "type": "error", "code": "EFO02",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
+        },
         "correttezza": {
             "cig" : {"text": "Il cig immesso non è valido", "type": "error", "code": "ECR01",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
@@ -76,6 +88,12 @@
         "coerenza" : {
             "importoAggiudicazioneELiquidato" : {"text": "L'importo liquidato è più del doppio di quello di aggiudicazione", "type": "warning", "code": "WCO01",
             "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
+        },
+        "precisione" : {
+            "importoAggiudicazione" : {"text": "L'importo di aggiudicazione è impreciso", "type": "warning", "code": "WPR01",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "importoSommeLiquidate" : {"text": "L'importo delle somme liquidate è impreciso", "type": "warning", "code": "WPR02",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
         }
     }
 

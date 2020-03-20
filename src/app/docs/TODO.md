@@ -29,13 +29,21 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - aggiungere il controllo di mime type per i file prodotti con excel -> non facile, passano il mime type test
     - www.comunefosdinovo.it/download_2015_comune.xml?h=634ed9133d133968ddf82630d55c486868c2c7bb
     - http://www.bonificanurra.it/pubblicazioni/tabella7.xml
+    - http://www.aeronautica.difesa.it/atticontr/Documents/LG_190_2014_80115410153.xml
 - un po' di testing con link veri!
 - se la lista di lotti con errori è molto lunga magari servirebbe una preview e poi puoi allargare
+    - es http://www.vcotrasporti.it/userdata/Gara%20Assicurazioni/2020-2022/GARA%20BUONI%20PASTO/ANNO%202019%20(file%20XLM).xml
+- gli aggiudicatari sono obbligatori? non credo!
+- se sulla stessa riga c'è sia un errore che un warning deve prevalere l'evidenziazione da errore non da warning!
 
 
 
 ## NOTE
 - errore in console non dipende da me, credo --> https://github.com/Semantic-Org/Semantic-UI/issues/2146
+
+# Lista generatori/validatori XML 190
+- https://www.dsa.it/index.php/generatore-xml-per-avcp
+- https://avcp-legge-190-2012.assocons.it/
 
 ## FATTI
 - analisi dell'XSD

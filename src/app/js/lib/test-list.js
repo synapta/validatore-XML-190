@@ -117,8 +117,29 @@ exports.validitaCf = {
     ]
 };
 
+exports.sintassiImporti = {
+    testName: 'sintassiImporti',
+    fieldsToTest: [
+        {field: 'importoAggiudicazione', code: 'ESI01'},
+        {field: 'importoSommeLiquidate', code: 'ESI02'}
+    ]
+};
 
+exports.formatoImporti = {
+    testName: 'formatoImporti',
+    fieldsToTest: [
+        {field: 'importoAggiudicazione', code: 'EFO01'},
+        {field: 'importoSommeLiquidate', code: 'EFO02'}
+    ]
+};
 
+exports.precisioneImporti = {
+    testName: 'formatoImporti',
+    fieldsToTest: [
+        {field: 'importoAggiudicazione', code: 'WPR01'},
+        {field: 'importoSommeLiquidate', code: 'WPR02'}
+    ]
+};
 
 
 

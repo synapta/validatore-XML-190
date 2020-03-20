@@ -135,6 +135,7 @@ let showResults = function (data) {
                 $('#numero-avvisi').text(res.totWarnings);
                 addMessages(res.errors)
                 markAll(xmlView, res.errors);
+                console.log(xmlView.getAllMarks())
                 $(".link_line").click( function(e) {
                     console.log(e)
                     let line = parseInt(e.target.textContent) + 20;
@@ -186,13 +187,17 @@ markLine = function (xmlView, line, type) {
 }
 
 markAll = function(xmlView, errori) {
-    // console.log(errori)
-    for (let i = 0; i < errori.length; i++) {
-        let line = errori[i].line;
-        if (errori[i].line === undefined) line = errori[i].startLine;
-        markLine(xmlView,line, errori[i].type)
+    let sortedErrori = [... errori];
+    console.log(errori)
+    sortedErrori = sortedErrori.sort((a, b) => (a.type < b.type) ? 1 : -1)
+    console.log(sortedErrori)
+    for (let i = 0; i < sortedErrori.length; i++) {
+        let line = sortedErrori[i].line;
+        if (sortedErrori[i].line === undefined) line = sortedErrori[i].startLine;
+        markLine(xmlView,line, sortedErrori[i].type)
     }
 }
+
 addMessages = function (errori) {
     let errorMap = groupBy(errori, errore => errore.code );
     let errorIter = errorMap.values();

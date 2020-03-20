@@ -101,6 +101,34 @@ exports.validitaCf = function (cf) {
     return true;
 }
 
+// controllo che gli importi non abbiano altre stringhe oltre all'importo
+exports.sintassiImporti = function (importo) {
+    if (importo === null || importo === undefined) return true;
+    importo = importo.trim();
+    if (importo.match(/[^\d\.,']/)) return false;
+    return true;
+}
+
+// controllo che gli importi siano nel formato NNNNNN.DD
+exports.formatoImporti = function (importo) {
+    if (importo === null || importo === undefined) return true;
+    importo = importo.replace(/[^ \d\.,']/g, '');
+    importo = importo.trim();
+    if (!importo.match(/^\d+(.\d+)?$/)) return false;
+    if (importo.match(/^\d+[^\.]\d+$/)) return false;
+    return true
+}
+
+// controllo che gli importi siano precisi, ovvero con tutte e solo due cifre decimali NNNNNN.DD
+exports.precisioneImporti = function (importo) {
+    if (importo === null || importo === undefined) return true;
+    importo = importo.replace(/[^ \d\.,']/g, '');
+    importo = importo.trim();
+    if (importo.match(/^\d+.\d{3,}?$/)) return false;
+    if (importo.match(/^\d+$/)) return false;
+    return true
+}
+
 
 var verificaPartitaIva = function (piva) {
     console.log(piva)
@@ -122,7 +150,6 @@ var verificaPartitaIva = function (piva) {
     if (sum % 10 === 0) return true;
     return false;
 }
-
 
 
 
