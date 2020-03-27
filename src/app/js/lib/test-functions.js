@@ -131,22 +131,18 @@ exports.precisioneImporti = function (importo) {
 
 
 var verificaPartitaIva = function (piva) {
-    console.log(piva)
     piva = piva.trim();
     if (piva.length !== 11) return false;
     if (piva.match(/^\d+$/) === null) return false;
     let arr = Array.from(piva, x => parseInt(x));
-    console.log(arr)
     let sum = 0;
     for (let i = 0; i < 11; i++) {
-        console.log(i, arr[i], sum, arr[i]*2 ,arr[i]*2 - 9)
         if (i % 2 === 0) {
             sum += arr[i];
         } else {
             sum = arr[i]*2  >= 10 ? sum + arr[i]*2 - 9 : sum + arr[i]*2;
         }
     }
-    console.log(sum)
     if (sum % 10 === 0) return true;
     return false;
 }
