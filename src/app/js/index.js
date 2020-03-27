@@ -135,7 +135,6 @@ let showResults = function (data) {
                 $('#numero-avvisi').text(res.totWarnings);
                 addMessages(res.errors)
                 markAll(xmlView, res.errors);
-                console.log(xmlView.getAllMarks())
                 $(".link_line").click( function(e) {
                     console.log(e)
                     let line = parseInt(e.target.textContent) + 20;
@@ -183,18 +182,39 @@ sanitizeComments = function (string) {
 }
 
 markLine = function (xmlView, line, type) {
-    xmlView.markText({line: line -1, ch: 0}, {line: parseInt(line), ch: 0}, {className: "styled-"+type });
+    let mark = xmlView.markText({line: line -1, ch: 0}, {line: parseInt(line), ch: 0}, {className: "styled-"+type, addToHistory:true });
 }
 
 markAll = function(xmlView, errori) {
     let sortedErrori = [... errori];
-    console.log(errori)
-    sortedErrori = sortedErrori.sort((a, b) => (a.type < b.type) ? 1 : -1)
-    console.log(sortedErrori)
-    for (let i = 0; i < sortedErrori.length; i++) {
-        let line = sortedErrori[i].line;
-        if (sortedErrori[i].line === undefined) line = sortedErrori[i].startLine;
-        markLine(xmlView,line, sortedErrori[i].type)
+    sortedErrori = sortedErrori.sort((a, b) => (a.line < b.line) ? 1 : (a.line === b.line) ? ((a.type < b.type) ? 1 : -1) : -1 );
+
+    let errorsByLine = _.groupBy(errori, errore => errore.line );
+    for (var line in errorsByLine) {
+        if (errorsByLine.hasOwnProperty(line)) {
+            let groupedError = errorsByLine[line];
+            let type = 'warning';
+            for (let i = 0; i < groupedError.length; i++) {
+                if (groupedError[i].type === 'error') type = 'error';
+            }
+            if (line !== 'undefined') {
+                markLine(xmlView,line, type);
+            } else {
+                // per gli errori che non hanno una riga ma solo quella di inizio lotto,
+                // devo rifare lo stesso lavoro per le singole startLine per trovare gli errori rispetto ai warning
+                let errorsByStartLine = _.groupBy(groupedError, errore => errore.startLine );
+                for (var startLine in errorsByStartLine) {
+                    if (errorsByStartLine.hasOwnProperty(startLine)) {
+                        let groupedErrorStartLine = errorsByStartLine[startLine];
+                        let type2 = 'warning';
+                        for (let j = 0; j < groupedErrorStartLine.length; j++) {
+                            if (groupedErrorStartLine[j].type === 'error') type2 = 'error';
+                        }
+                        markLine(xmlView,startLine, type2);
+                    }
+                }
+            }
+        }
     }
 }
 
