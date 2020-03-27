@@ -7,7 +7,9 @@ var utils = require('./utils.js');
 var xsd = require('xsd-schema-validator');
 var fs = require('fs');
 var _ = require('lodash');
-var xsdPath = __dirname + '/../../assets/schema-tolerant.xsd'
+var xsdXmlPath = __dirname + '/../../assets/schema-tolerant.xsd';
+var xsdIndexPath = __dirname + '/../../assets/schema-index.xsd';
+
 
 var mmm = require('mmmagic'),
     Magic = mmm.Magic;
@@ -21,7 +23,7 @@ var detectMIME = function (body, cb) {
         if (mimeType !== 'text/xml') {
             let errorLog = {};
             errorLog.header = "Il file non è del tipo giusto :-(";
-            errorLog.text = "Il link è di file che non è un XML."
+            errorLog.text = "Il link è di un file che non è un XML."
             if (mimeType === "text/html") errorLog.text = "Il link è di una pagina HTML.";
             if (mimeType === "application/zip") errorLog.text = "Il link è di un file compresso.";
             // if (mimeType === "application/vnd.ms-excel") errorLog.text = "Il link è di un file xml prodotto con excel.";
@@ -38,7 +40,9 @@ var detectMIME = function (body, cb) {
     });
 }
 
-var xsdValidation = function (body, cb) {
+var xsdValidation = function (body, type, cb) {
+    xsdPath = xsdXmlPath;
+    if (type === 'index') xsdPath = xsdIndexPath;
     xsd.validateXML(body, xsdPath, function(err, result) {
         if (result.valid) {
             cb(undefined)
@@ -47,6 +51,7 @@ var xsdValidation = function (body, cb) {
             errorLog.header = "L'XML non valida lo schema XSD :-(";
             errorLog.text = "";
             errorLog.progression = 2;
+            if (type === 'index') errorLog.index = true;
             for (let i = 0; i < result.messages.length; i++){
                 errorLog.text += result.messages[i] + '<br>';
             }
@@ -56,13 +61,19 @@ var xsdValidation = function (body, cb) {
     });
 }
 
+var detectIfIndex = function (body) {
+    if (body.match(/<indici/)) return 'index';
+    return 'xml';
+}
+
 exports.validateFile = function (body,cb) {
     detectMIME(body, (errorLog) => {
         if (errorLog) {
             cb(errorLog)
         } else {
             console.log("MIME OK!")
-            xsdValidation(body,cb);
+            let type = detectIfIndex(body);
+            xsdValidation(body,type,cb);
         }
     })
 }

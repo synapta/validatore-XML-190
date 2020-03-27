@@ -7,6 +7,7 @@ var pageStatus = function (status) {
             $('#show').hide();
             $('#main').show();
             $('#messages').html('');
+            $('#custom-error').html('');
             $('#progress-steps').html('');
             $('#show-results').toggleClass( "ui primary active button" ).toggleClass( "ui primary disabled button" );
             if (window.myCodeMirror !== undefined) window.myCodeMirror.toTextArea();
@@ -75,6 +76,7 @@ var pageStatus = function (status) {
 }
 
 var loadAnalysis = function () {
+    let isIndex = false;
     pageStatus('homepage')
     pageStatus('loading')
     let url = $("#search-field").val();
@@ -82,23 +84,33 @@ var loadAnalysis = function () {
         url: "/api/show/xml-from-site?url=" + encodeURI(url),
         type: 'GET',
         error: function(e) {
+            if (e.responseJSON.index !== undefined) isIndex = true;
             makeProgressionSteps(e.responseJSON.progression)
+            if (isIndex)
+                makeMessageUnderSearch('Attenzione', `Questo file è un dataset di tipo "Indice". Questa applicazione non analizza ulteriormente questo tipo di file, ad ogni modo sono elencati gli errori che riguardano la validazione dello schema XSD di riferimento per gli indici. Per sfruttare le piene potenzialità dell'applicazione immettere un url ad un file XML della Legge 190 del tipo "Appalto", ovvero di un file che riguarda singoli lotti. Consultare la fonte <a href="http://www.anticorruzione.it/portal/public/classic/Servizi/ServiziOnline/DichiarazioneAdempLegge190">ANAC</a> per ulteriori informazioni.`, 'warning');
             makeMessageUnderSearch(e.responseJSON.header,e.responseJSON.text, 'negative');
-            pageStatus('show-steps-with-error')
+            pageStatus('show-steps-with-error');
         },
         success: function(data) {
+            if (data.match(/<indici/)) isIndex = true;
             let haveComments = false;
             // prima di parsificare l'xml tolgo i commenti perché rompono la libreria xml-js
             let sanitizedData = sanitizeComments(data);
             if (data !== sanitizedData) haveComments = true;
             data = sanitizedData;
-            makeProgressionSteps()
-            pageStatus('show-steps-successful')
+            makeProgressionSteps();
             if (haveComments) makeMessageUnderSearch('Attenzione', HTMLEncode(`È richiesto dalle linee guida di non usare commenti nel file (indicati da "<!-- testo del commento-->"), per la visualizzazione dell'analisi sono stati eliminati.`), 'warning')
-            $('#show-results').click(() => {
-                pageStatus('loading-analysis');
-                showResults(data);
-            })
+            if (isIndex) {
+                pageStatus('show-steps-with-error')
+                makeMessageUnderSearch('Attenzione', `Questo file è un dataset di tipo "Indice". Sebbene non ci siano errori di validazione dello schema XSD di riferimento per gli indici, questa applicazione non analizza ulteriormente questo tipo di file. Per sfruttare le piene potenzialità dell'applicazione immettere un url ad un file XML della Legge 190 del tipo "Appalto", ovvero di un file che riguarda singoli lotti. Consultare la fonte <a href="http://www.anticorruzione.it/portal/public/classic/Servizi/ServiziOnline/DichiarazioneAdempLegge190">ANAC</a> per ulteriori informazioni.`, 'warning')
+            } else {
+                pageStatus('show-steps-successful')
+                $('#show-results').click(() => {
+                    pageStatus('loading-analysis');
+                    showResults(data);
+                })
+            }
+
         }
     });
 }
@@ -328,7 +340,7 @@ makeMessageUnderSearch = function (header, text, type) {
     </div>
     <p>${text}</p>
 </div>`;
-    $('#custom-error').html(div);
+    $('#custom-error').append(div);
 }
 
 function groupBy(list, keyGetter) {

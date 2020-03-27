@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--aaa-->
+<indici xsi:noNamespaceSchemaLocation="http://dati.avcp.it/schema/datasetIndiceAppaltiL190.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata>
+    <titolo>Indice pubblicazione informazioni ai sensi della legge 190/2012</titolo>
+    <abstract>Pubblicazione informazioni ai sensi della legge 190/2012</abstract>
+    <dataPubblicazioneIndice>2014-06-11</dataPubblicazioneIndice>
+    <entePubblicatore>Ministero del Lavoro e delle Politiche Sociali</entePubblicatore>
+    <dataUltimoAggiornamentoIndice>2020-02-20</dataUltimoAggiornamentoIndice>
+    <annoRiferimento>2014</annoRiferimento>
+    <urlFile>http://www.lavoro.gov.it/OpendataAffidamenti/indice/indicedataset.xml</urlFile>
+    <licenza>IODL</licenza>
+  </metadata>
+  <indice>
+    <dataset id="ID_1">
+      <linkDataset>www.lavoro.gov.it/OpendataAffidamenti1/2013/XMLapp.xml</linkDataset>
+      <dataUltimoAggiornamento>2020-03-27</dataUltimoAggiornamento>
+    </dataset>
+    <dataset id="ID_2">
+      <linkDataset>www.lavoro.gov.it/OpendataAffidamenti1/2014/XMLapp.xml</linkDataset>
+      <dataUltimoAggiornamento>2020-03-27</dataUltimoAggiornamento>
+    </dataset>
+    <dataset id="ID_3">
+      <linkDataset>www.lavoro.gov.it/OpendataAffidamenti1/2015/XMLapp.xml</linkDataset>
+      <dataUltimoAggiornamento>2020-03-27</dataUltimoAggiornamento>
+    </dataset>
+    <dataset id="ID_4">
+      <linkDataset>www.lavoro.gov.it/OpendataAffidamenti1/2016/XMLapp.xml</linkDataset>
+      <dataUltimoAggiornamento>2020-03-27</dataUltimoAggiornamento>
+    </dataset>
+    <dataset id="ID_5">
+      <linkDataset>www.lavoro.gov.it/OpendataAffidamenti1/2017/XMLapp.xml</linkDataset>
+      <dataUltimoAggiornamento>2020-03-27</dataUltimoAggiornamento>
+    </dataset>
+    <dataset id="ID_6">
+      <linkDataset>www.lavoro.gov.it/OpendataAffidamenti1/2018/XMLapp.xml</linkDataset>
+      <dataUltimoAggiornamento>2020-03-27</dataUltimoAggiornamento>
+    </dataset>
+    <dataset id="ID_7">
+      <linkDataset>www.lavoro.gov.it/OpendataAffidamenti1/2019/XMLapp.xml</linkDataset>
+      <dataUltimoAggiornamento>2020-03-27</dataUltimoAggiornamento>
+    </dataset>
+    <dataset id="ID_8">
+      <linkDataset>www.lavoro.gov.it/OpendataAffidamenti1/2020/XMLapp.xml</linkDataset>
+      <dataUltimoAggiornamento>2020-03-27</dataUltimoAggiornamento>
+    </dataset>
+  </indice>
+</indici>
