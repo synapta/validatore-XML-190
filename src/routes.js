@@ -17,7 +17,7 @@ module.exports = function(app) {
     app.get('/api/show/xml-from-site', function (request, response) {
         utils.getWebPage(request.query.url, function(err, statusCode, body) {
             if (err || statusCode !== 200) {
-                console.log("Errore nel recuperare la pagina:", err);
+                console.log("Errore nel recuperare la pagina:", err, statusCode);
                 let errorLog = {};
                 errorLog.header = "C'è un problema con l'URL immesso :-(";
                 errorLog.text = "";
@@ -46,6 +46,7 @@ module.exports = function(app) {
     });
 
 // http://localhost:8041/xml/test1
+// http://localhost:8041/xml/testonline
 // http://localhost:8041/xml/file.zip
     app.get('/xml/:path', function (request, response) {
         response.sendFile(__dirname + '/xml/' + request.params.path);
