@@ -1,7 +1,8 @@
 const request = require('request');
 
 exports.getWebPage = function (url, callback) {
-    request.post({url: url}, function(error, response, body){
+    request.post({url: url,followAllRedirects: true, followOriginalHttpMethod: true
+                }, function(error, response, body){
         if (error) {
             callback(error, null, body);
             return;

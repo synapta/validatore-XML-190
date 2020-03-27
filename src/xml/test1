@@ -45,7 +45,6 @@
       <importoAggiudicazione>464.02</importoAggiudicazione>
       <tempiCompletamento>
         <dataInizio>2017-02-19</dataInizio>
-        <dataUltimazione>2016-06-10</dataUltimazione>
       </tempiCompletamento>
       <importoSommeLiquidate>120000</importoSommeLiquidate>
     </lotto>
@@ -76,7 +75,6 @@
           <importoAggiudicazione>123</importoAggiudicazione>
           <tempiCompletamento>
             <dataInizio>2016-06-10</dataInizio>
-            <dataUltimazione>2016-06-10</dataUltimazione>
           </tempiCompletamento>
           <importoSommeLiquidate>123</importoSommeLiquidate>
         </lotto>

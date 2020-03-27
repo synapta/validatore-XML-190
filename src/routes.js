@@ -19,8 +19,8 @@ module.exports = function(app) {
             if (err || statusCode !== 200) {
                 console.log("Errore nel recuperare la pagina:", err, statusCode);
                 let errorLog = {};
-                errorLog.header = "C'è un problema con l'URL immesso :-(";
-                errorLog.text = "";
+                errorLog.header = `C'è un problema con l'URL immesso :-(`;
+                errorLog.text = `HTTP Status ${statusCode}`;
                 errorLog.progression = 0;
                 response.status(400).send(errorLog);
             } else {

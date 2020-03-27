@@ -30,12 +30,17 @@ la classe che è la roba che cambia nella struttura del div [AM]
     - www.comunefosdinovo.it/download_2015_comune.xml?h=634ed9133d133968ddf82630d55c486868c2c7bb
     - http://www.bonificanurra.it/pubblicazioni/tabella7.xml
     - http://www.aeronautica.difesa.it/atticontr/Documents/LG_190_2014_80115410153.xml
-- un po' di testing con link veri!
+    - probabilmente da programma simil excel https://www.cbsm.it/public/allegati/testi/150331171237_AVCP_ANTICORRUZIONE_De_Ferrari.xml
+- errori incomprensibili nel parsing dell'XML (valido per l'XSD)
+    - http://bra.trasparenza-valutazione-merito.it/anac/c_b111/2013/Dataset_idx_97343.xml
 - se la lista di lotti con errori è molto lunga magari servirebbe una preview e poi puoi allargare
     - es http://www.vcotrasporti.it/userdata/Gara%20Assicurazioni/2020-2022/GARA%20BUONI%20PASTO/ANNO%202019%20(file%20XLM).xml
+    - esempio erroretag
 - gli aggiudicatari sono obbligatori? non credo!
-- se sulla stessa riga c'è sia un errore che un warning deve prevalere l'evidenziazione da errore non da warning!
-
+- potrebbe servire gestire i tag in lowercase
+- url che vanno normalmente, ma con request danno errori:
+    - 500/405 http://anac.robyone.net/xml/Dataset.aspx?cid=149&year=2015&id=37825
+    - 405 http://iccanale.gov.it/PubXML2.php?anno=2017&id=46
 
 
 ## NOTE
@@ -59,6 +64,12 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - il testo nel box di testo non deve essere modificabile!
 - se il lotto non ha alcun errore -> messaggio di successo!
 - gestiti i commenti nell'XML
+- se sulla stessa riga c'è sia un errore che un warning deve prevalere l'evidenziazione da errore non da warning!
+- gestire i redirect con la POST in request
+    - http://montecchiomaggiore.trasparenza-valutazione-merito.it/anac/1249929510/2015/Dataset_idx_127554.xml
+- se non si vuole gestire gli indici, per lo meno rilevarli e dare un messaggio di warning per cui non viene fatta l'analisi, o al massimo vedere se l'xsd va bene
+
+
 
 
 
