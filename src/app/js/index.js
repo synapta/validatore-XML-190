@@ -231,6 +231,7 @@ markAll = function(xmlView, errori) {
 }
 
 addMessages = function (errori) {
+    // XXX sostituire la funzione groupBy locale con quella di lodash
     let errorMap = groupBy(errori, errore => errore.code );
     let errorIter = errorMap.values();
 

@@ -8,7 +8,6 @@ PayloadTooLargeError: request entity too large
 (http://www.bologna.aci.it/avcp/00312900376/2015/indice.xml)
     - gestire i file monoriga (view-source:https://www.comune.poggibonsi.si.it/files/00097460521/2013/Z83082FC0B.xml)
 - alle volte all'interno del tag hai del text, alle volte del CDATA, controllare se esistono altri tipi!
-- se ho un errore più bloccante, quelli dopo non li valuto! es. se il dato manca è inutile che mi sforzi di controllare se è corretto!
 
 
 ## MIGLIORIE
@@ -33,9 +32,9 @@ la classe che è la roba che cambia nella struttura del div [AM]
     - probabilmente da programma simil excel https://www.cbsm.it/public/allegati/testi/150331171237_AVCP_ANTICORRUZIONE_De_Ferrari.xml
 - errori incomprensibili nel parsing dell'XML (valido per l'XSD)
     - http://bra.trasparenza-valutazione-merito.it/anac/c_b111/2013/Dataset_idx_97343.xml
+    - esempio erroretag
 - se la lista di lotti con errori è molto lunga magari servirebbe una preview e poi puoi allargare
     - es http://www.vcotrasporti.it/userdata/Gara%20Assicurazioni/2020-2022/GARA%20BUONI%20PASTO/ANNO%202019%20(file%20XLM).xml
-    - esempio erroretag
 - gli aggiudicatari sono obbligatori? non credo!
 - potrebbe servire gestire i tag in lowercase
 - url che vanno normalmente, ma con request danno errori:
@@ -68,9 +67,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - gestire i redirect con la POST in request
     - http://montecchiomaggiore.trasparenza-valutazione-merito.it/anac/1249929510/2015/Dataset_idx_127554.xml
 - se non si vuole gestire gli indici, per lo meno rilevarli e dare un messaggio di warning per cui non viene fatta l'analisi, o al massimo vedere se l'xsd va bene
-
-
-
+- se ho un errore più bloccante, quelli dopo non li valuto! es. se il dato manca è inutile che mi sforzi di controllare se è corretto!
 
 
 ## Lista test
