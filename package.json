@@ -27,5 +27,8 @@
       "mmmagic": "latest",
       "xsd-schema-validator": "latest",
       "lodash": "latest"
+  },
+  "scripts": {
+      "test": "mocha src/app/js/unit-test/unit-tests.js"
   }
 }
