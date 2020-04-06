@@ -35,12 +35,20 @@
             "importoAggiudicazione" : {"text": "L'importo di aggiudicazione ha un errore di sintassi", "type": "error", "code": "ESI01",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
             "importoSommeLiquidate" : {"text": "L'importo delle somme liquidate ha un errore di sintassi", "type": "error", "code": "ESI02",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "dataInizio" : { "text": "La data di inizio ha una sintassi non corretta", "type": "error", "code": "ESI03",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "dataUltimazione" : { "text": "La data di fine ha una sintassi non corretta", "type": "error", "code": "ESI04",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
         },
         "formato" : {
             "importoAggiudicazione" : {"text": "L'importo di aggiudicazione non è nel giusto formato", "type": "error", "code": "EFO01",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
             "importoSommeLiquidate" : {"text": "L'importo delle somme liquidate non è nel giusto formato", "type": "error", "code": "EFO02",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "dataInizio" : { "text": "La data di inizio ha un formato non corretto", "type": "error", "code": "EFO03",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "dataUltimazione" : { "text": "La data di fine ha un formato non corretto", "type": "error", "code": "EFO04",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
         },
         "correttezza": {

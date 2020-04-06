@@ -25,6 +25,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
 
 ## TODO
 - scrivere i testi per gli approfondimenti
+- scrivere tutti i test per le funzioni
 - aggiungere il controllo di mime type per i file prodotti con excel -> non facile, passano il mime type test
     - www.comunefosdinovo.it/download_2015_comune.xml?h=634ed9133d133968ddf82630d55c486868c2c7bb
     - http://www.bonificanurra.it/pubblicazioni/tabella7.xml
@@ -68,7 +69,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
     - http://montecchiomaggiore.trasparenza-valutazione-merito.it/anac/1249929510/2015/Dataset_idx_127554.xml
 - se non si vuole gestire gli indici, per lo meno rilevarli e dare un messaggio di warning per cui non viene fatta l'analisi, o al massimo vedere se l'xsd va bene
 - se ho un errore più bloccante, quelli dopo non li valuto! es. se il dato manca è inutile che mi sforzi di controllare se è corretto!
-
+- impostati gli unit-test per vedere che dia il giusto output ogni funzione di validazione
 
 ## Lista test
 
@@ -89,10 +90,10 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - [X] codfiscprop regex
 - [ ] [warn] caratteri utf-8
 - [ ] scelta contraente da elenco
-- [ ] importo formato NNNNNNNNN.DD (non inizia per 0)
+- [X] importo formato NNNNNNNNN.DD (non inizia per 0)
 - [X] [warn] importo = 0
 - [X] [warn] se >= 10B
-- [ ] date nel formato giusto ISO 8601
+- [X] date nel formato giusto ISO 8601
 - [ ] date > 2000 < 2100 (date in questo secolo)
 - [ ] partecipanti non duplicati come cf
 - [ ] raggruppamento 2+ membri

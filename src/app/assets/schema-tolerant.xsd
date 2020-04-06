@@ -73,8 +73,8 @@
 										<xsd:element name="tempiCompletamento">
 											<xsd:complexType>
 												<xsd:sequence>
-													<xsd:element name="dataInizio" type="xsd:date" minOccurs="0"/>
-													<xsd:element name="dataUltimazione" type="xsd:date" minOccurs="0"/>
+													<xsd:element name="dataInizio" minOccurs="0"/>
+													<xsd:element name="dataUltimazione" minOccurs="0"/>
 												</xsd:sequence>
 											</xsd:complexType>
 										</xsd:element>

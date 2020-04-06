@@ -216,6 +216,8 @@ validitaCf = fun.validitaCf;
 sintassiImporti = fun.sintassiImporti;
 formatoImporti = fun.formatoImporti;
 precisioneImporti = fun.precisioneImporti;
+sintassiDate = fun.sintassiDate;
+formatoDate = fun.formatoDate;
 
 var analyzeLotto = function (lotto) {
     lotto.partecipanti.partecipante = rendiArray(lotto.partecipanti.partecipante);
@@ -235,11 +237,11 @@ var analyzeLotto = function (lotto) {
     erroriTotali = erroriTotali.concat(useTest(lotto, tl.sintassiImporti));
     erroriTotali = erroriTotali.concat(useTest(lotto, tl.formatoImporti));
     erroriTotali = erroriTotali.concat(useTest(lotto, tl.precisioneImporti));
-
+    erroriTotali = erroriTotali.concat(useTest(lotto, tl.sintassiDate));
+    erroriTotali = erroriTotali.concat(useTest(lotto, tl.formatoDate));
 
 
     return erroriTotali;
-
 }
 
 var useTest = function (lotto, options) {

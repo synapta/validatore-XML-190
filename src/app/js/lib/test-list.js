@@ -141,10 +141,21 @@ exports.precisioneImporti = {
     ]
 };
 
+exports.sintassiDate = {
+    testName: 'sintassiDate',
+    fieldsToTest: [
+        {field: 'tempiCompletamento.dataInizio', code: 'ESI03'},
+        {field: 'tempiCompletamento.dataUltimazione', code: 'ESI04'}
+    ]
+};
 
-
-
-
+exports.formatoDate = {
+    testName: 'formatoDate',
+    fieldsToTest: [
+        {field: 'tempiCompletamento.dataInizio', code: 'EFO03'},
+        {field: 'tempiCompletamento.dataUltimazione', code: 'EFO04'}
+    ]
+};
 
 
 

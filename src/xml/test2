@@ -35,7 +35,7 @@
       <importoAggiudicazione>464.02</importoAggiudicazione>
       <tempiCompletamento>
         <dataInizio>2016-02-19</dataInizio>
-        <dataUltimazione>2016-06-10</dataUltimazione>
+        <dataUltimazione>2016/06/10</dataUltimazione>
       </tempiCompletamento>
       <importoSommeLiquidate>12</importoSommeLiquidate>
     </lotto>
@@ -61,8 +61,8 @@
       </aggiudicatari>
       <importoAggiudicazione> asd sd 464.02</importoAggiudicazione>
       <tempiCompletamento>
-        <dataInizio>2016-02-19</dataInizio>
-        <dataUltimazione>2016-06-10</dataUltimazione>
+        <dataInizio>antani 2016-02-19</dataInizio>
+        <dataUltimazione>antani 16-06-2010</dataUltimazione>
       </tempiCompletamento>
       <importoSommeLiquidate> 12 </importoSommeLiquidate>
     </lotto>
