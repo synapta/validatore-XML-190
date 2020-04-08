@@ -13,6 +13,9 @@ module.exports = function(app) {
     // app.use((err, req, res, next) => {
     //     res.status(status).send(body).json(err);
     // });
+    app.get('/info', function (request, response) {
+        response.sendFile(__dirname + '/app/info.html');
+    });
 
     app.get('/api/show/xml-from-site', function (request, response) {
         utils.getWebPage(request.query.url, function(err, statusCode, body) {

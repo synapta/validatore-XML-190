@@ -5,38 +5,55 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.47.0/codemirror.min.css">
 
-
     <link rel="stylesheet" href="/css/index.css" type="text/css" />
 </head>
 <body>
-    <div class="ui small menu">
-        <a class="item" id='home-logo'>
+    <div class="ui masthead  segment">
+        <!-- <a class="item" id='home-logo'>
             <img class="logo" src="/assets/images/xml-logo.png">
+        </a> -->
+        <a class='navbar-name' id='home-name' href=''>
+            Home
         </a>
-        <a class="header item" id='home-name'>
-            Validatore XML 190
+        <a class='navbar-name' href='/info'>
+            Info
         </a>
     </div>
 
-    <div class="ui grid" id="main">
-        <div class="four wide column">
-        </div>
-        <div class="eight wide column">
-            <h2 class="ui header">Scrivi un link</h2>
+    <div id="main">
+        <div class="object">
+            <h2 class="ui header">Validatore XML </h2>
+             <h3 class="ui header"><i class="angle double down icon"></i>Scrivi un link e scopri se è un file valido!</h3>
             <div class="ui fluid icon input" >
                 <input type="text"  placeholder="Scrivi link..." id='search-field'>
                 <i class="inverted circular search link icon" id='load-site'></i>
             </div>
-            <br>
-            <div id='progress-steps'>
+            <div class="message-container" id='progress-steps'>
             </div>
-            <br>
-            <br>
-            <div id="custom-error">
-
+            <div class="message-container" id="custom-error">
             </div>
         </div>
-        <div class="four wide column">
+        <div class="ui inverted vertical footer segment form-page">
+            <div class="ui container">
+                <div class="ui stackable inverted  equal height stackable grid">
+                    <div class="three wide column">
+                        <h4 class="ui inverted header">Link utili</h4>
+                        <div class="ui inverted link list">
+                            <a href="https://synapta.it/" target="_blank" class="item">Synapta</a>
+                            <a href="https://contrattipubblici.org/" target="_blank" class="item">ContrattiPubblici.org</a>
+                            <a href="https://github.com/synapta/validatore-XML-190" target="_blank" class="item">GitHub</a>
+                            <a href="http://www.anticorruzione.it/portal/public/classic/Servizi/ServiziOnline/DichiarazioneAdempLegge190" target="_blank" class="item">ANAC</a>
+                        </div>
+                    </div>
+                    <div class="three wide column">
+                    </div>
+                    <div class="seven wide column">
+                      <h4 class="ui inverted header">Made by</h4>
+                      <p>Sofia Rosati <i class="heart outline icon"></i>, 2020 <br>
+                      per informazioni contattare <a href="mailto:sofia.rosati@synapta.it">sofia.rosati@synapta.it</a></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -92,6 +109,7 @@
             </button>
         </div>
     </div>
+
 
 
     <!-- <script src="https://code.jquery.com/jquery-2.2.0.js"></script>   -->
