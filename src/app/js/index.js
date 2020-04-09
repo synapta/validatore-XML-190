@@ -5,31 +5,24 @@ var pageStatus = function (status) {
             // $('#loading-lotti').hide();
             $('#loading').hide();
             $('#show').hide();
-            $('#main').show();
             $('#messages').html('');
             $('#custom-error').html('');
             $('#progress-steps').html('');
-            $('#show-results').toggleClass( "ui primary active button" ).toggleClass( "ui primary disabled button" );
             if (window.myCodeMirror !== undefined) window.myCodeMirror.toTextArea();
             break;
         case 'loading':
-            $('#custom-error').html('');
-            $('#main').hide();
+            // $('#custom-error').html('');
             $('#loading').show();
             $('#loading').html("Scarico il file...");
             break;
         case 'show-steps-with-error':
             $('#loading').hide();
-            $('#main').show();
             break;
         case 'show-steps-successful':
-            $('#show-results').toggleClass( "ui primary disabled button" ).toggleClass( "ui primary active button" );
             $('#loading').hide();
-            $('#main').show();
             break;
         case 'loading-analysis':
-            $('#custom-error').html('');
-            $('#main').hide();
+            // $('#custom-error').html('');
             $('#show-results').hide();
             $('#loading').show();
             $('#loading').html("Analizzo il file...");
@@ -37,13 +30,11 @@ var pageStatus = function (status) {
         case 'show-success':
             $('#loading').hide();
             $('#xml-form').text();
-            $('#main').show();
             $('#show').hide();
             break;
         case 'show-analysis1':
             $('#loading').hide();
             $('#xml-form').text();
-            $('#main').hide();
             $('#show').show();
             break;
         case 'show-analysis2':
@@ -87,7 +78,7 @@ var loadAnalysis = function () {
             if (e.responseJSON.index !== undefined) isIndex = true;
             makeProgressionSteps(e.responseJSON.progression)
             if (isIndex)
-                makeMessageUnderSearch('Attenzione', `Questo file è un dataset di tipo "Indice". Questa applicazione non analizza ulteriormente questo tipo di file, ad ogni modo sono elencati gli errori che riguardano la validazione dello schema XSD di riferimento per gli indici. Per sfruttare le piene potenzialità dell'applicazione immettere un url ad un file XML della Legge 190 del tipo "Appalto", ovvero di un file che riguarda singoli lotti. Consultare la fonte <a href="http://www.anticorruzione.it/portal/public/classic/Servizi/ServiziOnline/DichiarazioneAdempLegge190">ANAC</a> per ulteriori informazioni.`, 'warning');
+                makeMessageUnderSearch('File di tipo indice', `Questo file è un dataset di tipo "Indice". Questa applicazione non analizza ulteriormente questo tipo di file, ad ogni modo sono elencati gli errori che riguardano la validazione dello schema XSD di riferimento per gli indici. Per sfruttare le piene potenzialità dell'applicazione immettere un url ad un file XML della Legge 190 del tipo "Appalto", ovvero di un file che riguarda singoli lotti. Consultare la fonte <a href="http://www.anticorruzione.it/portal/public/classic/Servizi/ServiziOnline/DichiarazioneAdempLegge190">ANAC</a> per ulteriori informazioni.`, 'warning');
             makeMessageUnderSearch(e.responseJSON.header,e.responseJSON.text, 'negative');
             pageStatus('show-steps-with-error');
         },
@@ -98,17 +89,15 @@ var loadAnalysis = function () {
             let sanitizedData = sanitizeComments(data);
             if (data !== sanitizedData) haveComments = true;
             data = sanitizedData;
-            makeProgressionSteps();
-            if (haveComments) makeMessageUnderSearch('Attenzione', HTMLEncode(`È richiesto dalle linee guida di non usare commenti nel file (indicati da "<!-- testo del commento-->"), per la visualizzazione dell'analisi sono stati eliminati.`), 'warning')
+
+            if (haveComments) makeMessageUnderSearch('Sono presenti dei commenti', HTMLEncode(`È richiesto dalle linee guida di non usare commenti nel file (indicati da "<!-- testo del commento-->"), per la visualizzazione dell'analisi sono stati eliminati.`), 'warning')
             if (isIndex) {
                 pageStatus('show-steps-with-error')
-                makeMessageUnderSearch('Attenzione', `Questo file è un dataset di tipo "Indice". Sebbene non ci siano errori di validazione dello schema XSD di riferimento per gli indici, questa applicazione non analizza ulteriormente questo tipo di file. Per sfruttare le piene potenzialità dell'applicazione immettere un url ad un file XML della Legge 190 del tipo "Appalto", ovvero di un file che riguarda singoli lotti. Consultare la fonte <a href="http://www.anticorruzione.it/portal/public/classic/Servizi/ServiziOnline/DichiarazioneAdempLegge190">ANAC</a> per ulteriori informazioni.`, 'warning')
+                makeMessageUnderSearch('File di tipo indice', `Questo file è un dataset di tipo "Indice". Sebbene non ci siano errori di validazione dello schema XSD di riferimento per gli indici, questa applicazione non analizza ulteriormente questo tipo di file. Per sfruttare le piene potenzialità dell'applicazione immettere un url ad un file XML della Legge 190 del tipo "Appalto", ovvero di un file che riguarda singoli lotti. Consultare la fonte <a href="http://www.anticorruzione.it/portal/public/classic/Servizi/ServiziOnline/DichiarazioneAdempLegge190">ANAC</a> per ulteriori informazioni.`, 'warning')
             } else {
                 pageStatus('show-steps-successful')
-                $('#show-results').click(() => {
-                    pageStatus('loading-analysis');
-                    showResults(data);
-                })
+                pageStatus('loading-analysis');
+                showResults(data);
             }
 
         }
@@ -137,10 +126,12 @@ let showResults = function (data) {
         dataType: "json",
         success: function (res) {
             if (res.totErrors === 0 && res.totWarnings === 0) {
+                makeProgressionSteps();
                 pageStatus('show-success');
                 makeMessageUnderSearch("Successo!", "L'analisi è andata a buon fine e non sono stati trovati errori. <br>Si può procedere con una nuova analisi.", 'positive')
 
             } else {
+                makeProgressionSteps(3);
                 pageStatus('show-analysis1');
                 $('#numero-lotti').text(res.totLotti);
                 $('#numero-errori').text(res.totErrors);
@@ -298,37 +289,45 @@ makeMessage = function (errorObj) {
 makeProgressionSteps = function (step) {
     let div = "";
     let status = [];
-    if (step === 0) status = ['disabled ','disabled ','disabled ']
-    if (step === 1) status = ['completed ','active ','disabled ']
-    if (step === 2) status = ['completed ','completed ','active ']
-    if (step === undefined) status = ['completed ','completed ','completed ']
+    if (step === 0) status = ['active ','red x ', 'disabled ', 'file outline ', 'disabled ', 'file code outline ','disabled ', 'table ']
+    if (step === 1) status = ['completed ','cloud download ', 'active ', 'red x ', 'disabled ', 'file code outline ','disabled ', 'table ']
+    if (step === 2) status = ['completed ','cloud download ', 'completed ', 'file outline ', 'active ', 'red x ','disabled ', 'table ']
+    if (step === 3) status = ['completed ','cloud download ', 'completed ', 'file outline ', 'completed ', 'file code outline ','active ', 'red x ']
+    // if (step === 0) status = ['completed ','cloud download ', 'disabled ', 'file outline ', 'disabled ', 'file code outline ']
+
+    // if (step === 1) status = ['completed ','active ','disabled ']
+    // if (step === 2) status = ['completed ','completed ','active ']
+    if (step === undefined) status = ['completed ','','completed ', '', 'completed ', '','completed ', 'table ']
     div = `<div class="ui tablet stackable steps">
     <div class="${status[0]}step">
-        <i class="cloud download icon"></i>
+        <i class="${status[1]} icon"></i>
         <div class="content">
             <div class="title">Download</div>
-            <div class="description">Scarico il file dal sito</div>
-        </div>
-    </div>
-    <div class="${status[1]}step">
-        <i class="file outline icon"></i>
-        <div class="content">
-            <div class="title">Tipo file</div>
-            <div class="description">Controllo che il file sia un XML</div>
+            <div class="description">Scarico il file </div>
         </div>
     </div>
     <div class="${status[2]}step">
-        <i class="file code outline icon"></i>
+        <i class="${status[3]} icon"></i>
         <div class="content">
-            <div class="title">Validazione XSD</div>
-            <div class="description">Controllo che il file validi lo schema XSD</div>
+            <div class="title">Tipo file</div>
+            <div class="description">Controllo che sia un XML</div>
         </div>
     </div>
-</div>
-<br>
-<button class="ui primary disabled button" id='show-results'>
-    Procedi
-</button>`
+    <div class="${status[4]}step">
+        <i class="${status[5]} icon"></i>
+        <div class="content">
+            <div class="title">Validazione XSD</div>
+            <div class="description">Valido con lo schema XSD</div>
+        </div>
+    </div>
+    <div class="${status[6]}step">
+        <i class="${status[7]} icon"></i>
+        <div class="content">
+            <div class="title">Analisi dati</div>
+            <div class="description">Controllo che non ci siano errori nei dati</div>
+        </div>
+    </div>
+</div>`
     $('#progress-steps').html(div);
 }
 

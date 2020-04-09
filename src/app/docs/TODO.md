@@ -70,6 +70,11 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - se non si vuole gestire gli indici, per lo meno rilevarli e dare un messaggio di warning per cui non viene fatta l'analisi, o al massimo vedere se l'xsd va bene
 - se ho un errore più bloccante, quelli dopo non li valuto! es. se il dato manca è inutile che mi sforzi di controllare se è corretto!
 - impostati gli unit-test per vedere che dia il giusto output ogni funzione di validazione
+- aggiungi l'ultimo step nella progressione, ovvero la ricerca degli errori [AM]
+- nei messaggi di errore/warning sotto la barra di ricerca non scrivere "attenzione", scrivi subito l'errore [AM]
+- togli che siano due pagine di seguito e che devi cliccare su "procedi", metti che il risultato della ricerca sia subito sotto [AM]
+- metti che nella progressione quando si rompe è attivo lo step e hai la X e quelli non ancora fatti sono disattivati [AM]
+
 
 ## Lista test
 

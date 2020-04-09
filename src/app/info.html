@@ -8,61 +8,64 @@
     <link rel="stylesheet" href="/css/index.css" type="text/css" />
 </head>
 <body>
-    <div class="ui masthead  segment">
-        <a class='navbar-name' id='home-name' href='/'>
-            Home
-        </a>
-        <a class='navbar-name' href='/info'>
-            Info
-        </a>
-    </div>
+    <div id='page-container'>
+        <div id='content-wrap'>
+            <div class="ui masthead  segment">
+                <a class='navbar-name' id='home-name' href='/'>
+                    Home
+                </a>
+                <a class='navbar-name' href='/info'>
+                    Info
+                </a>
+            </div>
 
-    <div class="object">
-        <h2 class="ui header">Validatore XML </h2>
-        <p style='text-align: center;'>Questa applicazione permette una comoda validazione dei file XML della legge 190. </p>
+            <div class="object">
+                <h2 class="ui header">Validatore XML </h2>
+                <p style='text-align: center;'>Questa applicazione permette una comoda validazione dei file XML della legge 190. </p>
 
-        <h3 class="ui header">Utilizzo </h3>
-        <ol class="ui list">
-            <li>Scrivere un link nella buca di ricerca in homepage</li>
-            <li>Si possono avere diversi risultati a seconda di quanti passaggi vengono superati
-                <ol>
-                    <li>Il link non funzionante: l'URL potrebbe essere rotto o essere scritto male</li>
-                    <li>Il file non è del tipo giusto: la risorsa è stata raggiunta ma il file che vi si trova non è un XML, potrebbe essere una pagina HTML, come un file zip o un video</li>
-                    <li>L'XML non valida lo schema XSD della legge 190: la risorsa è raggiungibile ed è un file XML, ma i tag usati e la loro gerarchia non sono quelli richiesti</li>
-                    <li>Il file supera tutti i primi controlli: si può procedere con la seconda parte della validazione
+                <h3 class="ui header">Utilizzo </h3>
+                <ol class="ui list">
+                    <li>Scrivere un link nella buca di ricerca in homepage</li>
+                    <li>Si possono avere diversi risultati a seconda di quanti passaggi vengono superati
                         <ol>
-                            <li>Il file è di tipo indice: l'applicazione non approfondisce la validazione di file di questo tipo</li>
-                            <li>Il file è di tipo dataset: si può procedere con l'analisi</li>
+                            <li>Il link non è funzionante: l'URL potrebbe essere rotto o essere scritto male</li>
+                            <li>Il file non è del tipo giusto: la risorsa è stata raggiunta ma il file che vi si trova non è un XML, potrebbe essere una pagina HTML, come un file zip o un video</li>
+                            <li>L'XML non valida lo schema XSD della legge 190: la risorsa è raggiungibile ed è un file XML, ma i tag usati e la loro gerarchia non sono quelli richiesti</li>
+                            <li>Il file supera tutti i primi controlli: si può procedere con l'analisi
+                                <ol>
+                                    <li>Il file è di tipo indice: l'applicazione non approfondisce la validazione di file di questo tipo</li>
+                                    <li>Il file è di tipo dataset: si può procedere con l'analisi</li>
+                                </ol>
+                            </li>
                         </ol>
                     </li>
+                    <li>Analisi del file</li>
                 </ol>
-            </li>
-            <li>Analisi del file</li>
-        </ol>
-    </div>
-    <div class="ui inverted vertical footer segment form-page">
-        <div class="ui container">
-            <div class="ui stackable inverted  equal height stackable grid">
-                <div class="three wide column">
-                    <h4 class="ui inverted header">Link utili</h4>
-                    <div class="ui inverted link list">
-                        <a href="https://synapta.it/" target="_blank" class="item">Synapta</a>
-                        <a href="https://contrattipubblici.org/" target="_blank" class="item">ContrattiPubblici.org</a>
-                        <a href="https://github.com/synapta/validatore-XML-190" target="_blank" class="item">GitHub</a>
-                        <a href="http://www.anticorruzione.it/portal/public/classic/Servizi/ServiziOnline/DichiarazioneAdempLegge190" target="_blank" class="item">ANAC</a>
+            </div>
+
+        <div class="ui inverted vertical footer segment form-page">
+            <div class="ui container">
+                <div class="ui stackable inverted  equal height stackable grid">
+                    <div class="three wide column">
+                        <h4 class="ui inverted header">Link utili</h4>
+                        <div class="ui inverted link list">
+                            <a href="https://synapta.it/" target="_blank" class="item">Synapta</a>
+                            <a href="https://contrattipubblici.org/" target="_blank" class="item">ContrattiPubblici.org</a>
+                            <a href="https://github.com/synapta/validatore-XML-190" target="_blank" class="item">GitHub</a>
+                            <a href="http://www.anticorruzione.it/portal/public/classic/Servizi/ServiziOnline/DichiarazioneAdempLegge190" target="_blank" class="item">ANAC</a>
+                        </div>
                     </div>
-                </div>
-                <div class="three wide column">
-                </div>
-                <div class="seven wide column">
-                  <h4 class="ui inverted header">Made by</h4>
-                  <p>Sofia Rosati <i class="heart outline icon"></i>, 2020 <br>
-                  per informazioni contattare <a href="mailto:sofia.rosati@synapta.it">sofia.rosati@synapta.it</a></p>
+                    <div class="three wide column">
+                    </div>
+                    <div class="seven wide column">
+                      <h4 class="ui inverted header">Made by</h4>
+                      <p>Sofia Rosati <i class="heart outline icon"></i>, 2020 <br>
+                      per informazioni contattare <a href="mailto:sofia.rosati@synapta.it">sofia.rosati@synapta.it</a></p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 
     <!-- <script src="https://code.jquery.com/jquery-2.2.0.js"></script>   -->
     <script src="https://contrattipubblici.org/js/lib/jquery223.js" type="text/javascript"></script>
