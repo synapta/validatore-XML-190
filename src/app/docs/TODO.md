@@ -13,12 +13,9 @@ PayloadTooLargeError: request entity too large
 ## MIGLIORIE
 - sarebbe carino invece che costruire l'html in modo poco leggibile per i messaggi, tu costruissi lo stesso div e poi ci inietti
 la classe che è la roba che cambia nella struttura del div [AM]
-- puoi aggiungere un parametro nell'url quando passi alla pagina di analisi dove ti indica l'url dell'xml cercato [AM]
 - errori nell'ordine migliore
 - trova un nome migliore per l'applicazione
 - gestire meglio il messaggio che riguarda le righe mancanti
-- footer con data e nome
-- pagina/messaggio/alert con "informazioni sull'applicazione"
 - aggiungi lista dei file di test da servire in modo comodo lato front end
 - quando sono sopra il testo dell'xml evidenziato perché c'è un errore vorrei poter andare a leggere qual era questo errore (link al messaggio, o in qualche modo il messaggio segue il testo)
 
@@ -31,6 +28,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
     - http://www.bonificanurra.it/pubblicazioni/tabella7.xml
     - http://www.aeronautica.difesa.it/atticontr/Documents/LG_190_2014_80115410153.xml
     - probabilmente da programma simil excel https://www.cbsm.it/public/allegati/testi/150331171237_AVCP_ANTICORRUZIONE_De_Ferrari.xml
+    - http://www.comune.urbino.pu.it/fileadmin/docs/gazzettamministrativa/004/a4/02/Dotazione%20organica%20al%2031-12-2015.xml
 - errori incomprensibili nel parsing dell'XML (valido per l'XSD)
     - http://bra.trasparenza-valutazione-merito.it/anac/c_b111/2013/Dataset_idx_97343.xml
     - esempio erroretag
@@ -46,9 +44,6 @@ la classe che è la roba che cambia nella struttura del div [AM]
 ## NOTE
 - errore in console non dipende da me, credo --> https://github.com/Semantic-Org/Semantic-UI/issues/2146
 
-# Lista generatori/validatori XML 190
-- https://www.dsa.it/index.php/generatore-xml-per-avcp
-- https://avcp-legge-190-2012.assocons.it/
 
 ## FATTI
 - analisi dell'XSD
@@ -74,6 +69,9 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - nei messaggi di errore/warning sotto la barra di ricerca non scrivere "attenzione", scrivi subito l'errore [AM]
 - togli che siano due pagine di seguito e che devi cliccare su "procedi", metti che il risultato della ricerca sia subito sotto [AM]
 - metti che nella progressione quando si rompe è attivo lo step e hai la X e quelli non ancora fatti sono disattivati [AM]
+- footer con data e nome
+- pagina/messaggio/alert con "informazioni sull'applicazione"
+- puoi aggiungere un parametro nell'url quando passi alla pagina di analisi dove ti indica l'url dell'xml cercato [AM]
 
 
 ## Lista test
@@ -99,7 +97,8 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - [X] [warn] importo = 0
 - [X] [warn] se >= 10B
 - [X] date nel formato giusto ISO 8601
-- [ ] date > 2000 < 2100 (date in questo secolo)
+- [X] [warn] date imprecise (anno a sole 2 cifre)
+- [X] date > 2000 < 2100 (date in questo secolo)
 - [ ] partecipanti non duplicati come cf
 - [ ] raggruppamento 2+ membri
 - [ ] 2+ aggiudicatari (no raggruppamento)

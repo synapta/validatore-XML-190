@@ -2,6 +2,7 @@ const moment = require('moment');
 const utils = require('./utils.js')
 moment.locale('it');
 
+// se un campo è compilato o meno (potrebbe anche essere assente il tag)
 exports.presenzaDato = function (dato) {
     if (dato === null || dato === undefined) return false;
     if (dato === '') return false;
@@ -36,7 +37,6 @@ exports.lunghezzaOggetto = function (oggetto) {
     return true;
 }
 
-
 // se la data d'inizio è successiva a quella di fine
 exports.coerenzaDate = function (obj) {
     let dataInizio = obj.dataInizio;
@@ -63,7 +63,6 @@ exports.coerenzaImporti = function (obj) {
     if (liquidato > importo * 2) return false;
     return true;
 }
-
 
 //se il codice fiscale/partita iva è valido
 exports.validitaCf = function (cf) {
@@ -154,7 +153,8 @@ exports.formatoDate = function (data) {
 }
 
 // controllo che le date siano precise, ovvero con tutte le cifre necessarie
-precisioneDate = function (data) {
+// (in pratica significa se le date hanno l'anno scritto con 2 cifre invece di tutte e 4)
+exports.precisioneDate = function (data) {
     if (data === undefined || data === null) return true;
     data = data.trim();
     if (moment(data, 'YY-MM-DD', true).isValid()) return false;
@@ -164,14 +164,15 @@ precisioneDate = function (data) {
     return true;
 }
 
-
 // controllo se le date sono entro un range ragionevole
-// funzioni di data quality
-// var dqDataRange = function (date) {
-//     if (new Date(date) > new Date('2100-01-01 00:00:00')) return false;
-//     if (new Date(date) < new Date('2000-01-01 00:00:00')) return false;
-//     return true;
-// }
+exports.rangeDate = function (data) {
+    //controllo lasco, ma dovrebbe bastare: estraggo l'anno!
+    let cleanDate = data.replace(/[^\d\.\-\/\\]/gi, '');
+    let year = cleanDate.match(/[0-3]\d\d\d/);
+    if (parseInt(cleanDate) > 2100) return false;
+    if (parseInt(cleanDate) < 2000) return false;
+    return true;
+}
 
 
 

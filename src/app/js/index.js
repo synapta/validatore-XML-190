@@ -2,7 +2,6 @@ var pageStatus = function (status) {
     switch (status) {
         case 'homepage':
             $('#xml-form').text('');
-            // $('#loading-lotti').hide();
             $('#loading').hide();
             $('#show').hide();
             $('#messages').html('');
@@ -11,7 +10,6 @@ var pageStatus = function (status) {
             if (window.myCodeMirror !== undefined) window.myCodeMirror.toTextArea();
             break;
         case 'loading':
-            // $('#custom-error').html('');
             $('#loading').show();
             $('#loading').html("Scarico il file...");
             break;
@@ -22,7 +20,6 @@ var pageStatus = function (status) {
             $('#loading').hide();
             break;
         case 'loading-analysis':
-            // $('#custom-error').html('');
             $('#show-results').hide();
             $('#loading').show();
             $('#loading').html("Analizzo il file...");
@@ -59,18 +56,18 @@ var pageStatus = function (status) {
 
                 btn.on('click', function(e) {
                     e.preventDefault();
-                    $('html, body').animate({scrollTop:0}, '300');
+                    $('html, body').animate({scrollTop:300}, '300');
                 });
             });
             break;
     }
 }
 
+//scarico la risorsa e faccio i primi controlli per vedere se è un xml valido
 var loadAnalysis = function (url) {
     let isIndex = false;
     pageStatus('homepage')
     pageStatus('loading')
-    // url = $("#search-field").val();
     $.ajax({
         url: "/api/show/xml-from-site?url=" + encodeURI(url),
         type: 'GET',
@@ -305,10 +302,6 @@ makeProgressionSteps = function (step) {
     if (step === 1) status = ['completed ','cloud download ', 'active ', 'red x ', 'disabled ', 'file code outline ','disabled ', 'table ']
     if (step === 2) status = ['completed ','cloud download ', 'completed ', 'file outline ', 'active ', 'red x ','disabled ', 'table ']
     if (step === 3) status = ['completed ','cloud download ', 'completed ', 'file outline ', 'completed ', 'file code outline ','active ', 'red x ']
-    // if (step === 0) status = ['completed ','cloud download ', 'disabled ', 'file outline ', 'disabled ', 'file code outline ']
-
-    // if (step === 1) status = ['completed ','active ','disabled ']
-    // if (step === 2) status = ['completed ','completed ','active ']
     if (step === undefined) status = ['completed ','','completed ', '', 'completed ', '','completed ', 'table ']
     div = `<div class="ui tablet stackable steps">
     <div class="${status[0]}step">

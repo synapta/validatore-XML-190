@@ -218,28 +218,20 @@ formatoImporti = fun.formatoImporti;
 precisioneImporti = fun.precisioneImporti;
 sintassiDate = fun.sintassiDate;
 formatoDate = fun.formatoDate;
+precisioneDate = fun.precisioneDate;
+rangeDate = fun.rangeDate;
 
 var analyzeLotto = function (lotto) {
     lotto.partecipanti.partecipante = rendiArray(lotto.partecipanti.partecipante);
     lotto.aggiudicatari.aggiudicatario = rendiArray(lotto.aggiudicatari.aggiudicatario);
 
     let erroriTotali = [];
-    erroriTotali = erroriTotali.concat(useTest(lotto, tl.presenzaDati));
-    erroriTotali = erroriTotali.concat(useTest(lotto, tl.validitaCig));
-    erroriTotali = erroriTotali.concat(useTest(lotto, tl.lunghezzaRagioneSociale));
-    erroriTotali = erroriTotali.concat(useTest(lotto, tl.lunghezzaOggetto));
-    erroriTotali = erroriTotali.concat(useTest(lotto, tl.importoNullo));
-    erroriTotali = erroriTotali.concat(useTest(lotto, tl.importoTroppoGrande));
-    erroriTotali = erroriTotali.concat(useTest(lotto, tl.importoNegativo));
-    erroriTotali = erroriTotali.concat(useTest(lotto, tl.coerenzaDate));
-    erroriTotali = erroriTotali.concat(useTest(lotto, tl.coerenzaImporti));
-    erroriTotali = erroriTotali.concat(useTest(lotto, tl.validitaCf));
-    erroriTotali = erroriTotali.concat(useTest(lotto, tl.sintassiImporti));
-    erroriTotali = erroriTotali.concat(useTest(lotto, tl.formatoImporti));
-    erroriTotali = erroriTotali.concat(useTest(lotto, tl.precisioneImporti));
-    erroriTotali = erroriTotali.concat(useTest(lotto, tl.sintassiDate));
-    erroriTotali = erroriTotali.concat(useTest(lotto, tl.formatoDate));
-
+    let testArray = [tl.presenzaDati,tl.validitaCig,tl.lunghezzaRagioneSociale,tl.lunghezzaOggetto,tl.importoNullo,tl.importoTroppoGrande,
+    tl.importoNegativo,tl.coerenzaDate,tl.coerenzaImporti,tl.validitaCf,tl.sintassiImporti,tl.formatoImporti,tl.precisioneImporti,
+    tl.sintassiDate,tl.formatoDate,tl.precisioneDate, tl.rangeDate];
+    for (let i = 0; i < testArray.length; i ++){
+        erroriTotali = erroriTotali.concat(useTest(lotto, testArray[i]));
+    }
 
     return erroriTotali;
 }
@@ -256,6 +248,7 @@ var useTest = function (lotto, options) {
 
 var useTestOnField = function (testFunction,lotto,row) {
     let errors = [];
+    // confronto fra campi
     if (row.fields !== undefined) {
         let objFields = {};
         for (var key in row.fields) {
@@ -267,6 +260,8 @@ var useTestOnField = function (testFunction,lotto,row) {
             errors.push(addError(row.code, getLine(lotto,row.fields[key]),lotto));
     return errors;
     }
+    // test su singolo campo
+    // campo che è un array
     if (row.field.match('_array')) {
         let length = 0;
         var match = /_array/.exec(row.field);
@@ -283,6 +278,7 @@ var useTestOnField = function (testFunction,lotto,row) {
                     errors.push(addError(row.code, getLine(lotto,currentLine),lotto));
             }
         }
+    // campo che non è un array
     } else {
         if (!testFunction(getValue(lotto,row.field)))
             errors.push(addError(row.code, getLine(lotto,row.field),lotto));

@@ -63,7 +63,11 @@
             "codiceFiscalePartecipante" : {"text": "Il codice fiscale/partita iva del partecipante non è valido", "type": "error", "code": "ECR05",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> controlla che il numero di caratteri sia quello giusto e che non ci siano altri caratteri, spazi inclusi, oltre al codice."},
             "codiceFiscaleAggiudicatario" : {"text": "Il codice fiscale/partita iva dell'aggiudicatario non è valido", "type": "error", "code": "ECR06",
-                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> controlla che il numero di caratteri sia quello giusto e che non ci siano altri caratteri, spazi inclusi, oltre al codice."}
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> controlla che il numero di caratteri sia quello giusto e che non ci siano altri caratteri, spazi inclusi, oltre al codice."},
+            "dataInizio" : { "text": "La data di inizio è precedente al 2000 o successiva al 2100", "type": "error", "code": "ECR07",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "dataUltimazione" : { "text": "La data di fine è precedente al 2000 o successiva al 2100", "type": "error", "code": "ECR08",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
         }
     },
     "warnings": {
@@ -101,6 +105,10 @@
             "importoAggiudicazione" : {"text": "L'importo di aggiudicazione è impreciso", "type": "warning", "code": "WPR01",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
             "importoSommeLiquidate" : {"text": "L'importo delle somme liquidate è impreciso", "type": "warning", "code": "WPR02",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "dataInizio" : { "text": "La data di inizio è imprecisa", "type": "warning", "code": "WPR03",
+                "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
+            "dataUltimazione" : { "text": "La data di fine è imprecisa", "type": "warning", "code": "WPR04",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}
         }
     }

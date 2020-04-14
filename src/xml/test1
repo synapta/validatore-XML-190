@@ -44,7 +44,8 @@
       </aggiudicatari>
       <importoAggiudicazione>464.02</importoAggiudicazione>
       <tempiCompletamento>
-        <dataInizio>2017-02-19</dataInizio>
+        <dataInizio>2117-02-19</dataInizio>
+        <dataUltimazione>antani 16-06-1990</dataUltimazione>
       </tempiCompletamento>
       <importoSommeLiquidate>120000</importoSommeLiquidate>
     </lotto>
@@ -74,7 +75,8 @@
           </aggiudicatari>
           <importoAggiudicazione>123</importoAggiudicazione>
           <tempiCompletamento>
-            <dataInizio>2016-06-10</dataInizio>
+            <dataInizio>1999/6/1</dataInizio>
+            <dataUltimazione>antani 16-06-2210 antani</dataUltimazione>
           </tempiCompletamento>
           <importoSommeLiquidate>123</importoSommeLiquidate>
         </lotto>

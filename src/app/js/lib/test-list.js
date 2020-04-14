@@ -157,10 +157,30 @@ exports.formatoDate = {
     ]
 };
 
+exports.precisioneDate = {
+    testName: 'precisioneDate',
+    fieldsToTest: [
+        {field: 'tempiCompletamento.dataInizio', code: 'WPR03'},
+        {field: 'tempiCompletamento.dataUltimazione', code: 'WPR04'}
+    ]
+};
 
+exports.rangeDate = {
+    testName: 'rangeDate',
+    fieldsToTest: [
+        {field: 'tempiCompletamento.dataInizio', code: 'ECR07'},
+        {field: 'tempiCompletamento.dataUltimazione', code: 'ECR08'}
+    ]
+};
 
-
-
+exports.partecipantiRipetuti = {
+    testName: 'partecipantiRipetuti',
+    fieldsToTest: [
+        {fields: {importoAggiudicazione: 'importoAggiudicazione', importoLiquidato: 'importoSommeLiquidate'}, code: 'WCO01'},
+    ]
+};
+        // {field: 'partecipanti.partecipante._array.codiceFiscale', code: 'ECM08'},
+        // {field: 'aggiudicatari.aggiudicatario._array.codiceFiscale', code: 'ECM10'},
 
 
 
