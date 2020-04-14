@@ -92,7 +92,7 @@
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
             "importoAggiudicazione" : {"text": "L'importo di aggiudicazione è nullo", "type": "warning", "code": "WCR05",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
-            "importoAggiudicazione" : {"text": "L'importo di aggiudicazione è maggiore di 10 miliardi", "type": "warning", "code": "WCR06",
+            "importoAggiudicazione2" : {"text": "L'importo di aggiudicazione è maggiore di 10 miliardi", "type": "warning", "code": "WCR06",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."},
             "importoSommeLiquidate" : {"text": "L'importo delle somme liquidate è maggiore di 10 miliardi", "type": "warning", "code": "WCR07",
                 "details": "<b>Perché</b> asadadada.<br><b>Soluzione</b> asadadada."}

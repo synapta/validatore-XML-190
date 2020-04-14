@@ -84,13 +84,13 @@ exports.sintassiImporti = function (importo) {
 exports.formatoImporti = function (importo) {
     if (importo === null || importo === undefined) return true;
     // spurgo la stringa da tutto quello che non è un numero, virgole, punti o virgolette
-    importo = importo.replace(/[^ \d\.,']/g, '');
+    importo = importo.replace(/[^\d\.,']/g, '');
     importo = importo.trim();
     // non mi preme vedere se la cifra ha il giusto numero di cifre dopo la virgola, voglio vedere se c'è un solo divisorio
-    // qualunque cosa diversa da numeri-divisiorio-numeri -> errore!
+    // qualunque cosa diversa da "numeri-divisiorio-numeri" o "numeri" -> errore!
     if (!importo.match(/^\d+(.\d+)?$/)) return false;
     // 123123,23 ci vuole il punto!
-    if (importo.match(/^\d+[^\.]\d+$/)) return false;
+    if (importo.match(/^\d+[^\d\.]\d+$/)) return false;
     // 00000123.12 zeri all'inizio del numero
     if (importo.match(/^0+[1-9]+/)) return false;
     return true
@@ -166,6 +166,7 @@ exports.precisioneDate = function (data) {
 
 // controllo se le date sono entro un range ragionevole
 exports.rangeDate = function (data) {
+    if (data === undefined || data === null) return true;
     //controllo lasco, ma dovrebbe bastare: estraggo l'anno!
     let cleanDate = data.replace(/[^\d\.\-\/\\]/gi, '');
     let year = cleanDate.match(/[0-3]\d\d\d/);

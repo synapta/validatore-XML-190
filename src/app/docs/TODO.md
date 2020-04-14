@@ -32,6 +32,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - errori incomprensibili nel parsing dell'XML (valido per l'XSD)
     - http://bra.trasparenza-valutazione-merito.it/anac/c_b111/2013/Dataset_idx_97343.xml
     - esempio erroretag
+    - http://www.comune.cameratacornello.bg.it/PortaleNet/portale/streaming/Lex190_2017_1.xml?nonce=NCXXK3SFAPX6E4D6
 - se la lista di lotti con errori è molto lunga magari servirebbe una preview e poi puoi allargare
     - es http://www.vcotrasporti.it/userdata/Gara%20Assicurazioni/2020-2022/GARA%20BUONI%20PASTO/ANNO%202019%20(file%20XLM).xml
 - gli aggiudicatari sono obbligatori? non credo!
@@ -39,6 +40,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - url che vanno normalmente, ma con request danno errori:
     - 500/405 http://anac.robyone.net/xml/Dataset.aspx?cid=149&year=2015&id=37825
     - 405 http://iccanale.gov.it/PubXML2.php?anno=2017&id=46
+- il file di dati vuoti da errore (vedere test "vuoto")
 
 
 ## NOTE
