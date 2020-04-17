@@ -1,14 +1,24 @@
 const request = require('request');
 
 exports.getWebPage = function (url, callback) {
-    request.post({url: url,followAllRedirects: true, followOriginalHttpMethod: true
-                }, function(error, response, body){
-        if (error) {
-            callback(error, null, body);
-            return;
-        }
-        callback(error, response.statusCode, body);
-    });
+        request.post({url: url,followAllRedirects: true, followOriginalHttpMethod: true}, function(error, response, body){
+            if (error) {
+                callback(error, null, body);
+                return;
+            }
+            if (response.statusCode === 405) {
+                console.log("La post non era permessa (HTTP 405), provo con la get")
+                request.get({url: url,followAllRedirects: true, followOriginalHttpMethod: true}, function(error, response, body){
+                    if (error) {
+                        callback(error, null, body);
+                        return;
+                    }
+                    callback(error, response.statusCode, body);
+                });
+            } else {
+                callback(error, response.statusCode, body);
+            }
+        });
 }
 
 exports.verificaPartitaIva = function (piva) {

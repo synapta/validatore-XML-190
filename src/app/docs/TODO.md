@@ -1,13 +1,7 @@
 # Appunti
 ## ERRORI
-- richiesta troppo grossa
-"POST /api/analyze/xml HTTP/1.1" 413 1069
-PayloadTooLargeError: request entity too large
-"
-- errori nell'indentazione -> creano problemi nella gestione del tagging delle righe
-(http://www.bologna.aci.it/avcp/00312900376/2015/indice.xml)
-    - gestire i file monoriga (view-source:https://www.comune.poggibonsi.si.it/files/00097460521/2013/Z83082FC0B.xml)
-- alle volte all'interno del tag hai del text, alle volte del CDATA, controllare se esistono altri tipi!
+
+
 
 
 ## MIGLIORIE
@@ -16,7 +10,6 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - errori nell'ordine migliore
 - trova un nome migliore per l'applicazione
 - gestire meglio il messaggio che riguarda le righe mancanti
-- aggiungi lista dei file di test da servire in modo comodo lato front end
 - quando sono sopra il testo dell'xml evidenziato perché c'è un errore vorrei poter andare a leggere qual era questo errore (link al messaggio, o in qualche modo il messaggio segue il testo)
 
 
@@ -29,25 +22,23 @@ la classe che è la roba che cambia nella struttura del div [AM]
     - http://www.aeronautica.difesa.it/atticontr/Documents/LG_190_2014_80115410153.xml
     - probabilmente da programma simil excel https://www.cbsm.it/public/allegati/testi/150331171237_AVCP_ANTICORRUZIONE_De_Ferrari.xml
     - http://www.comune.urbino.pu.it/fileadmin/docs/gazzettamministrativa/004/a4/02/Dotazione%20organica%20al%2031-12-2015.xml
-- errori incomprensibili nel parsing dell'XML (valido per l'XSD)
-    - http://bra.trasparenza-valutazione-merito.it/anac/c_b111/2013/Dataset_idx_97343.xml
-    - esempio erroretag
-    - http://www.comune.cameratacornello.bg.it/PortaleNet/portale/streaming/Lex190_2017_1.xml?nonce=NCXXK3SFAPX6E4D6
 - se la lista di lotti con errori è molto lunga magari servirebbe una preview e poi puoi allargare
     - es http://www.vcotrasporti.it/userdata/Gara%20Assicurazioni/2020-2022/GARA%20BUONI%20PASTO/ANNO%202019%20(file%20XLM).xml
+    - https://www.isiaroma.it/file-amministrazione/Dati-contratti-pubblici-ISIA-ROMA-2017-Legge-n.190-del-6-novembre-2012.xml
 - gli aggiudicatari sono obbligatori? non credo!
 - potrebbe servire gestire i tag in lowercase
-- url che vanno normalmente, ma con request danno errori:
-    - 500/405 http://anac.robyone.net/xml/Dataset.aspx?cid=149&year=2015&id=37825
-    - 405 http://iccanale.gov.it/PubXML2.php?anno=2017&id=46
 - il file di dati vuoti da errore (vedere test "vuoto")
-
+- request non sembra seguire bene il link che si ottiene
+    - http://iccanale.gov.it/PubXML2.php?anno=2017&id=46
+- errore 500
+    - http://www.comune.cameratacornello.bg.it/PortaleNet/portale/streaming/Lex190_2017_1.xml?nonce=NCXXK3SFAPX6E4D6
 
 ## NOTE
 - errore in console non dipende da me, credo --> https://github.com/Semantic-Org/Semantic-UI/issues/2146
 
 
 ## FATTI
+- richiesta troppo grossa (la post dovrebbe gestirlo)
 - analisi dell'XSD
 - aggiungere più informazioni negli errori con un "approfondisci"
 - allargare la buca del link!
@@ -74,7 +65,14 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - footer con data e nome
 - pagina/messaggio/alert con "informazioni sull'applicazione"
 - puoi aggiungere un parametro nell'url quando passi alla pagina di analisi dove ti indica l'url dell'xml cercato [AM]
-
+- alle volte all'interno del tag hai del text, alle volte del CDATA
+- errori nell'indentazione -> creano problemi nella gestione del tagging delle righe
+(http://www.bologna.aci.it/avcp/00312900376/2015/indice.xml)
+    - gestire i file monoriga (view-source:https://www.comune.poggibonsi.si.it/files/00097460521/2013/Z83082FC0B.xml)
+- errori nel parsing dell'XML (valido per l'XSD) (era un mio errore scemo per il tagging delle linee con il parametro "linea")
+    - http://bra.trasparenza-valutazione-merito.it/anac/c_b111/2013/Dataset_idx_97343.xml
+    - esempio erroretag
+    - http://www.comune.fiesole.fi.it/01252310485/2015/Z8914A766F.xml
 
 ## Lista test
 

@@ -23,9 +23,9 @@ var detectMIME = function (body, cb) {
         if (mimeType !== 'text/xml') {
             let errorLog = {};
             errorLog.header = "Il file non è del tipo giusto :-(";
-            errorLog.text = "Il link è di un file che non è un XML."
+            errorLog.text = "Il link porta ad un file che non è un XML."
             if (mimeType === "text/html") errorLog.text = "Il link è di una pagina HTML.";
-            if (mimeType === "application/zip") errorLog.text = "Il link è di un file compresso.";
+            if (mimeType === "application/zip") errorLog.text = "Il link porta ad un file compresso.";
             // if (mimeType === "application/vnd.ms-excel") errorLog.text = "Il link è di un file xml prodotto con excel.";
             // if (mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
                 // errorLog.text = "Il link è di un file xml prodotto con excel.";
@@ -82,13 +82,15 @@ var convertXMLToJSON = function (body) {
     var lines = body.split('\n');
     var newBody = '';
     for (var i = 0; i < lines.length; i++){
-        let regex = /<[^\/][^>]+()>/;
+        let regex = /<[^\/>]+()\/?>/;
+        let regexEmptyTag = /<[^\/>]+()\/>/;
         let regexQuestionMarks = /<\?[^\/][^>]+()\?>/;
         let newLine = lines[i];
         if (lines[i].match(regex)) {
             let tag = lines[i].match(regex);
-            let indexEndOfTag = tag[0].length + lines[i].match(regex).index - 1;
+            let indexEndOfTag = tag[0].length + tag.index - 1;
             if (lines[i].match(regexQuestionMarks)) indexEndOfTag -= 1;
+            if (lines[i].match(regexEmptyTag)) indexEndOfTag -= 1;
             let trueI = i + 1;
             newLine = insertString(lines[i],' linea="' + trueI + '"', indexEndOfTag);
 

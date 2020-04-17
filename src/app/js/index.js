@@ -89,6 +89,7 @@ var loadAnalysis = function (url) {
 
             if (haveComments) makeMessageUnderSearch('Sono presenti dei commenti', HTMLEncode(`È richiesto dalle linee guida di non usare commenti nel file (indicati da "<!-- testo del commento-->"), per la visualizzazione dell'analisi sono stati eliminati.`), 'warning')
             if (isIndex) {
+                makeProgressionSteps();
                 pageStatus('show-steps-with-error')
                 makeMessageUnderSearch('File di tipo indice', `Questo file è un dataset di tipo "Indice". Sebbene non ci siano errori di validazione dello schema XSD di riferimento per gli indici, questa applicazione non analizza ulteriormente questo tipo di file. Per sfruttare le piene potenzialità dell'applicazione immettere un url ad un file XML della Legge 190 del tipo "Appalto", ovvero di un file che riguarda singoli lotti. Consultare la fonte <a href="http://www.anticorruzione.it/portal/public/classic/Servizi/ServiziOnline/DichiarazioneAdempLegge190">ANAC</a> per ulteriori informazioni.`, 'warning')
             } else {
@@ -165,10 +166,6 @@ if (window.location.search.indexOf('?url=') > -1) {
 }
 
 
-$('#home-logo').click(() => {
-    pageStatus('homepage');
-    $('#custom-error').html('');
-});
 $('#home-name').click(() => {
     pageStatus('homepage');
     $('#custom-error').html('');
@@ -367,17 +364,12 @@ function groupBy(list, keyGetter) {
 formatData = function (xmlView,data) {
     // bisogna insistere per scollare fra loro tutti i tag
     // tag di apertura seguito da uno di chiusura
-    data = data.replace(/<\?([^>]+?)\?>\s*<([^>]+?)>/g, '<?$1?>\n<$2>');
+    data = data.replace(/<\?([^>]+?)\?>[ \t]*<([^>]+?)>/g, '<?$1?>\n<$2>');
+    data = data.replace(/<([^>]+?)>[ \t]*<([^>]+?)>/g, '<$1>\n<$2>');
+    data = data.replace(/<([^>]+?)>[ \t]*<([^>]+?)>/g, '<$1>\n<$2>');
+    data = data.replace(/<([^>]+?)>[ \t]*<([^>]+?)>/g, '<$1>\n<$2>');
+    data = data.replace(/<([^>]+?)>[ \t]*<([^>]+?)>/g, '<$1>\n<$2>');
 
-    data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
-    data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
-    data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
-    data = data.replace(/<([^>]+?)>\s*<([^\/>]+?)>/g, '<$1>\n<$2>');
-    data = data.replace(/<\/([^>]+?)>\s*</g, '</$1>\n<');
-    // due tag di chiusura di seguito
-    data = data.replace(/<\/([^>]+?)>\s*<\/([^>]+?)>/g, '</$1>\n</$2>');
-    data = data.replace(/<\/([^>]+)><\/([^>]+)>/g, '</$1>\n</$2>');
-    data = data.replace(/<\/([^>]+)><\/([^>]+)>/g, '</$1>\n</$2>');
     xmlView.setValue(data);
     indentData(xmlView,data);
     data = xmlView.getValue();
