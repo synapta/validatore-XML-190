@@ -3,7 +3,7 @@ var morgan       = require('morgan');
 var bodyParser   = require('body-parser');
 
 var app = express();
-//NEXT TWO LINES FOR READ BODY FROM POST
+// queste due righe per leggere da una POST
 app.use(bodyParser.json({limit: '50mb', extended: true}));
 app.use(bodyParser.text({limit: '50mb', extended: true}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));

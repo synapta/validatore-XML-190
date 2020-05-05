@@ -72,6 +72,7 @@ var loadAnalysis = function (url) {
         url: "/api/show/xml-from-site?url=" + encodeURI(url),
         type: 'GET',
         error: function(e) {
+            // non è stato possibile arrivare all'analisi per un x motivo
             if (e.responseJSON.index !== undefined) isIndex = true;
             makeProgressionSteps(e.responseJSON.progression)
             if (isIndex)
@@ -80,6 +81,7 @@ var loadAnalysis = function (url) {
             pageStatus('show-steps-with-error');
         },
         success: function(data) {
+            // il file ha superato tutti i primi controlli, quindi procedo con l'analisi di data quality
             if (data.match(/<indici/)) isIndex = true;
             let haveComments = false;
             // prima di parsificare l'xml tolgo i commenti perché rompono la libreria xml-js
@@ -123,6 +125,7 @@ let showResults = function (data) {
         contentType: 'text/plain',
         dataType: "json",
         success: function (res) {
+            // mostro gli errori di data quality trovati, se ce ne sono
             if (res.totErrors === 0 && res.totWarnings === 0) {
                 makeProgressionSteps();
                 pageStatus('show-success');
@@ -153,6 +156,7 @@ let showResults = function (data) {
             }
         },
         error: function(e) {
+            // errori non gestiti
             alert("Errore nell'analisi :-(");
             console.log(e);
         }
@@ -194,6 +198,7 @@ markLine = function (xmlView, line, type) {
     let mark = xmlView.markText({line: line -1, ch: 0}, {line: parseInt(line), ch: 0}, {className: "styled-"+type, addToHistory:true });
 }
 
+// evidenzio le righe dell'XML che hanno un errore o un warning
 markAll = function(xmlView, errori) {
     let sortedErrori = [... errori];
     sortedErrori = sortedErrori.sort((a, b) => (a.line < b.line) ? 1 : (a.line === b.line) ? ((a.type < b.type) ? 1 : -1) : -1 );
@@ -227,6 +232,8 @@ markAll = function(xmlView, errori) {
     }
 }
 
+// riformulo l'oggetto degli errori di data quality, raggruppandoli per tipo
+// e poi per lotto
 addMessages = function (errori) {
     // XXX sostituire la funzione groupBy locale con quella di lodash
     let errorMap = groupBy(errori, errore => errore.code );
@@ -252,6 +259,7 @@ addMessages = function (errori) {
     }
 }
 
+// creo l'HTML per i messaggi di errori di data quality
 makeMessage = function (errorObj) {
     let div = '<div class="ui ';
     let coordinates = '';
@@ -267,7 +275,6 @@ makeMessage = function (errorObj) {
             }
         }
         if (errorObj.positions[i].linee.length > 0) coordinates += '<br>';
-
     }
 
     if (errorObj[0].type === 'error') div += 'negative message">';
@@ -289,9 +296,9 @@ makeMessage = function (errorObj) {
         </div>
         `;
     return div;
-
 }
 
+// creo l'HTML per la barra di progressione a step dell'analisi del link
 makeProgressionSteps = function (step) {
     let div = "";
     let status = [];
@@ -333,15 +340,15 @@ makeProgressionSteps = function (step) {
     $('#progress-steps').html(div);
 }
 
-
+// creo HTML per i messaggi di informazione/errore sotto la buca di ricerca
 makeMessageUnderSearch = function (header, text, type) {
     let div = `
-<div class="ui ${type} message">
-    <div class="header">
-    ${header}
-    </div>
-    <p>${text}</p>
-</div>`;
+    <div class="ui ${type} message">
+        <div class="header">
+        ${header}
+        </div>
+        <p>${text}</p>
+    </div>`;
     $('#custom-error').append(div);
 }
 
@@ -363,6 +370,7 @@ function groupBy(list, keyGetter) {
 
 formatData = function (xmlView,data) {
     // bisogna insistere per scollare fra loro tutti i tag
+    // (esistono infatti i file monoriga)
     // tag di apertura seguito da uno di chiusura
     data = data.replace(/<\?([^>]+?)\?>[ \t]*<([^>]+?)>/g, '<?$1?>\n<$2>');
     data = data.replace(/<([^>]+?)>[ \t]*<([^>]+?)>/g, '<$1>\n<$2>');
@@ -376,8 +384,8 @@ formatData = function (xmlView,data) {
     return data;
 }
 
+//indento il codice del file XML
 var indentData = function (xmlView, data) {
-    //indento il codice
     xmlView.setSelection({
         'line':xmlView.firstLine(),
         'ch':0,
@@ -395,33 +403,7 @@ var indentData = function (xmlView, data) {
           'sticky':null
      })
 }
+
 function HTMLEncode(s) {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-}
-
-setParam = function (name, value) {
-    var l = window.location;
-    /* build params */
-    var params = {};
-    var x = /(?:\??)([^=&?]+)=?([^&?]*)/g;
-    var s = l.search;
-    for(var r = x.exec(s); r; r = x.exec(s)) {
-        r[1] = decodeURIComponent(r[1]);
-        if (!r[2]) r[2] = '%%';
-        params[r[1]] = r[2];
-    }
-    /* set param */
-    params[name] = encodeURIComponent(value);
-
-    /* build search */
-    var search = [];
-    for(var i in params) {
-        var p = encodeURIComponent(i);
-        var v = params[i];
-        if (v != '%%') p += '=' + v;
-        search.push(p);
-    }
-    search = search.join('&');
-    /* execute search */
-    l.search = search;
 }

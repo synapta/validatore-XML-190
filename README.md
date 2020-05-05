@@ -14,12 +14,12 @@ In seguito alla realizzazione del progetto [ContrattiPubblici.org](https://contr
 
 ## Per cominciare
 
-Per installare le dipendenze esegui
+Per installare le dipendenze eseguire
 
 ```
 npm install
 ```
-e assicurati di avere java installato
+e assicurarsi di avere java installato
 
 ```
 sudo apt-get update && apt-get upgrade
@@ -27,12 +27,12 @@ sudo apt-get install default-jdk
 
 ```
 
-e per lanciare il server
+infine per lanciare il server
 
 ```
 node server.js
 ```
 
-Per validare un XML di test puoi andare a http://localhost:8041/ e utilizzare il link http://localhost:8041/xml/test1
+Per validare un XML di test si può andare su http://localhost:8041/ e immettere nella buca il link http://localhost:8041/xml/test1
 
-Per altri link di file XML da validare si può cercare nella lista pubblicata qui: https://dati.anticorruzione.it/#/l190
+Per altri link di file XML da validare si può cercare nella lista ufficiale pubblicata qui: https://dati.anticorruzione.it/#/l190

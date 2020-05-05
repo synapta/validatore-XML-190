@@ -42,7 +42,6 @@ exports.verificaCodiceFiscale = function (cf) {
     cf = cf.trim();
     cf = cf.toUpperCase();
     if (cf.length !== 16) return false;
-    // if (cf.match(/^\d+$/) === null) return false;
     let arr = Array.from(cf, x => isNaN(x) ? x : parseInt(x));
     let sum = 0;
     let dic = {

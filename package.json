@@ -29,6 +29,6 @@
       "lodash": "latest"
   },
   "scripts": {
-      "test": "mocha src/app/js/unit-test/unit-tests.js"
+      "test": "mocha app/js/unit-test/unit-tests.js"
   }
 }

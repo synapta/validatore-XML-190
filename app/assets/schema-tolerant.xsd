@@ -10,6 +10,7 @@
 						<xsd:sequence>
 							<xsd:element name="titolo" type="xsd:string"/>
 							<xsd:element name="abstract" type="xsd:string"/>
+							<!--per gestire sia la versione 1 che la 1.1 dove il typo è stato corretto-->
 							<xsd:choice>
 								<xsd:element name="dataPubblicazioneDataset" type="xsd:date" nillable="false"/>
 								<xsd:element name="dataPubbicazioneDataset" type="xsd:date" nillable="false"/>

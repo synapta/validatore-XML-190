@@ -1,8 +1,4 @@
 # Appunti
-## ERRORI
-
-
-
 
 ## MIGLIORIE
 - sarebbe carino invece che costruire l'html in modo poco leggibile per i messaggi, tu costruissi lo stesso div e poi ci inietti
@@ -11,7 +7,14 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - trova un nome migliore per l'applicazione
 - gestire meglio il messaggio che riguarda le righe mancanti
 - quando sono sopra il testo dell'xml evidenziato perché c'è un errore vorrei poter andare a leggere qual era questo errore (link al messaggio, o in qualche modo il messaggio segue il testo)
-
+- ordina errori per: categoria d'errore, numero, campo
+- group by errori per categoria d'errori invece che per numero
+- mostrare se l'errore viene da specifiche tecniche delle direttive anac, data quality generale o semplice buon senso
+- definire una specie di semaforino del tipo
+    - qualità bassa: hai errori anche fondamentali/errori rispetto alle direttive anac
+    - media: hai errori ma non fondamentali
+    - alta: solo avvisi
+- sarebbe bella una api da chiamare
 
 ## TODO
 - scrivere i testi per gli approfondimenti
@@ -67,7 +70,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - puoi aggiungere un parametro nell'url quando passi alla pagina di analisi dove ti indica l'url dell'xml cercato [AM]
 - alle volte all'interno del tag hai del text, alle volte del CDATA
 - errori nell'indentazione -> creano problemi nella gestione del tagging delle righe
-(http://www.bologna.aci.it/avcp/00312900376/2015/indice.xml)
+    - http://www.bologna.aci.it/avcp/00312900376/2015/indice.xml
     - gestire i file monoriga (view-source:https://www.comune.poggibonsi.si.it/files/00097460521/2013/Z83082FC0B.xml)
 - errori nel parsing dell'XML (valido per l'XSD) (era un mio errore scemo per il tagging delle linee con il parametro "linea")
     - http://bra.trasparenza-valutazione-merito.it/anac/c_b111/2013/Dataset_idx_97343.xml
@@ -75,12 +78,6 @@ la classe che è la roba che cambia nella struttura del div [AM]
     - http://www.comune.fiesole.fi.it/01252310485/2015/Z8914A766F.xml
 
 ## Lista test
-
-### checklist nuovo test
-- aggiunta funzione in test-functions.js
-- aggiunta lista dei campi in test-list.js
-- aggiunto il dizionario degli errori in error-dictionary.json
-- aggiunto il nome della funzione in analyze.js
 
 ### singolo campo singolo lotto
 - [X] non nullo su tutto tranne [warn] data fine, importo liquidato

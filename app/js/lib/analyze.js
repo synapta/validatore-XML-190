@@ -1,4 +1,3 @@
-// var synapta_x2j = require('./synapta_x2j/build/Release/synapta_x2j.node');
 var x2j = require('xml-js');
 var dict = require('./error-dictionary.json');
 var fun = require('./test-functions.js');
@@ -7,12 +6,11 @@ var utils = require('./utils.js');
 var xsd = require('xsd-schema-validator');
 var fs = require('fs');
 var _ = require('lodash');
+var mmm = require('mmmagic'),
+    Magic = mmm.Magic;
 var xsdXmlPath = __dirname + '/../../assets/schema-tolerant.xsd';
 var xsdIndexPath = __dirname + '/../../assets/schema-index.xsd';
 
-
-var mmm = require('mmmagic'),
-    Magic = mmm.Magic;
 
 
 var detectMIME = function (body, cb) {
@@ -66,6 +64,7 @@ var detectIfIndex = function (body) {
     return 'xml';
 }
 
+// faccio i primi test di analisi del file fino alla validazione dello schema XSD
 exports.validateFile = function (body,cb) {
     detectMIME(body, (errorLog) => {
         if (errorLog) {
@@ -86,6 +85,9 @@ var convertXMLToJSON = function (body) {
         let regexEmptyTag = /<[^\/>]+()\/>/;
         let regexQuestionMarks = /<\?[^\/][^>]+()\?>/;
         let newLine = lines[i];
+        // per mostrare gli errori di data quality ho bisogno di mettere il riferimento
+        // direttamente dentro l'XML stesso della posizione della riga
+        // inietto nei tag il parametro "linea" con valore la riga
         if (lines[i].match(regex)) {
             let tag = lines[i].match(regex);
             let indexEndOfTag = tag[0].length + tag.index - 1;
@@ -105,10 +107,9 @@ var extractLotti = function (xmlJSON) {
     // c'è il primo livello (singolo) dell'XML che non è sempre uguale (spesso 'legge190:pubblicazione')
     var firstLevel;
     for (var key in xmlJSON) firstLevel = key;
-    var totLotti = 1;
-    // if (Array.isArray(xmlJSON[firstLevel].data.lotto)) totLotti = xmlJSON[firstLevel].data.lotto.length;
     return rendiArray(xmlJSON[firstLevel].data.lotto);
 }
+
 
 exports.analyze = function (body, cb) {
     let xmlJSON = convertXMLToJSON(body);
@@ -120,6 +121,8 @@ exports.analyze = function (body, cb) {
         lotti[j].lottoNumber = incremented;
         lotti[j].startLine = getLine(lotti[j],'')
     }
+    // analizzo lotto per lotto
+    // XXX da implementare controlli cross-lotto
     for (let i = 0; i < lotti.length; i ++) {
         errors = errors.concat(analyzeLotto(lotti[i]));
     }
@@ -140,6 +143,9 @@ var insertString = function (str,newStr,i) {
     return str.slice(0, i) + newStr + str.slice(i);
 }
 
+// nella trasformazione da XML a oggetto json, alcune parti dell'oggetto stesso, a seconda della loro numerosità,
+// possono essere array come no, per semplificare i riferimenti questa funzione ha l'obbiettivo di
+// rendere l'oggetto in entrata un array se non lo è già
 var rendiArray = function (obj) {
     if (Array.isArray(obj)) {
         return obj;
@@ -150,8 +156,7 @@ var rendiArray = function (obj) {
     }
 }
 
-
-
+// funzione per passare il path di un elmento come stringa
 var getValue = function (lotto, child) {
     let otherTags = ['._cdata'];
     let path = child + '._text';
@@ -166,7 +171,7 @@ var getValue = function (lotto, child) {
     return value;
 }
 
-
+// funzione per recuperare la riga originaria di un tag dato il suo path nel json
 var getLine = function (lotto, child) {
     let path = '';
     path = child + '._attributes.linea';
@@ -175,15 +180,15 @@ var getLine = function (lotto, child) {
     return line;
 }
 
-
-
+// funzione per standardizzare la struttura degli errori
+// tutti i dati sono esplicitati in error-dictionary.json
 var addError = function (errorCode, line,lotto) {
     let definition = findKey(dict,errorCode)
     return {text:definition.text, type:definition.type, code:errorCode, details:definition.details, line:line,
         lottoNumber:lotto.lottoNumber, startLine:lotto.startLine };
 }
 
-
+// funzione per recuperare una porzione di oggetto a partire da un codice identificativo
 var findKey = function(obj,code) {
     for (let p in obj) {
         if (p === 'code') {
@@ -200,18 +205,15 @@ var findKey = function(obj,code) {
     return false;
 };
 
-
-
-
+// dichiariazioni per associare i riferimenti alle funzioni dichiarate in test-functions.js
+// e poi riusarne i nomi come stringhe da passare come parametri
 presenzaDato = fun.presenzaDato;
 checkCig = utils.checkCig;
 lunghezzaRagioneSociale = fun.lunghezzaRagioneSociale;
 lunghezzaOggetto = fun.lunghezzaOggetto;
-
 importoNullo = fun.importoNullo;
 importoTroppoGrande = fun.importoTroppoGrande;
 importoNegativo = fun.importoNegativo;
-
 coerenzaDate = fun.coerenzaDate;
 coerenzaImporti = fun.coerenzaImporti;
 validitaCf = fun.validitaCf;
@@ -223,6 +225,7 @@ formatoDate = fun.formatoDate;
 precisioneDate = fun.precisioneDate;
 rangeDate = fun.rangeDate;
 
+// iteratore sulla lista di funzione dei controlli da fare su un lotto
 var analyzeLotto = function (lotto) {
     lotto.partecipanti.partecipante = rendiArray(lotto.partecipanti.partecipante);
     lotto.aggiudicatari.aggiudicatario = rendiArray(lotto.aggiudicatari.aggiudicatario);
@@ -238,6 +241,8 @@ var analyzeLotto = function (lotto) {
     return erroriTotali;
 }
 
+// funzione che chiama una funzione di un controllo e ritorna la lista degli errori trovati
+// per tutti i campi che sui quali la funzione va applicata, come dichiarato in test-list.js
 var useTest = function (lotto, options) {
     let errori = [];
     let fieldsToTest = options.fieldsToTest;
@@ -248,6 +253,7 @@ var useTest = function (lotto, options) {
     return errori;
 }
 
+// funzione che effettivamente itera una funzione di controllo su tutti i campi richiesti
 var useTestOnField = function (testFunction,lotto,row) {
     let errors = [];
     // confronto fra campi

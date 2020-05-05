@@ -21,16 +21,26 @@
 
             <div class="object">
                 <h2 class="ui header">Validatore XML Legge 190</h2>
-                <p style='text-align: center;'>Questa applicazione permette una comoda validazione dei file XML della legge 190. </p>
+                <p>Questa applicazione permette una comoda validazione dei file XML relativi ai contratti di servizi, forniture e lavori
+                    dalla Pubblica Amministrazione, relativi all'art.1, comma 32 Legge n.190/2012. </p>
+                <p>Le specifiche tecniche per la compilazione di questi file sono riportate nelle <a target="_blank" href='http://www.anticorruzione.it/portal/rest/jcr/repository/collaboration/Digital%20Assets/anacdocs/Servizi/ServiziOnline/AdempimentoLegge190/Specifiche%20Tecniche%20Legge%20190%20v1.2_finale.pdf'> specifiche tecniche</a> dell'Autorità nazionale per l'anticoruzzione (ANAC), mentre i 3 schemi XSD sono
+                    <ol class="ui list">
+                        <li><a target="_blank" href='http://dati.anticorruzione.it/schema/TypesL190.xsd'>http://dati.anticorruzione.it/schema/TypesL190.xsd</a></li>
+                        <li><a target="_blank" href='http://dati.anticorruzione.it/schema/datasetIndiceAppaltiL190.xsd'>http://dati.anticorruzione.it/schema/datasetIndiceAppaltiL190.xsd</a></li>
+                        <li><a target="_blank" href='http://dati.anticorruzione.it/schema/datasetAppaltiL190.xsd'>http://dati.anticorruzione.it/schema/datasetAppaltiL190.xsd</a></li>
+                    </ol>.
+                Ad ogni modo non esiste un tool, libero o non, che permetta di conoscere estensivamente la qualità dei dati di un dato file, sia per chi compila alla fonte i dati stessi, sia per gli utenti finali, fruitori dei dati, per capire come migliorarli laddove fosse necessario. </p>
+                <p>Da questa mancanza nasce l'idea per questa applicazione open source, come progetto di formazione del team di sviluppo di <a target="_blank" href='https://synapta.it/'>Synapta Srl</a>. </p>
+
 
                 <h3 class="ui header">Utilizzo </h3>
                 <ol class="ui list">
                     <li>Scrivere un link nella buca di ricerca in homepage</li>
                     <li>Si possono avere diversi risultati a seconda di quanti passaggi vengono superati
                         <ol>
-                            <li>Il link non è funzionante: l'URL potrebbe essere rotto o essere scritto male</li>
+                            <li>Il link non è funzionante: l'URL potrebbe essere non raggiungibile o essere scritto male</li>
                             <li>Il file non è del tipo giusto: la risorsa è stata raggiunta ma il file che vi si trova non è un XML, potrebbe essere una pagina HTML, come un file zip o un video</li>
-                            <li>L'XML non valida lo schema XSD della legge 190: la risorsa è raggiungibile ed è un file XML, ma i tag usati e la loro gerarchia non sono quelli richiesti</li>
+                            <li>L'XML non valida lo schema XSD della legge 190: la risorsa è raggiungibile ed è un file XML, ma i tag usati e/o la loro gerarchia non sono quelli richiesti</li>
                             <li>Il file supera tutti i primi controlli: si può procedere con l'analisi
                                 <ol>
                                     <li>Il file è di tipo indice: l'applicazione non approfondisce la validazione di file di questo tipo</li>
@@ -39,7 +49,7 @@
                             </li>
                         </ol>
                     </li>
-                    <li>Analisi del file</li>
+                    <li>Analisi del file per cercare errori di data quality</li>
                 </ol>
             </div>
 
