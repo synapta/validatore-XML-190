@@ -66,6 +66,7 @@ var pageStatus = function (status) {
 //scarico la risorsa e faccio i primi controlli per vedere se è un xml valido
 var loadAnalysis = function (url) {
     let isIndex = false;
+    let isEmpty = false;
     pageStatus('homepage')
     pageStatus('loading')
     $.ajax({
@@ -73,27 +74,37 @@ var loadAnalysis = function (url) {
         type: 'GET',
         error: function(e) {
             // non è stato possibile arrivare all'analisi per un x motivo
-            if (e.responseJSON.index !== undefined) isIndex = true;
+            if (e.responseJSON.is_index === true) isIndex = true;
             makeProgressionSteps(e.responseJSON.progression)
             if (isIndex)
-                makeMessageUnderSearch('File di tipo indice', `Questo file è un dataset di tipo "Indice". Questa applicazione non analizza ulteriormente questo tipo di file, ad ogni modo sono elencati gli errori che riguardano la validazione dello schema XSD di riferimento per gli indici. Per sfruttare le piene potenzialità dell'applicazione immettere un url ad un file XML della Legge 190 del tipo "Appalto", ovvero di un file che riguarda singoli lotti. Consultare la fonte <a href="http://www.anticorruzione.it/portal/public/classic/Servizi/ServiziOnline/DichiarazioneAdempLegge190">ANAC</a> per ulteriori informazioni.`, 'warning');
-            makeMessageUnderSearch(e.responseJSON.header,e.responseJSON.text, 'negative');
+                makeMessageUnderSearch(dict['indice_w_errori']);
+            makeMessageUnderSearch({title: e.responseJSON.header, text: e.responseJSON.text, type: 'negative'});
+            if (e.responseJSON.is_empty === true)
+                makeMessageUnderSearch(dict['vuoto']);
             pageStatus('show-steps-with-error');
         },
         success: function(data) {
             // il file ha superato tutti i primi controlli, quindi procedo con l'analisi di data quality
-            if (data.match(/<indici/)) isIndex = true;
+            if (data.match(/<\s*indici/)) isIndex = true;
+            if (data.match(/<\s*data\s*\/\s*>/)) isEmpty = true;
+            console.log(isEmpty)
             let haveComments = false;
             // prima di parsificare l'xml tolgo i commenti perché rompono la libreria xml-js
             let sanitizedData = sanitizeComments(data);
             if (data !== sanitizedData) haveComments = true;
             data = sanitizedData;
 
-            if (haveComments) makeMessageUnderSearch('Sono presenti dei commenti', HTMLEncode(`È richiesto dalle linee guida di non usare commenti nel file (indicati da "<!-- testo del commento-->"), per la visualizzazione dell'analisi sono stati eliminati.`), 'warning')
+            if (haveComments) makeMessageUnderSearch(dict['has_comments'])
+
             if (isIndex) {
                 makeProgressionSteps();
                 pageStatus('show-steps-with-error')
-                makeMessageUnderSearch('File di tipo indice', `Questo file è un dataset di tipo "Indice". Sebbene non ci siano errori di validazione dello schema XSD di riferimento per gli indici, questa applicazione non analizza ulteriormente questo tipo di file. Per sfruttare le piene potenzialità dell'applicazione immettere un url ad un file XML della Legge 190 del tipo "Appalto", ovvero di un file che riguarda singoli lotti. Consultare la fonte <a href="http://www.anticorruzione.it/portal/public/classic/Servizi/ServiziOnline/DichiarazioneAdempLegge190">ANAC</a> per ulteriori informazioni.`, 'warning')
+                makeMessageUnderSearch(dict['indice_no_errori'])
+            }
+            else if (isEmpty) {
+                makeProgressionSteps(3);
+                pageStatus('show-steps-with-error')
+                makeMessageUnderSearch(dict['vuoto']);
             } else {
                 pageStatus('show-steps-successful')
                 pageStatus('loading-analysis');
@@ -129,7 +140,7 @@ let showResults = function (data) {
             if (res.totErrors === 0 && res.totWarnings === 0) {
                 makeProgressionSteps();
                 pageStatus('show-success');
-                makeMessageUnderSearch("Successo!", "L'analisi è andata a buon fine e non sono stati trovati errori. <br>Si può procedere con una nuova analisi.", 'positive')
+                makeMessageUnderSearch(dict['successo'])
 
             } else {
                 makeProgressionSteps(3);
@@ -341,7 +352,10 @@ makeProgressionSteps = function (step) {
 }
 
 // creo HTML per i messaggi di informazione/errore sotto la buca di ricerca
-makeMessageUnderSearch = function (header, text, type) {
+makeMessageUnderSearch = function (ref) {
+    let header = ref.title;
+    let text = ref.text;
+    let type = ref.type;
     let div = `
     <div class="ui ${type} message">
         <div class="header">

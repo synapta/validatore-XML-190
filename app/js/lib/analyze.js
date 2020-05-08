@@ -18,6 +18,20 @@ var detectMIME = function (body, cb) {
     let magic = new Magic(mmm.MAGIC_MIME_TYPE);
     magic.detect(buf, function(err, mimeType) {
         if (err) throw err;
+        if (mimeType === 'text/plain') {
+            // questa stringa può essere scordata all'inizio dei file XML, ma se manca,
+            // il detector del mime type non è in grado di riconoscere che è un XML
+            let bodyXMLCured = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' + body;
+            let bufXMLCured = Buffer.from(bodyXMLCured);
+            magic.detect(bufXMLCured, function(err2,mimeType2)  {
+                if (err2) throw err2;
+                logic(mimeType2,cb)
+            })
+        } else {
+            logic(mimeType,cb)
+        }
+    });
+    let logic = function (mimeType, cb) {
         if (mimeType !== 'text/xml') {
             let errorLog = {};
             errorLog.header = "Il file non è del tipo giusto :-(";
@@ -34,13 +48,12 @@ var detectMIME = function (body, cb) {
         } else {
             cb(undefined)
         }
-
-    });
+    }
 }
 
-var xsdValidation = function (body, type, cb) {
+var xsdValidation = function (body, property, cb) {
     xsdPath = xsdXmlPath;
-    if (type === 'index') xsdPath = xsdIndexPath;
+    if (property.is_index === true) xsdPath = xsdIndexPath;
     xsd.validateXML(body, xsdPath, function(err, result) {
         if (result.valid) {
             cb(undefined)
@@ -49,7 +62,8 @@ var xsdValidation = function (body, type, cb) {
             errorLog.header = "L'XML non valida lo schema XSD :-(";
             errorLog.text = "";
             errorLog.progression = 2;
-            if (type === 'index') errorLog.index = true;
+            if (property.is_empty === true) errorLog.is_empty = true;
+            if (property.is_index === true) errorLog.is_index = true;
             for (let i = 0; i < result.messages.length; i++){
                 errorLog.text += result.messages[i] + '<br>';
             }
@@ -60,8 +74,12 @@ var xsdValidation = function (body, type, cb) {
 }
 
 var detectIfIndex = function (body) {
-    if (body.match(/<indici/)) return 'index';
-    return 'xml';
+    if (body.match(/<indici/)) return true;
+    return false;
+}
+var detectIfEmpty = function (body) {
+    if (body.match(/<data\s*\/>/)) return true;
+    return false;
 }
 
 // faccio i primi test di analisi del file fino alla validazione dello schema XSD
@@ -71,8 +89,8 @@ exports.validateFile = function (body,cb) {
             cb(errorLog)
         } else {
             console.log("MIME OK!")
-            let type = detectIfIndex(body);
-            xsdValidation(body,type,cb);
+            let property = {is_index: detectIfIndex(body), is_empty: detectIfEmpty(body)}
+            xsdValidation(body,property,cb);
         }
     })
 }

@@ -30,7 +30,6 @@ la classe che è la roba che cambia nella struttura del div [AM]
     - https://www.isiaroma.it/file-amministrazione/Dati-contratti-pubblici-ISIA-ROMA-2017-Legge-n.190-del-6-novembre-2012.xml
 - gli aggiudicatari sono obbligatori? non credo!
 - potrebbe servire gestire i tag in lowercase
-- il file di dati vuoti da errore (vedere test "vuoto")
 - request non sembra seguire bene il link che si ottiene
     - http://iccanale.gov.it/PubXML2.php?anno=2017&id=46
 - errore 500
@@ -55,7 +54,9 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - il testo nel box di testo non deve essere modificabile!
 - se il lotto non ha alcun errore -> messaggio di successo!
 - gestiti i commenti nell'XML
+- il file di dati vuoti da errore (vedere test "vuoto")
 - se sulla stessa riga c'è sia un errore che un warning deve prevalere l'evidenziazione da errore non da warning!
+- per il riconoscimento del mime type di un xml c'è bisogno della stringa "<?xml version="1.0" encoding="UTF-8" standalone="yes"?>"
 - gestire i redirect con la POST in request
     - http://montecchiomaggiore.trasparenza-valutazione-merito.it/anac/1249929510/2015/Dataset_idx_127554.xml
 - se non si vuole gestire gli indici, per lo meno rilevarli e dare un messaggio di warning per cui non viene fatta l'analisi, o al massimo vedere se l'xsd va bene
