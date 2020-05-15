@@ -19,6 +19,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
 ## TODO
 - scrivere i testi per gli approfondimenti
 - scrivere tutti i test per le funzioni
+- nelle info scrivere delle FAQ, tipo cosa è un tag, cosa un cig, cosa la iso ecc.
 - aggiungere il controllo di mime type per i file prodotti con excel -> non facile, passano il mime type test
     - www.comunefosdinovo.it/download_2015_comune.xml?h=634ed9133d133968ddf82630d55c486868c2c7bb
     - http://www.bonificanurra.it/pubblicazioni/tabella7.xml
@@ -30,6 +31,8 @@ la classe che è la roba che cambia nella struttura del div [AM]
     - https://www.isiaroma.it/file-amministrazione/Dati-contratti-pubblici-ISIA-ROMA-2017-Legge-n.190-del-6-novembre-2012.xml
 - gli aggiudicatari sono obbligatori? non credo!
 - potrebbe servire gestire i tag in lowercase
+- aggiungere la gestione dell'identificativo fiscale estero
+- scrivere tutti i riferimenti e da dove provengono le linee guida negli approfondimenti
 - request non sembra seguire bene il link che si ottiene
     - http://iccanale.gov.it/PubXML2.php?anno=2017&id=46
 - errore 500
