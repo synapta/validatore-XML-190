@@ -1,0 +1,86 @@
+#home-name {
+    font-weight: 900;
+}
+.CodeMirror {
+  height: auto;
+  margin: 0 10px 30px 10px;
+  padding: 1%;
+  border-radius: 15px;
+}
+.styled-error { background-color: #ff1a1a; }
+.styled-warning { background-color: #ffcc66;}
+.link_line {color:#0000EE; text-decoration: underline; cursor: pointer;}
+.link_lotto {color:#0000EE; text-decoration: underline; cursor: pointer;}
+
+body {
+ background-image: url("../assets/images/greyzz.png");
+}
+
+.ui.statistics > .statistic {
+    margin: auto;
+}
+
+#scroll-to-top {
+  text-align: center;
+  border-radius: 4px;
+  margin: 30px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 10;
+  transition: background-color .3s;
+}
+.message-container {
+    margin: 10px 0px ;
+}
+.object {
+    margin: 2% 20%;
+}
+
+#error-messages {
+    background-color: white;
+    padding: 2%;
+    border-radius: 15px;
+}
+h2,h3,h4,h5 {
+    text-align: center;
+}
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+#content-wrap {
+  padding-bottom: 15rem;
+}
+
+@media (min-height: 320px) {
+  .ui.footer.form-page {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 2rem;
+    height: 12rem;
+  }
+}
+
+.masthead a {
+  font-size: 1.1em;
+  padding-left: 1%;
+}
+.navbar-name {
+    color: black;
+}
+ol.ui.list ol li::before {
+  margin-left: -2rem;
+}
+
+ol.ui.list ol li ol li::before {
+  margin-left: -2.5rem;
+}
+
+div h4 {
+    text-align: left;
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<head>
+    <title>VAL190</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.47.0/codemirror.min.css">
+
+    <link rel="stylesheet" href="/css/index.css" type="text/css" />
+</head>
+<body>
+    <div id='page-container'>
+        <div id='content-wrap'>
+            <div class="ui masthead  segment">
+                <a class='navbar-name' id='home-name' href='/'>
+                    Home
+                </a>
+                <a class='navbar-name' href='/info'>
+                    Info
+                </a>
+            </div>
+
+            <div class="object">
+                <h2 class="ui header">VAL190</h2>
+                <h4 class="ui header" style="text-align: center">Validatore di Data Quality degli XML della Legge 190/2012</h4>
+                <p>Questa applicazione permette una comoda validazione dei file XML relativi ai contratti di servizi, forniture e lavori
+                    dalla Pubblica Amministrazione, relativi all'art.1, comma 32 Legge n.190/2012. </p>
+                <p>Le specifiche tecniche per la compilazione di questi file sono riportate nella <a target="_blank" href='http://www.anticorruzione.it/portal/rest/jcr/repository/collaboration/Digital%20Assets/anacdocs/Servizi/ServiziOnline/AdempimentoLegge190/Specifiche%20Tecniche%20Legge%20190%20v1.2_finale.pdf'>documentazione</a> dell'Autorità nazionale per l'anticorruzione (ANAC), mentre i 3 schemi XSD sono
+                    <ol class="ui list">
+                        <li><a target="_blank" href='http://dati.anticorruzione.it/schema/TypesL190.xsd'>http://dati.anticorruzione.it/schema/TypesL190.xsd</a></li>
+                        <li><a target="_blank" href='http://dati.anticorruzione.it/schema/datasetIndiceAppaltiL190.xsd'>http://dati.anticorruzione.it/schema/datasetIndiceAppaltiL190.xsd</a></li>
+                        <li><a target="_blank" href='http://dati.anticorruzione.it/schema/datasetAppaltiL190.xsd'>http://dati.anticorruzione.it/schema/datasetAppaltiL190.xsd</a></li>
+                    </ol>
+                Ad ogni modo non esiste un tool, libero o non, che permetta di conoscere estensivamente la qualità dei dati di un dato file, sia per chi compila alla fonte i dati stessi, sia per gli utenti finali, fruitori dei dati, per capire come migliorarli laddove fosse necessario. </p>
+                <p>Da questa mancanza nasce l'idea per questa applicazione open source, come progetto di formazione del team di sviluppo di <a target="_blank" href='https://synapta.it/'>Synapta Srl</a>, start-up torinese. L'interesse per questo tema nasce dal progetto principale dell'azienda,  <a target="_blank" href='https://contrattipubblici.org/'>ContrattiPubblici.org</a>, motore di ricerca e piattaforma d'analisi dei contratti della pubblica amministrazione italiana.</p>
+
+
+                <h3 class="ui header">Utilizzo </h3>
+                <ol class="ui list">
+                    <li>Scrivere un link nella buca di ricerca in homepage</li>
+                    <li>Si possono avere diversi risultati a seconda di quanti passaggi vengono superati
+                        <ol>
+                            <li>Il link non è funzionante: l'URL potrebbe essere non raggiungibile o essere scritto male</li>
+                            <li>Il file non è del tipo giusto: la risorsa è stata raggiunta ma il file che vi si trova non è un XML, potrebbe essere una pagina HTML, come un file zip o un video</li>
+                            <li>L'XML non valida lo schema XSD della legge 190: la risorsa è raggiungibile ed è un file XML, ma i tag usati e/o la loro gerarchia non sono quelli richiesti</li>
+                            <li>Il file supera tutti i primi controlli: si può procedere con l'analisi
+                                <ol>
+                                    <li>Il file è di tipo indice: l'applicazione non approfondisce la validazione di file di questo tipo</li>
+                                    <li>Il file è di tipo dataset: si può procedere con l'analisi</li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </li>
+                    <li>Analisi del file per cercare errori di data quality</li>
+                </ol>
+            </div>
+
+        <div class="ui inverted vertical footer segment form-page">
+            <div class="ui container">
+                <div class="ui stackable inverted  equal height stackable grid">
+                    <div class="three wide column">
+                        <h4 class="ui inverted header">Link utili</h4>
+                        <div class="ui inverted link list">
+                            <a href="https://synapta.it/" target="_blank" class="item">Synapta</a>
+                            <a href="https://contrattipubblici.org/" target="_blank" class="item">ContrattiPubblici.org</a>
+                            <a href="https://github.com/synapta/validatore-XML-190" target="_blank" class="item">GitHub</a>
+                            <a href="http://www.anticorruzione.it/portal/public/classic/Servizi/ServiziOnline/DichiarazioneAdempLegge190" target="_blank" class="item">ANAC</a>
+                        </div>
+                    </div>
+                    <div class="three wide column">
+                    </div>
+                    <div class="seven wide column">
+                      <h4 class="ui inverted header">Made by</h4>
+                      <p>Sofia Rosati <i class="heart outline icon"></i>, 2020 <br>
+                      per informazioni contattare <a href="mailto:sofia.rosati@synapta.it">sofia.rosati@synapta.it</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <script src="https://code.jquery.com/jquery-2.2.0.js"></script>   -->
+    <script src="https://contrattipubblici.org/js/lib/jquery223.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" type="text/javascript"></script>
+    <script src="https://contrattipubblici.org/js/lib/typeahead0105.js" type="text/javascript"></script>
+    <script src="https://contrattipubblici.org/js/lib/underscore183.js" type="text/javascript"></script>
+    <script src="https://contrattipubblici.org/js/lib/mustache072.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.47.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/mode/xml/xml.js"></script>
+    <script src='https://cdn.jsdelivr.net/lodash/4.17.2/lodash.min.js'></script>
+
+</body>
+</html>

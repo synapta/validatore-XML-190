@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<head>
+    <title>VAL190</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.47.0/codemirror.min.css">
+
+    <link rel="stylesheet" href="/css/index.css" type="text/css" />
+</head>
+<body>
+    <div id='page-container'>
+        <div id='content-wrap'>
+            <div class="ui masthead  segment">
+                <a class='navbar-name' id='home-name' href='/'>
+                    Home
+                </a>
+                <a class='navbar-name' href='/info'>
+                    Info
+                </a>
+            </div>
+
+            <div id="main">
+                <div class="object">
+                    <h2 class="ui header">VAL190</h2>
+                    <h4 class="ui header" style="text-align: center">Validatore di Data Quality degli XML della Legge 190/2012</h4>
+                    <h3 class="ui header"><i class="angle double down icon"></i>Scrivi un link e scopri se è un file valido!</h3>
+                    <div class="ui fluid icon input" >
+                        <input type="text"  placeholder="Scrivi link..." id='search-field'>
+                        <i class="inverted circular search link icon" id='load-site'></i>
+                    </div>
+                    <div class="message-container" id='progress-steps'>
+                    </div>
+                    <div class="message-container" id="custom-error">
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui massive text loader" style="display:none" id='loading'></div>
+
+            <div class="ui grid" id="show" style="display:none">
+                <div class="row">
+                    <div class="ten wide column">
+                        <textarea id="xml-form"></textarea>
+                    </div>
+                    <div class="five wide column" id="error-messages">
+                        <h4 class="ui horizontal divider header">
+                            <i class="bar chart  icon"></i>
+                            Statistiche
+                        </h4>
+
+
+                        <div class="ui statistics">
+                            <div class="statistic">
+                                <div class="value" id='numero-lotti'>
+                                </div>
+                                <div class="label">
+                                  Lotti
+                                </div>
+                            </div>
+                            <div class="red statistic">
+                                <div class="value" id='numero-errori'>
+                                  12
+                                </div>
+                                <div class="label">
+                                  Errori
+                                </div>
+                            </div>
+                            <div class="orange statistic">
+                                <div class="value" id='numero-avvisi'>
+                                  22
+                                </div>
+                                <div class="label">
+                                  Avvisi
+                                </div>
+                            </div>
+                        </div>
+                        <h4 class="ui horizontal divider header">
+                        <i class="flag outline icon"></i>
+                        Messaggi
+                        </h4>
+                        <div id='messages'></div>
+
+                    </div>
+                    <button class="ui labeled icon button" id='scroll-to-top' style="display:none">
+                        Torna in alto
+                        <i class="arrow up icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui inverted vertical footer segment form-page">
+            <div class="ui container">
+                <div class="ui stackable inverted  equal height stackable grid">
+                    <div class="three wide column">
+                        <h4 class="ui inverted header">Link utili</h4>
+                        <div class="ui inverted link list">
+                            <a href="https://synapta.it/" target="_blank" class="item">Synapta</a>
+                            <a href="https://contrattipubblici.org/" target="_blank" class="item">ContrattiPubblici.org</a>
+                            <a href="https://github.com/synapta/validatore-XML-190" target="_blank" class="item">GitHub</a>
+                            <a href="http://www.anticorruzione.it/portal/public/classic/Servizi/ServiziOnline/DichiarazioneAdempLegge190" target="_blank" class="item">ANAC</a>
+                        </div>
+                    </div>
+                    <div class="three wide column">
+                    </div>
+                    <div class="seven wide column">
+                      <h4 class="ui inverted header">Made by</h4>
+                      <p>Sofia Rosati <i class="heart outline icon"></i>, 2020 <br>
+                      per informazioni contattare <a href="mailto:sofia.rosati@synapta.it">sofia.rosati@synapta.it</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://contrattipubblici.org/js/lib/jquery223.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js" type="text/javascript"></script>
+    <script src="https://contrattipubblici.org/js/lib/typeahead0105.js" type="text/javascript"></script>
+    <script src="https://contrattipubblici.org/js/lib/underscore183.js" type="text/javascript"></script>
+    <script src="https://contrattipubblici.org/js/lib/mustache072.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.47.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/mode/xml/xml.js"></script>
+    <script src='https://cdn.jsdelivr.net/lodash/4.17.2/lodash.min.js'></script>
+
+    <script src="/js/index.js"></script>
+    <script src="/js/lib/message-dictionary.js"></script>
+
+</body>
+</html>
