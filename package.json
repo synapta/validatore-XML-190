@@ -4,8 +4,7 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.js"
+    "test": "mocha app/js/unit-test/unit-tests.js"
   },
   "repository": {
     "type": "git",
@@ -18,17 +17,15 @@
   },
   "homepage": "https://github.com/synapta/validatore-XML-190#readme",
   "dependencies": {
-      "body-parser": "^1.19.0",
-      "express": "^4.17.1",
-      "morgan": "^1.9.1",
-      "pg": "^7.11.0",
-      "request": "^2.88.0",
-      "xml-js": "^1.6.11",
-      "mmmagic": "latest",
-      "xsd-schema-validator": "latest",
-      "lodash": "latest"
-  },
-  "scripts": {
-      "test": "mocha app/js/unit-test/unit-tests.js"
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "lodash": "latest",
+    "mmmagic": "latest",
+    "moment": "^2.26.0",
+    "morgan": "^1.9.1",
+    "pg": "^7.11.0",
+    "request": "^2.88.0",
+    "xml-js": "^1.6.11",
+    "xsd-schema-validator": "latest"
   }
 }
