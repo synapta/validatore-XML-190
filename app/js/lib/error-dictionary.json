@@ -65,51 +65,51 @@
             "codiceFiscaleAggiudicatario" : {"text": "Codice fiscale/partita iva dell'aggiudicatario non valido", "type": "error", "code": "ECR06",
                 "details": "<b>Cosa significa?</b> Il codice fiscale (o la partita IVA) immesso non supera l'algoritmo di validazione. Il codice fiscale è un codice alfanumerico a 16 cifre per persone fisiche, e così come la partita IVA, è di 11 cifre se è di persone giuridiche. Un esempio valido è 'IT11491360019'. <br><b>Come risolvere?</b> Controllare di non aver commesso degli errori di battitura, come lettere 'O' al posto degli zero, scambi di caratteri o cifre raddoppiate. Se non fosse questo il problema cancellare qualunque parola o carattere diverso dal codice stesso, come 'CF: IT11491360019'. Evitare inoltre l'invenzione di formati per indicare un codice mancante come 'XXXXXXXXXX' o 'NON PRESENTE'."},
             "dataInizio" : { "text": "Data di inizio precedente al 2000 o successiva al 2100", "type": "error", "code": "ECR07",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."},
+                "details": "<b>Cosa significa?</b> La data di inizio immessa è fuori da un range considerato ragionevole per i contratti.<br><b>Come risolvere?</b> Controllare di non aver commesso errori di battitura nell'indicare l'anno."},
             "dataUltimazione" : { "text": "Data di fine precedente al 2000 o successiva al 2100", "type": "error", "code": "ECR08",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."}
+                "details": "<b>Cosa significa?</b> La data di fine immessa è fuori da un range considerato ragionevole per i contratti.<br><b>Come risolvere?</b> Controllare di non aver commesso errori di battitura nell'indicare l'anno."}
         }
     },
     "warnings": {
         "completezza": {
             "importoSommeLiquidate" : { "text": "Importo delle somme liquidate mancante", "type": "warning", "code": "WCM01",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."},
+                "details": "<b>Cosa significa?</b> Il campo dell'importo delle somme liquidate non è stato compilato o il tag che lo contiene è del tutto assente. Questo messaggio è un avviso e non un errore perché potrebbe essere un'informazione non conosciuta al momento della compilazione del file, oppure correttamente assente, perché la gara è andata deserta. <br><b>Come risolvere?</b> Controllare di aver compilato tutti i campi. Ad ogni modo se l'informazione non fosse conosciuta solo al momento si consiglia di compilare il dato almeno con una stima provvisoria. Se anche questa non fosse possibile averla, si consiglia caldamente di fare in futuro una nuova pubblicazione per aggiornare i dati e compilarli tutti."},
             "dataUltimazione" : { "text": "Data di fine mancante", "type": "warning", "code": "WCM02",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."},
+                "details": "<b>Cosa significa?</b> Il campo della data di fine non è stato compilato o il tag che lo contiene è del tutto assente. Questo messaggio è un avviso e non un errore perché potrebbe essere un'informazione non conosciuta al momento della compilazione del file. <br><b>Come risolvere?</b> Controllare di aver compilato tutti i campi. Ad ogni modo se l'informazione non fosse conosciuta si consiglia di compilare il dato almeno con una stima provvisoria. Se anche questa non fosse possibile averla, si consiglia caldamente di fare in futuro una nuova pubblicazione per aggiornare i dati e compilarli tutti."},
             "aggiudicatari" : { "text": "Aggiudicatari mancanti", "type": "warning", "code": "WCM03",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."},
+                "details": "<b>Cosa significa?</b> Il campo dell'aggiudicatario non è stato compilato o il tag che lo contiene è del tutto assente. Questo messaggio è un avviso e non un errore perché potrebbe essere un'informazione non conosciuta al momento della compilazione del file, oppure correttamente assente, perché la gara è andata deserta. <br><b>Come risolvere?</b> Controllare di aver compilato tutti i campi. Ad ogni modo se l'informazione non fosse conosciuta solo al momento, si consiglia caldamente di fare in futuro una nuova pubblicazione per aggiornare i dati e compilarli tutti."},
             "partecipanti" : { "text": "Partecipanti mancanti", "type": "warning", "code": "WCM04",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."}
+                "details": "<b>Cosa significa?</b> Il campo dei partecipanti non è stato compilato o il tag che lo contiene è del tutto assente. Questo messaggio è un avviso e non un errore perché potrebbe essere un'informazione non conosciuta al momento della compilazione del file, oppure correttamente assente, perché la gara è andata deserta. <br><b>Come risolvere?</b> Controllare di aver compilato tutti i campi. Ad ogni modo se l'informazione non fosse conosciuta solo al momento, si consiglia caldamente di fare in futuro una nuova pubblicazione per aggiornare i dati e compilarli tutti."}
         },
         "correttezza": {
             "ragioneSociale" : {"text": "Denominazione dell'ente proponente troppo corta", "type": "warning", "code": "WCR01",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."},
+                "details": "<b>Cosa significa?</b> La denominazione dell'ente proponente è composta da meno di 4 caratteri. Questo rende impossibile il riconoscimento e la disambiguazione da altre ragioni sociali. <br><b>Come risolvere?</b> Controllare di non aver omesso la forma giuridica in sigla e di non aver commesso errori di battitura."},
             "ragioneSocialePartecipante" : {"text": "Ragione sociale del partecipante troppo corta", "type": "warning", "code": "WCR02",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."},
+                "details": "<b>Cosa significa?</b> La ragione sociale del partecipante è composta da meno di 4 caratteri. Questo rende impossibile il riconoscimento e la disambiguazione da altre ragioni sociali. <br><b>Come risolvere?</b> Controllare di non aver omesso la forma giuridica in sigla e di non aver commesso errori di battitura."},
             "ragioneSocialeAggiudicatario" : {"text": "Ragione sociale dell'aggiudicatario troppo corta", "type": "warning", "code": "WCR03",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."},
+                "details": "<b>Cosa significa?</b> La ragione sociale dell'aggiudicatario è composta da meno di 4 caratteri. Questo rende impossibile il riconoscimento e la disambiguazione da altre ragioni sociali. <br><b>Come risolvere?</b> Controllare di non aver omesso la forma giuridica in sigla e di non aver commesso errori di battitura."},
             "oggetto" : {"text": "Oggetto troppo corto", "type": "warning", "code": "WCR04",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."},
+                "details": "<b>Cosa significa?</b> L'oggetto è composto da meno di 4 parole. Questo rende difficoltosa: la comprensione del testo; la ricerca del servizio, fornitura o lavoro in esame; la disambiguazione da altri contratti simili. <br><b>Come risolvere?</b> Provare ad esprimere lo stesso concetto con più parole, dando la descrizione del contratto senza entrare nei dettagli tecnici, ma fornendo una spiegazione sufficiente ad identificare univocamente il contratto."},
             "importoAggiudicazione" : {"text": "Importo di aggiudicazione nullo", "type": "warning", "code": "WCR05",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."},
+                "details": "<b>Cosa significa?</b> L'importo di aggiudicazione immesso è nullo. Questo messaggio è un avviso e non un errore perché potrebbe essere un modo per indicare che l'informazione non è conosciuta al momento della compilazione del file. <br><b>Come risolvere?</b> Controllare di aver compilato correttamente tutti i campi. Ad ogni modo se l'informazione non fosse conosciuta solo al momento, si consiglia di compilare il dato almeno con una stima provvisoria. Se anche questa non fosse possibile averla, si consiglia caldamente di fare in futuro una nuova pubblicazione per aggiornare i dati e compilarli tutti."},
             "importoAggiudicazione2" : {"text": "Importo di aggiudicazione maggiore di 10 miliardi", "type": "warning", "code": "WCR06",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."},
+                "details": "<b>Cosa significa?</b> L'importo di aggiudicazione è maggiore di 10 miliardi. Questo messaggio è un avviso e non un errore perché, sebbene sia un importo molto improbabile, potrebbe essere possibile che l'informazione sia corretta. <br><b>Come risolvere?</b> Controllare se si è scritto l'importo con il numero giusto di cifre o se la virgola è nel posto sbagliato, dando un effetto moltiplicativo. "},
             "importoSommeLiquidate" : {"text": "Importo delle somme liquidate maggiore di 10 miliardi", "type": "warning", "code": "WCR07",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."}
+                "details": "<b>Cosa significa?</b> L'importo delle somme liquidate è maggiore di 10 miliardi. Questo messaggio è un avviso e non un errore perché, sebbene sia un importo molto improbabile, potrebbe essere possibile che l'informazione sia corretta. <br><b>Come risolvere?</b> Controllare se si è scritto l'importo con il numero giusto di cifre o se la virgola è nel posto sbagliato, dando un effetto moltiplicativo."}
         },
         "coerenza" : {
             "importoAggiudicazioneELiquidato" : {"text": "Importo liquidato più del doppio di quello di aggiudicazione", "type": "warning", "code": "WCO01",
-            "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."}
+            "details": "<b>Cosa significa?</b> L'importo delle somme liquidate è maggiore rispetto a quello di aggiudicazione di più del doppio. Questo messaggio è un avviso e non un errore perché non esiste una soglia ufficiale (oltre al sesto quinto), ma solo una di ragionevolezza. <br><b>Come risolvere?</b> Controllare di non aver scambiato i due campi e di aver scritto correttamente entrambi gli importi. Uno potrebbe avere "}
         },
         "precisione" : {
             "importoAggiudicazione" : {"text": "Importo di aggiudicazione impreciso", "type": "warning", "code": "WPR01",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."},
+                "details": ""},
             "importoSommeLiquidate" : {"text": "Importo delle somme liquidate impreciso", "type": "warning", "code": "WPR02",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."},
+                "details": ""},
             "dataInizio" : { "text": "Data di inizio imprecisa", "type": "warning", "code": "WPR03",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."},
+                "details": ""},
             "dataUltimazione" : { "text": "Data di fine imprecisa", "type": "warning", "code": "WPR04",
-                "details": "<b>Cosa significa?</b> asadadada.<br><b>Come risolvere?</b> asadadada."}
+                "details": ""}
         }
     }
 

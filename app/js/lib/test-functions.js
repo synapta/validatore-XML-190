@@ -33,7 +33,7 @@ exports.lunghezzaRagioneSociale = function (nome) {
 exports.lunghezzaOggetto = function (oggetto) {
     if (oggetto === undefined || oggetto === null) return true;
     let parole = oggetto.split(' ');
-    if (parole.length < 5) return false;
+    if (parole.length < 4) return false;
     return true;
 }
 
