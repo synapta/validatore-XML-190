@@ -16,6 +16,8 @@ la classe che è la roba che cambia nella struttura del div [AM]
     - alta: solo avvisi
 - sarebbe bella una api da chiamare
 
+
+
 ## TODO
 - scrivere i testi per gli approfondimenti
 - scrivere tutti i test per le funzioni
@@ -32,11 +34,17 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - gli aggiudicatari sono obbligatori? non credo!
 - potrebbe servire gestire i tag in lowercase
 - aggiungere la gestione dell'identificativo fiscale estero
+- cosa balorda per cui ha reagito male con qualcosa e l'editor ha messo spazi in più ad ogni riga
+    - https://www.istitutomatteifiorenzuola.edu.it/legge190/AVCP_2019.xml
 - scrivere tutti i riferimenti e da dove provengono le linee guida negli approfondimenti
 - request non sembra seguire bene il link che si ottiene
     - http://iccanale.gov.it/PubXML2.php?anno=2017&id=46
 - errore 500
     - http://www.comune.cameratacornello.bg.it/PortaleNet/portale/streaming/Lex190_2017_1.xml?nonce=NCXXK3SFAPX6E4D6
+- errore 403
+    - https://cdn.website-editor.net/67c5f5debbeb4ae99523f8dfeee541a2/files/uploaded/L190_2019.xml
+- non viene riconosciuto il tipo di file
+    - https://cercalatuascuola.istruzione.it/cercalatuascuola/istituti/BNIC804009/finanza/AVCP?annoScolastico=201920&annoBilancio=2019
 
 ## NOTE
 - errore in console non dipende da me, credo --> https://github.com/Semantic-Org/Semantic-UI/issues/2146

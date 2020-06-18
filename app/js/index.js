@@ -29,6 +29,9 @@ var pageStatus = function (status) {
             $('#xml-form').text();
             $('#show').hide();
             break;
+        case 'show-error':
+            $('#loading').hide();
+            break;
         case 'show-analysis1':
             $('#loading').hide();
             $('#xml-form').text();
@@ -87,7 +90,6 @@ var loadAnalysis = function (url) {
             // il file ha superato tutti i primi controlli, quindi procedo con l'analisi di data quality
             if (data.match(/<\s*indici/)) isIndex = true;
             if (data.match(/<\s*data\s*\/\s*>/)) isEmpty = true;
-            console.log(isEmpty)
             let haveComments = false;
             // prima di parsificare l'xml tolgo i commenti perché rompono la libreria xml-js
             let sanitizedData = sanitizeComments(data);
@@ -167,8 +169,9 @@ let showResults = function (data) {
             }
         },
         error: function(e) {
-            // errori non gestiti
-            alert("Errore nell'analisi :-(");
+            makeProgressionSteps(3);
+            pageStatus('show-error');
+            makeMessageUnderSearch({title: "C'è stato un errore nell'analisi :-(", text: e.responseText, type: 'negative'});
             console.log(e);
         }
     });
@@ -275,6 +278,16 @@ makeMessage = function (errorObj) {
     let div = '<div class="ui ';
     let coordinates = '';
     for (let i = 0; i < errorObj.positions.length; i++){
+        if (i === 11) {
+            coordinates += `
+            <div class="ui fluid accordion">
+                <div class="title">
+                    <i class="dropdown icon"></i>
+                    Più righe
+                </div>
+                    <div class="content">
+                        <p>`
+        }
         coordinates += `Lotto <span class="link_lotto" data-position="${errorObj.positions[i].startLine}">`
                             + errorObj.positions[i].lottoNumber + '</span>';
         for (let j = 0; j < errorObj.positions[i].linee.length; j ++) {
@@ -286,6 +299,12 @@ makeMessage = function (errorObj) {
             }
         }
         if (errorObj.positions[i].linee.length > 0) coordinates += '<br>';
+        if (i === errorObj.positions.length - 1 && i >= 11) {
+            coordinates += `
+                        </p>
+                    </div>
+            </div>`
+        }
     }
 
     if (errorObj[0].type === 'error') div += 'negative message">';
@@ -306,6 +325,7 @@ makeMessage = function (errorObj) {
             </div>
         </div>
         `;
+        console.log(div)
     return div;
 }
 

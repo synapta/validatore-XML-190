@@ -99,8 +99,8 @@ var convertXMLToJSON = function (body) {
     var lines = body.split('\n');
     var newBody = '';
     for (var i = 0; i < lines.length; i++){
-        let regex = /<[^\/>]+()\/?>/;
-        let regexEmptyTag = /<[^\/>]+()\/>/;
+        let regex = /<[^\/\!>]+()\/?>/;
+        let regexEmptyTag = /<[^\/\!>]+()\/>/;
         let regexQuestionMarks = /<\?[^\/][^>]+()\?>/;
         let newLine = lines[i];
         // per mostrare gli errori di data quality ho bisogno di mettere il riferimento
