@@ -249,19 +249,44 @@ markAll = function(xmlView, errori) {
 // riformulo l'oggetto degli errori di data quality, raggruppandoli per tipo
 // e poi per lotto
 addMessages = function (errori) {
-    // XXX sostituire la funzione groupBy locale con quella di lodash
-    let errorMap = groupBy(errori, errore => errore.code );
-    let errorIter = errorMap.values();
+    // console.log(errori)
+    // errori = errori.sort(function(a, b){
+        // if (a.type === b.type) {
+           // Price is only important when cities are the same
+           // return b.price - a.price;
+        // }
+        // return a.type > b.type ? 1 : -1;
+    // });
+    // console.log(errori)
+    let errorByCode = _.groupBy(errori, errore => errore.code);
+    console.log(errorByCode)
 
-    for (let i = 0; i < errorMap.size; i++) {
-        let groupedError = errorIter.next().value;
+    let sortable = [];
+    for (var error in errorByCode) {
+        sortable.push([error, errorByCode[error]]);
+    }
+
+    sortable.sort(function(a, b) {
+        if (a[1][0].type === b[1][0].type) {
+           return b[1].length - a[1].length;
+        }
+        console.log(a[1][0].type)
+        return a[1][0].type > b[1][0].type ? 1 : -1;
+    });
+    var errorByCodeSorted = {}
+    sortable.forEach(function(item){
+        errorByCodeSorted[item[0]]=item[1];
+    })
+    console.log(errorByCodeSorted)
+    for (let code in errorByCodeSorted) {
+        let groupedError = errorByCodeSorted[code];
         let errObj = groupedError[0];
-        let lottoMap = groupBy(groupedError, errore => errore.lottoNumber);
-        let lottoIter = lottoMap.values();
+        let lottoByLottoNumber = _.groupBy(groupedError, errore => errore.lottoNumber);
         let positions = [];
-        for (let j = 0; j < lottoMap.size; j ++) {
+
+        for (let lottoNumber in lottoByLottoNumber) {
             let coordinates = {};
-            let groupedLotto = lottoIter.next().value;
+            let groupedLotto = lottoByLottoNumber[lottoNumber];
             let linee = groupedLotto.map(errore => errore.line)
             coordinates.lottoNumber = groupedLotto[0].lottoNumber;
             coordinates.startLine = groupedLotto[0].startLine;
@@ -270,6 +295,7 @@ addMessages = function (errori) {
         }
         groupedError.positions = positions;
         $('#messages').append(makeMessage(groupedError));
+        // console.log(groupedError)
     }
 }
 
@@ -325,7 +351,6 @@ makeMessage = function (errorObj) {
             </div>
         </div>
         `;
-        console.log(div)
     return div;
 }
 

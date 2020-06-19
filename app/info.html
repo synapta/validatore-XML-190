@@ -52,6 +52,55 @@
                     </li>
                     <li>Analisi del file per cercare errori di data quality</li>
                 </ol>
+                <h3 class="ui header">Lista dei controlli di Data quality attualmente implementati </h3>
+                Si distinguono due tipi di risultati conseguenti ad un controllo: gli <i>errori</i> e gli <i>avvisi</i>. <br>
+                Un <i>errore</i> è un imprecisione grave che può rendere eventualmente impossibile la comprensione del dato.
+                Un <i>avviso</i> invece è meno grave: informa che un dato potrebbe essere errato e che quindi si richiede l'attenzione per un controllo.
+                <ul class="ui list">
+                    <li>Errori:
+                        <ul>
+                            <li>Campo assente
+                                <ul>
+                                    <li>CIG</li>
+                                    <li>Codice fiscale del proponente</li>
+                                    <li>Denominazione del proponente</li>
+                                    <li>Oggetto</li>
+                                    <li>Scelta del contraente</li>
+                                    <li>Codice fiscale del partecipante</li>
+                                    <li>Ragione sociale del partecipante</li>
+                                    <li>Codice fiscale dell'aggiudicatario</li>
+                                    <li>Ragione sociale dell'aggiudicatario</li>
+                                    <li>Importo di aggiudicazione</li>
+                                    <li>Data di inizio</li>
+                                </ul>
+                            </li>
+                            <li>CIG non è valido</li>
+                            <li>Un codice fiscale o una partita iva non sono validi</li>
+                            <li>Un importo non è esattamente nel formato 'IIIIIIIII.DD' (I = parte intera, D = parte decimale)</li>
+                            <li>Una data non è nel formato 'AAAA-MM-GG' (AAAA = anno, MM = mese, GG = giorno)</li>
+                            <li>Una data è precedente al 2000 o è successiva al 2100</li>
+                            <li>Una data di fine è precedente ad una di inizio</li>
+                        </ul>
+                    </li>
+                    <li>Avvisi:
+                        <ul>
+                            <li>Campo assente
+                                <ul>
+                                    <li>Importo delle somme liquidate</li>
+                                    <li>Data di fine</li>
+                                    <li>Lista degli aggiudicatari</li>
+                                    <li>Lista dei partecipanti</li>
+                                </ul>
+                            </li>
+                            <li>Una ragione sociale è troppo corta (meno di 4 caratteri)</li>
+                            <li>L'oggetto è troppo corto (meno di 4 parole)</li>
+                            <li>L'importo di aggiudicazione è nullo</li>
+                            <li>Un importo è maggiore di 10 miliardi</li>
+                            <li>Una data è imprecisa (l'anno ha solo 2 cifre o è segnato solo l'anno)</li>
+                            <li>L'importo delle somme liquidate è maggiore di due volte l'importo di aggiudicazione</li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
 
         <div class="ui inverted vertical footer segment form-page">

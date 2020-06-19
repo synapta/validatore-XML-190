@@ -79,5 +79,36 @@
           </tempiCompletamento>
           <importoSommeLiquidate>123</importoSommeLiquidate>
         </lotto>
+        <lotto>
+          <cig>asd</cig>
+          <strutturaProponente>
+            <codiceFiscaleProp>83000850145</codiceFiscaleProp>
+            <denominazione>asd</denominazione>
+          </strutturaProponente>
+          <oggetto>B.E. N. 4294 RIPARAZIONE PORTONE GARAGE SANTA MARIA</oggetto>
+          <sceltaContraente>08-AFFIDAMENTO IN ECONOMIA - COTTIMO FIDUCIARIO</sceltaContraente>
+          <partecipanti>
+          </partecipanti>
+          <aggiudicatari>
+            <aggiudicatario>
+              <codiceFiscale>asd</codiceFiscale>
+              <ragioneSociale>IMSA s.r.l.</ragioneSociale>
+            </aggiudicatario>
+            <aggiudicatario>
+              <codiceFiscale>01827690130</codiceFiscale>
+              <ragioneSociale></ragioneSociale>
+            </aggiudicatario>
+            <aggiudicatario>
+              <codiceFiscale></codiceFiscale>
+              <ragioneSociale>IMS</ragioneSociale>
+            </aggiudicatario>
+          </aggiudicatari>
+          <importoAggiudicazione>123</importoAggiudicazione>
+          <tempiCompletamento>
+            <dataInizio>2020/6/1</dataInizio>
+            <dataUltimazione>2020-01-31</dataUltimazione>
+          </tempiCompletamento>
+          <importoSommeLiquidate>123.12</importoSommeLiquidate>
+        </lotto>
   </data>
 </ns2:pubblicazione>

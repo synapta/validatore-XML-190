@@ -92,12 +92,10 @@ la classe che è la roba che cambia nella struttura del div [AM]
 ## Lista test
 
 ### singolo campo singolo lotto
-- [X] non nullo su tutto tranne [warn] data fine, importo liquidato
+- [X] non nullo su tutto tranne [warn] data fine, importo liquidato, aggiudicatario, partecipante
 - [X] cig valida algoritmo
-- [X] [warn] almeno 1 partecipante
-- [X] [warn] nessun aggiudicatario
 - [X] [warn] ragonesocialeprop >=3 caratteri
-- [X] [warn] oggetto con almeno 5 parole distinte (parola = cosa separata da spazi)
+- [X] [warn] oggetto con almeno 3 parole distinte (parola = cosa separata da spazi)
 - [ ] [warn] più di 1000 partecipanti
 - [X] codfiscprop regex
 - [ ] [warn] caratteri utf-8
@@ -105,7 +103,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - [X] importo formato NNNNNNNNN.DD (non inizia per 0)
 - [X] [warn] importo = 0
 - [X] [warn] se >= 10B
-- [X] date nel formato giusto ISO 8601
+- [X] date nel formato giusto ISO 8601 2020-02-31
 - [X] [warn] date imprecise (anno a sole 2 cifre)
 - [X] date > 2000 < 2100 (date in questo secolo)
 - [ ] partecipanti non duplicati come cf
