@@ -59,7 +59,7 @@ var pageStatus = function (status) {
 
                 btn.on('click', function(e) {
                     e.preventDefault();
-                    $('html, body').animate({scrollTop:300}, '300');
+                    $('html, body').animate({scrollTop:0}, '300');
                 });
             });
             break;
@@ -183,10 +183,12 @@ if (window.location.search.indexOf('?url=') > -1) {
     loadAnalysis(url.searchParams.get("url"));
 }
 
+$("input:text:visible:first").focus();
 
 $('#home-name').click(() => {
     pageStatus('homepage');
     $('#custom-error').html('');
+
 });
 
 
@@ -465,4 +467,19 @@ var indentData = function (xmlView, data) {
 
 function HTMLEncode(s) {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+}
+
+
+function addLoadEvent(func) {
+  var oldonload = window.onload;
+  if (typeof window.onload != 'function') {
+    window.onload = func;
+  } else {
+    window.onload = function() {
+      if (oldonload) {
+        oldonload();
+      }
+      func();
+    }
+  }
 }

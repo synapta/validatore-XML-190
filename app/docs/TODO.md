@@ -1,25 +1,22 @@
 # Appunti
 
-## MIGLIORIE
+## TODO
+- scrivere i testi per gli approfondimenti
 - sarebbe carino invece che costruire l'html in modo poco leggibile per i messaggi, tu costruissi lo stesso div e poi ci inietti
 la classe che è la roba che cambia nella struttura del div [AM]
-- errori nell'ordine migliore
-- trova un nome migliore per l'applicazione
 - gestire meglio il messaggio che riguarda le righe mancanti
-- quando sono sopra il testo dell'xml evidenziato perché c'è un errore vorrei poter andare a leggere qual era questo errore (link al messaggio, o in qualche modo il messaggio segue il testo)
+- quando sono sopra il testo dell'xml evidenziato perché c'è un errore vorrei poter andare a leggere qual era questo errore (link al messaggio, o in qualche modo il messaggio segue il testo); potrebbe anche essere che con l'hovering mostra il titolo dell'errore https://stackoverflow.com/questions/36985200/hover-over-string-and-update-preview
 - ordina errori per: categoria d'errore, numero, campo
 - group by errori per categoria d'errori invece che per numero
 - mostrare se l'errore viene da specifiche tecniche delle direttive anac, data quality generale o semplice buon senso
-- definire una specie di semaforino del tipo
+- definire una specie di semaforino del tipo (una specie di score da mostrare per avere un'idea complessiva se la situa è grave o no)
     - qualità bassa: hai errori anche fondamentali/errori rispetto alle direttive anac
     - media: hai errori ma non fondamentali
     - alta: solo avvisi
 - sarebbe bella una api da chiamare
-
-
-
-## TODO
-- scrivere i testi per gli approfondimenti
+- warning da mostrare se vengono usate le scelte contraente vecchie
+- una roba che si può aggiungere è il totale del conteggio dei soldi fra le statistiche
+- report automatico da passare come pdf dei risultati trovati
 - scrivere tutti i test per le funzioni
 - nelle info scrivere delle FAQ, tipo cosa è un tag, cosa un cig, cosa la iso ecc.
 - aggiungere il controllo di mime type per i file prodotti con excel -> non facile, passano il mime type test
@@ -45,6 +42,8 @@ la classe che è la roba che cambia nella struttura del div [AM]
     - https://cdn.website-editor.net/67c5f5debbeb4ae99523f8dfeee541a2/files/uploaded/L190_2019.xml
 - non viene riconosciuto il tipo di file
     - https://cercalatuascuola.istruzione.it/cercalatuascuola/istituti/BNIC804009/finanza/AVCP?annoScolastico=201920&annoBilancio=2019
+- fatal error all'inizio del file `[fatal] Content is not allowed in prolog. (1:1) [fatal] Content is not allowed in prolog.`
+    - http://cloud.urbi.it/urbi/progs/urp/fecore01.sto?CPT=N&FileContesto=UR&SottoContesto=OpenData&DB_NAME=n200892&NDFH=158840&TDFH=OPEN1&PRFH=DATASET119&MPFH=1&AEFH=MOTFNSCBWPXBYPUQAVWCXGRERMBLETWUUUPJBLTPSF1CLGZDKD119VBRDYYJHRDULYE1VEL_N200892Q200892&FNFH=dataset_2019_L190.xml
 
 ## NOTE
 - errore in console non dipende da me, credo --> https://github.com/Semantic-Org/Semantic-UI/issues/2146
@@ -52,6 +51,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
 
 ## FATTI
 - richiesta troppo grossa (la post dovrebbe gestirlo)
+- mettere il focus sulla barra di ricerca
 - analisi dell'XSD
 - aggiungere più informazioni negli errori con un "approfondisci"
 - allargare la buca del link!
