@@ -3,7 +3,7 @@ const utils = require('./utils.js')
 moment.locale('it');
 
 // se un campo è compilato o meno (potrebbe anche essere assente il tag)
-exports.presenzaDato = function (dato) {
+exports.presenzaDato = function presenzaDato (dato) {
     if (dato === null || dato === undefined) return false;
     if (dato === '') return false;
     if (Array.isArray(dato)) {
@@ -23,14 +23,14 @@ exports.presenzaDato = function (dato) {
 }
 
 // se ragione sociale più corta di 3 caratteri troppo corta
-exports.lunghezzaRagioneSociale = function (nome) {
+exports.lunghezzaRagioneSociale = function lunghezzaRagioneSociale (nome) {
     if (nome === undefined || nome === null) return true;
     if (nome.length < 4) return false;
     return true;
 }
 
 // se meno di 5 parole oggetto troppo corto
-exports.lunghezzaOggetto = function (oggetto) {
+exports.lunghezzaOggetto = function lunghezzaOggetto (oggetto) {
     if (oggetto === undefined || oggetto === null) return true;
     let parole = oggetto.split(' ');
     if (parole.length < 4) return false;
@@ -38,7 +38,7 @@ exports.lunghezzaOggetto = function (oggetto) {
 }
 
 // se la data d'inizio è successiva a quella di fine
-exports.coerenzaDate = function (obj) {
+exports.coerenzaDate = function coerenzaDate (obj) {
     let dataInizio = obj.dataInizio;
     let dataFine = obj.dataFine;
     if (dataInizio === undefined || dataInizio === null) return true;
@@ -51,7 +51,7 @@ exports.coerenzaDate = function (obj) {
 }
 
 // se l'importo liquidato è più del doppio di quello d'aggiudicazione
-exports.coerenzaImporti = function (obj) {
+exports.coerenzaImporti = function coerenzaImporti (obj) {
     let importo = obj.importoAggiudicazione;
     let liquidato = obj.importoLiquidato;
     if (importo === undefined || importo === null) return true;
@@ -65,14 +65,14 @@ exports.coerenzaImporti = function (obj) {
 }
 
 //se il codice fiscale/partita iva è valido
-exports.validitaCf = function (cf) {
+exports.validitaCf = function validitaCf (cf) {
     if (cf === undefined || cf === null) return true;
     if (!utils.verificaPartitaIva(cf) && !utils.verificaCodiceFiscale(cf)) return false;
     return true;
 }
 
 // controllo che gli importi non abbiano altre stringhe oltre all'importo
-exports.sintassiImporti = function (importo) {
+exports.sintassiImporti = function sintassiImporti (importo) {
     if (importo === null || importo === undefined) return true;
     importo = importo.trim();
     // se matcha una qualunque cosa che non sono numeri, virgole, punti o virgolette dà errore
@@ -81,7 +81,7 @@ exports.sintassiImporti = function (importo) {
 }
 
 // controllo che gli importi siano nel formato NNNNNN.DD
-exports.formatoImporti = function (importo) {
+exports.formatoImporti = function formatoImporti (importo) {
     if (importo === null || importo === undefined) return true;
     // spurgo la stringa da tutto quello che non è un numero, virgole, punti o virgolette
     importo = importo.replace(/[^\d\.,']/g, '');
@@ -97,7 +97,7 @@ exports.formatoImporti = function (importo) {
 }
 
 // controllo che gli importi siano precisi, ovvero con tutte e solo due cifre decimali NNNNNN.DD
-exports.precisioneImporti = function (importo) {
+exports.precisioneImporti = function precisioneImporti (importo) {
     if (importo === null || importo === undefined) return true;
     importo = importo.replace(/[^ \d\.,']/g, '');
     importo = importo.trim();
@@ -109,15 +109,22 @@ exports.precisioneImporti = function (importo) {
 }
 
 // se l'importo è nullo
-exports.importoNullo = function (importo) {
+exports.importoNullo = function importoNullo (importo) {
     if (importo === undefined || importo === null) return true;
     if (isNaN(importo)) return true;
     if (parseFloat(importo) === 0) return false;
     return true;
 }
 
+//controllo che il numero di enti non sia troppo grande
+exports.numeroEnti = function numeroEnti (length) {
+    if (parseInt(length) > 500) return false;
+    return true;
+}
+
+
 // se gli importi sono negativi o troppo grandi
-exports.importoTroppoGrande = function (importo) {
+exports.importoTroppoGrande = function importoTroppoGrande (importo) {
     if (importo === undefined || importo === null) return true;
     if (isNaN(importo)) return true;
     if ( parseFloat(importo) > 10000000000) return false;
@@ -125,7 +132,7 @@ exports.importoTroppoGrande = function (importo) {
 }
 
 // se gli importi sono negativi o troppo grandi
-exports.importoNegativo = function (importo) {
+exports.importoNegativo = function importoNegativo (importo) {
     if (importo === undefined || importo === null) return true;
     if (isNaN(importo)) return true;
     if ( parseFloat(importo) < 0) return false;
@@ -134,14 +141,14 @@ exports.importoNegativo = function (importo) {
 
 // controllo che le date non abbiano altre stringhe oltre alla data stessa
 //(è un controllo un po' lasco perché è un falso positivo per questo test specifico una data nel formato '12 agosto 2012')
-exports.sintassiDate = function (data) {
+exports.sintassiDate = function sintassiDate (data) {
     if (data === undefined || data === null) return true;
     if (data.match(/[^\d\.\-\/ \\]/)) return false;
     return true;
 }
 
 // controllo che le date siano nel formato ISO
-exports.formatoDate = function (data) {
+exports.formatoDate = function formatoDate (data) {
     if (data === undefined || data === null) return true;
     let cleanDate = data.replace(/[^\d\.\-\/\\]/gi, '');
 
@@ -154,7 +161,7 @@ exports.formatoDate = function (data) {
 
 // controllo che le date siano precise, ovvero con tutte le cifre necessarie
 // (in pratica significa se le date hanno l'anno scritto con 2 cifre invece di tutte e 4)
-exports.precisioneDate = function (data) {
+exports.precisioneDate = function precisioneDate (data) {
     if (data === undefined || data === null) return true;
     data = data.trim();
     if (moment(data, 'YY-MM-DD', true).isValid()) return false;
@@ -165,7 +172,7 @@ exports.precisioneDate = function (data) {
 }
 
 // controllo se le date sono entro un range ragionevole
-exports.rangeDate = function (data) {
+exports.rangeDate = function rangeDate (data) {
     if (data === undefined || data === null) return true;
     //controllo lasco, ma dovrebbe bastare: estraggo l'anno!
     let cleanDate = data.replace(/[^\d\.\-\/\\]/gi, '');

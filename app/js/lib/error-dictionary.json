@@ -68,6 +68,13 @@
                 "details": "<b>Cosa significa?</b> La data di inizio immessa è fuori da un range considerato ragionevole per i contratti.<br><b>Come risolvere?</b> Controllare di non aver commesso errori di battitura nell'indicare l'anno."},
             "dataUltimazione" : { "text": "Data di fine precedente al 2000 o successiva al 2100", "type": "error", "code": "ECR08",
                 "details": "<b>Cosa significa?</b> La data di fine immessa è fuori da un range considerato ragionevole per i contratti.<br><b>Come risolvere?</b> Controllare di non aver commesso errori di battitura nell'indicare l'anno."}
+        },
+        "numerosità": {
+            "partecipanti" : { "text": "Più di 500 partecipanti dichiarati", "type": "error", "code": "ENU01",
+                "details": "<b>Cosa significa?</b> Sono stati dichiarati più di 500 partecipanti.<br><b>Come risolvere?</b> Controllare di non aver copiato più volte gli stessi partecipanti o aver scelto il giusto insieme di enti."},
+            "aggiudicatari" : { "text": "Più di 500 aggiudicatari dichiarati", "type": "error", "code": "ENU02",
+                "details": "<b>Cosa significa?</b> Sono stati dichiarati più di 500 aggiudicatari.<br><b>Come risolvere?</b> Controllare di non aver copiato più volte gli stessi partecipanti o aver scelto il giusto insieme di enti."}
+
         }
     },
     "warnings": {

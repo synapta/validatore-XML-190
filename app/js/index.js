@@ -125,7 +125,12 @@ let showResults = function (data) {
         lineWrapping: true,
         autoRefresh:true,
         readOnly: true,
-        mode: 'xml'
+        mode: 'xml',
+        tabMode: "indent",
+        styleActiveLine: true,
+        autoCloseTags: true,
+        gutters: ['gutter-error',"CodeMirror-linenumbers","CodeMirror-lint-markers"],
+        lint: true
         // viewportMargin: Infinity --carica tutto il file, puoi fare il cerca, ma se è grosso danni
     });
     let xmlView = window.myCodeMirror;
@@ -214,8 +219,25 @@ markLine = function (xmlView, line, type) {
     let mark = xmlView.markText({line: line -1, ch: 0}, {line: parseInt(line), ch: 0}, {className: "styled-"+type, addToHistory:true });
 }
 
+//funzione per aggiungere le icone al lato della riga (sul gutter accanto ai numeri)
+//con il tooltip con il testo di tutti gli errori rilevati a quella riga
+setLint = function (xmlView,line,text, type ) {
+    line = line - 1;
+    let color = 'yellow';
+    const marker = document.createElement("i");
+    if (type === 'error') color = 'red';
+
+    marker.setAttribute('class','large ' + color + ' x icon');
+    marker.setAttribute('data-html', text);
+    marker.setAttribute('data-variation', 'large very wide');
+    xmlView.setGutterMarker(line,'gutter-error',marker);
+    $('.icon').popup();
+}
+
 // evidenzio le righe dell'XML che hanno un errore o un warning
 markAll = function(xmlView, errori) {
+
+    xmlView.clearGutter('gutter-error');
     let sortedErrori = [... errori];
     sortedErrori = sortedErrori.sort((a, b) => (a.line < b.line) ? 1 : (a.line === b.line) ? ((a.type < b.type) ? 1 : -1) : -1 );
 
@@ -228,6 +250,10 @@ markAll = function(xmlView, errori) {
                 if (groupedError[i].type === 'error') type = 'error';
             }
             if (line !== 'undefined') {
+                let lintText = errorsByLine[line].map(el =>
+                    el.type === 'error' ? '<font color="red">Errore</font>: ' + el.text: '<font color="orange">Avviso</font>: ' + el.text);
+                lintText = lintText.toString().replace(/,/g,'<br/>');
+                setLint(xmlView,line,lintText,type)
                 markLine(xmlView,line, type);
             } else {
                 // per gli errori che non hanno una riga ma solo quella di inizio lotto,
@@ -240,6 +266,10 @@ markAll = function(xmlView, errori) {
                         for (let j = 0; j < groupedErrorStartLine.length; j++) {
                             if (groupedErrorStartLine[j].type === 'error') type2 = 'error';
                         }
+                        let lintText = errorsByStartLine[startLine].map(el =>
+                            el.type === 'error' ? '<font color="red">Errore</font>: ' + el.text: '<font color="orange">Avviso</font>: ' + el.text);
+                        lintText = lintText.toString().replace(/,/g,'<br/>');
+                        setLint(xmlView,startLine,lintText,type2)
                         markLine(xmlView,startLine, type2);
                     }
                 }
@@ -251,18 +281,7 @@ markAll = function(xmlView, errori) {
 // riformulo l'oggetto degli errori di data quality, raggruppandoli per tipo
 // e poi per lotto
 addMessages = function (errori) {
-    // console.log(errori)
-    // errori = errori.sort(function(a, b){
-        // if (a.type === b.type) {
-           // Price is only important when cities are the same
-           // return b.price - a.price;
-        // }
-        // return a.type > b.type ? 1 : -1;
-    // });
-    // console.log(errori)
     let errorByCode = _.groupBy(errori, errore => errore.code);
-    console.log(errorByCode)
-
     let sortable = [];
     for (var error in errorByCode) {
         sortable.push([error, errorByCode[error]]);
@@ -272,14 +291,12 @@ addMessages = function (errori) {
         if (a[1][0].type === b[1][0].type) {
            return b[1].length - a[1].length;
         }
-        console.log(a[1][0].type)
         return a[1][0].type > b[1][0].type ? 1 : -1;
     });
     var errorByCodeSorted = {}
     sortable.forEach(function(item){
         errorByCodeSorted[item[0]]=item[1];
     })
-    console.log(errorByCodeSorted)
     for (let code in errorByCodeSorted) {
         let groupedError = errorByCodeSorted[code];
         let errObj = groupedError[0];
@@ -297,7 +314,6 @@ addMessages = function (errori) {
         }
         groupedError.positions = positions;
         $('#messages').append(makeMessage(groupedError));
-        // console.log(groupedError)
     }
 }
 
@@ -305,8 +321,9 @@ addMessages = function (errori) {
 makeMessage = function (errorObj) {
     let div = '<div class="ui ';
     let coordinates = '';
+    let maxShownRows = 5;
     for (let i = 0; i < errorObj.positions.length; i++){
-        if (i === 11) {
+        if (i === maxShownRows) {
             coordinates += `
             <div class="ui fluid accordion">
                 <div class="title">
@@ -327,7 +344,7 @@ makeMessage = function (errorObj) {
             }
         }
         if (errorObj.positions[i].linee.length > 0) coordinates += '<br>';
-        if (i === errorObj.positions.length - 1 && i >= 11) {
+        if (i === errorObj.positions.length - 1 && i >= maxShownRows) {
             coordinates += `
                         </p>
                     </div>

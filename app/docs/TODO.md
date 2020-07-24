@@ -5,7 +5,7 @@
 - sarebbe carino invece che costruire l'html in modo poco leggibile per i messaggi, tu costruissi lo stesso div e poi ci inietti
 la classe che è la roba che cambia nella struttura del div [AM]
 - gestire meglio il messaggio che riguarda le righe mancanti
-- quando sono sopra il testo dell'xml evidenziato perché c'è un errore vorrei poter andare a leggere qual era questo errore (link al messaggio, o in qualche modo il messaggio segue il testo); potrebbe anche essere che con l'hovering mostra il titolo dell'errore https://stackoverflow.com/questions/36985200/hover-over-string-and-update-preview
+- quando sono sopra il testo dell'xml evidenziato perché c'è un errore vorrei poter andare a leggere qual era questo errore (link al messaggio, o in qualche modo il messaggio segue il testo); potrebbe anche essere che con l'hovering mostra il titolo dell'errore https://stackoverflow.com/questions/36985200/hover-over-string-and-update-preview direi che con lint me la posso cavare....
 - ordina errori per: categoria d'errore, numero, campo
 - group by errori per categoria d'errori invece che per numero
 - mostrare se l'errore viene da specifiche tecniche delle direttive anac, data quality generale o semplice buon senso
@@ -96,7 +96,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - [X] cig valida algoritmo
 - [X] [warn] ragonesocialeprop >=3 caratteri
 - [X] [warn] oggetto con almeno 3 parole distinte (parola = cosa separata da spazi)
-- [ ] [warn] più di 1000 partecipanti
+- [x] più di 500 partecipanti
 - [X] codfiscprop regex
 - [ ] [warn] caratteri utf-8
 - [ ] scelta contraente da elenco
@@ -113,7 +113,7 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - [ ] [warn] 2+ mandataria, capogruppo
 
 ### multi campo singolo lotto
-- [ ] [warn] almeno un lotto
+- [X] [warn] almeno un lotto
 - [X] data fine >= data inizio
 - [ ] pa stessa tra partecipanti
 - [X] [warn] importo liquidato >= 2* importo

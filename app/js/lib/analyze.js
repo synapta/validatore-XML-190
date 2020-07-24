@@ -242,6 +242,7 @@ sintassiDate = fun.sintassiDate;
 formatoDate = fun.formatoDate;
 precisioneDate = fun.precisioneDate;
 rangeDate = fun.rangeDate;
+numeroEnti = fun.numeroEnti;
 
 // iteratore sulla lista di funzione dei controlli da fare su un lotto
 var analyzeLotto = function (lotto) {
@@ -251,7 +252,7 @@ var analyzeLotto = function (lotto) {
     let erroriTotali = [];
     let testArray = [tl.presenzaDati,tl.validitaCig,tl.lunghezzaRagioneSociale,tl.lunghezzaOggetto,tl.importoNullo,tl.importoTroppoGrande,
     tl.importoNegativo,tl.coerenzaDate,tl.coerenzaImporti,tl.validitaCf,tl.sintassiImporti,tl.formatoImporti,tl.precisioneImporti,
-    tl.sintassiDate,tl.formatoDate,tl.precisioneDate, tl.rangeDate];
+    tl.sintassiDate,tl.formatoDate,tl.precisioneDate, tl.rangeDate, tl.numeroEnti];
     for (let i = 0; i < testArray.length; i ++){
         erroriTotali = erroriTotali.concat(useTest(lotto, testArray[i]));
     }
@@ -294,6 +295,11 @@ var useTestOnField = function (testFunction,lotto,row) {
         let path = row.field.substring(0, match.index);
         length = _.get(lotto, path + 'length');
         let only_array = row.field.match(/_array$/) ? true : false;
+        if (testFunction.name === 'numeroEnti') {
+            if (!testFunction(length))
+                errors.push(addError(row.code, getLine(lotto,row.field.replace(/\.[^\.]+\._array/,'')), lotto));
+            return errors;
+        }
         if (testFunction.name === 'presenzaDato' && length === undefined) {
             errors.push(addError(row.code, undefined , lotto));
         } else {

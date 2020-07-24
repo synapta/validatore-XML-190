@@ -7,6 +7,12 @@
   padding: 1%;
   border-radius: 15px;
 }
+
+.CodeMirror-linenumber {
+    padding: 1px 8px 0px 20px;
+    font-size: 10px;
+}
+
 .styled-error { background-color: #ff1a1a; }
 .styled-warning { background-color: #ffcc66;}
 .link_line {color:#0000EE; text-decoration: underline; cursor: pointer;}

@@ -99,7 +99,7 @@
               <ragioneSociale></ragioneSociale>
             </aggiudicatario>
             <aggiudicatario>
-              <codiceFiscale></codiceFiscale>
+              <codiceFiscale/>
               <ragioneSociale>IMS</ragioneSociale>
             </aggiudicatario>
           </aggiudicatari>

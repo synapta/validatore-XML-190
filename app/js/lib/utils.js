@@ -149,7 +149,7 @@ normalCigValidity = function (string) {
 }
 
 //Check CIG validity. True valid, false if not valid.
-exports.checkCig = function (string) {
+exports.checkCig = function checkCig(string) {
     if (!string) return false;
     var patt_normal = /([0-9]{7}[A-Fa-f0-9]{3})/ig;
     var patt_smart = /([X-Zx-z]{1}[A-Fa-f0-9]{9})/ig;

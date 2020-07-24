@@ -179,6 +179,15 @@ exports.partecipantiRipetuti = {
         {fields: {importoAggiudicazione: 'importoAggiudicazione', importoLiquidato: 'importoSommeLiquidate'}, code: 'WCO01'},
     ]
 };
+
+exports.numeroEnti = {
+    testName: 'numeroEnti',
+    fieldsToTest: [
+        {field: 'aggiudicatari.aggiudicatario._array', code: 'ENU01'},
+        {field: 'partecipanti.partecipante._array', code: 'ENU02'}
+    ]
+};
+
         // {field: 'partecipanti.partecipante._array.codiceFiscale', code: 'ECM08'},
         // {field: 'aggiudicatari.aggiudicatario._array.codiceFiscale', code: 'ECM10'},
 
