@@ -129,7 +129,7 @@ let showResults = function (data) {
         tabMode: "indent",
         styleActiveLine: true,
         autoCloseTags: true,
-        gutters: ['gutter-error',"CodeMirror-linenumbers","CodeMirror-lint-markers"],
+        gutters: ['gutter-error',"CodeMirror-linenumbers"],
         lint: true
         // viewportMargin: Infinity --carica tutto il file, puoi fare il cerca, ma se è grosso danni
     });
@@ -251,7 +251,7 @@ markAll = function(xmlView, errori) {
             }
             if (line !== 'undefined') {
                 let lintText = errorsByLine[line].map(el =>
-                    el.type === 'error' ? '<font color="red">Errore</font>: ' + el.text: '<font color="orange">Avviso</font>: ' + el.text);
+                    el.type === 'error' ? '<font color="red">Errore:</font> ' + el.text: '<font color="orange">Avviso:</font> ' + el.text);
                 lintText = lintText.toString().replace(/,/g,'<br/>');
                 setLint(xmlView,line,lintText,type)
                 markLine(xmlView,line, type);
@@ -267,7 +267,7 @@ markAll = function(xmlView, errori) {
                             if (groupedErrorStartLine[j].type === 'error') type2 = 'error';
                         }
                         let lintText = errorsByStartLine[startLine].map(el =>
-                            el.type === 'error' ? '<font color="red">Errore</font>: ' + el.text: '<font color="orange">Avviso</font>: ' + el.text);
+                            el.type === 'error' ? '<font color="red">Errore:</font> ' + el.text: '<font color="orange">Avviso:</font> ' + el.text);
                         lintText = lintText.toString().replace(/,/g,'<br/>');
                         setLint(xmlView,startLine,lintText,type2)
                         markLine(xmlView,startLine, type2);

@@ -1,14 +1,20 @@
 const request = require('request');
+var UserAgents=['Mozilla/5.0 (X11; Linux x86_64; rv:49.0) Gecko/20100101 Firefox/49.0','Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:59.0) Gecko/20100101 Firefox/59.0','Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36','Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.93 Safari/537.36']
 
 exports.getWebPage = function (url, callback) {
-        request.post({url: url,followAllRedirects: true, followOriginalHttpMethod: true}, function(error, response, body){
+        request.post({
+                url: url,
+                followAllRedirects: true,
+                followOriginalHttpMethod: true,
+                'User-Agent': UserAgents[Math.floor(Math.random()*UserAgents.length)]}, function(error, response, body){
             if (error) {
                 callback(error, null, body);
                 return;
             }
-            if (response.statusCode === 405) {
+            if (response.statusCode === 405 || body.trim() === '02 - Configurazione non valida') {
                 console.log("La post non era permessa (HTTP 405), provo con la get")
-                request.get({url: url,followAllRedirects: true, followOriginalHttpMethod: true}, function(error, response, body){
+                request.get({url: url,followAllRedirects: true, followOriginalHttpMethod: true,
+                'User-Agent': UserAgents[Math.floor(Math.random()*UserAgents.length)]}, function(error, response, body){
                     if (error) {
                         callback(error, null, body);
                         return;

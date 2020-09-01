@@ -118,6 +118,9 @@ var convertXMLToJSON = function (body) {
         newBody += newLine;
         if (i !== lines.length - 1 ) newBody += '\n';
     }
+    // let options = {elementNameFn: function(val) {console.log(val)
+    //     return val.toLowerCase();},
+    // compact: true, spaces: 4, trim:true};
     return xmlJSON = JSON.parse(x2j.xml2json(newBody, {compact: true, spaces: 4}));
 }
 
@@ -294,26 +297,44 @@ var useTestOnField = function (testFunction,lotto,row) {
         var match = /_array/.exec(row.field);
         let path = row.field.substring(0, match.index);
         length = _.get(lotto, path + 'length');
+        // if (testFunction.name === 'presenzaDato') console.log(row.field, path, length)
         let only_array = row.field.match(/_array$/) ? true : false;
         if (testFunction.name === 'numeroEnti') {
             if (!testFunction(length))
                 errors.push(addError(row.code, getLine(lotto,row.field.replace(/\.[^\.]+\._array/,'')), lotto));
             return errors;
         }
-        if (testFunction.name === 'presenzaDato' && length === undefined) {
-            errors.push(addError(row.code, undefined , lotto));
-        } else {
-            if (only_array) return [];
-            for (let j = 0; j < length; j ++){
-                let currentLine = row.field.replace('_array',j)
-                if (!testFunction(getValue(lotto,currentLine)))
-                    errors.push(addError(row.code, getLine(lotto,currentLine),lotto));
-            }
+        for (let j = 0; j < length; j ++){
+            let currentLine = getFirstDefinedLine(lotto,row.field,j);
+            if (!testFunction(getValue(lotto,currentLine)))
+                errors.push(addError(row.code, getLine(lotto,currentLine),lotto));
         }
+        if (only_array && length === undefined ){
+            let currentLine = getFirstDefinedLine(lotto,row.field);
+            if (!testFunction(getValue(lotto,currentLine))) {
+                errors.push(addError(row.code, getLine(lotto,currentLine),lotto));
+            }
+        } else if (only_array) return [];
     // campo che non è un array
     } else {
+        let currentLine = getFirstDefinedLine(lotto,row.field);
         if (!testFunction(getValue(lotto,row.field)))
-            errors.push(addError(row.code, getLine(lotto,row.field),lotto));
+            errors.push(addError(row.code, getLine(lotto,currentLine),lotto));
     }
     return errors;
+}
+
+//funzione per risalire l'albero dei tag ed andare al primo che è definito, per
+//avere una riga sempre definita (e non riferirsi sempre al lotto se manca un campo in array)
+getFirstDefinedLine = function (lotto, field, j) {
+    let lengthPath = field.toString().split('.').length;
+    let currentLine;
+    for (let i = lengthPath; i > -1; i-- ){
+        let subpart = field.toString().split('.').splice(0,i);
+        currentLine = subpart.toString().replace(/,/g,'.');
+        if (j !== undefined) currentLine = currentLine.replace('_array',j);
+        if (getLine(lotto,currentLine)) break;
+    }
+    if (!currentLine) return;
+    return currentLine;
 }

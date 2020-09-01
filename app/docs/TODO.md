@@ -5,29 +5,33 @@
 - sarebbe carino invece che costruire l'html in modo poco leggibile per i messaggi, tu costruissi lo stesso div e poi ci inietti
 la classe che è la roba che cambia nella struttura del div [AM]
 - gestire meglio il messaggio che riguarda le righe mancanti
-- quando sono sopra il testo dell'xml evidenziato perché c'è un errore vorrei poter andare a leggere qual era questo errore (link al messaggio, o in qualche modo il messaggio segue il testo); potrebbe anche essere che con l'hovering mostra il titolo dell'errore https://stackoverflow.com/questions/36985200/hover-over-string-and-update-preview direi che con lint me la posso cavare....
 - ordina errori per: categoria d'errore, numero, campo
+- sarebbe carino gestire una specie di bypass per certi errori vs warning, cioè se l'importo è nullo è un warning, ma se allo stesso tempo il liquidato non è nullo il fatto che sia nullo l'importo dovrebbe diventare un errore vero e proprio, quindi questo secondo caso dovrebbe presentare solo l'errore e non anche il warning che crea confusione
 - group by errori per categoria d'errori invece che per numero
+- bug: non vedo l'errore se il campo aggiudicatari o partecipanti è vuoto (quello che contiene l'array)
 - mostrare se l'errore viene da specifiche tecniche delle direttive anac, data quality generale o semplice buon senso
 - definire una specie di semaforino del tipo (una specie di score da mostrare per avere un'idea complessiva se la situa è grave o no)
     - qualità bassa: hai errori anche fondamentali/errori rispetto alle direttive anac
     - media: hai errori ma non fondamentali
     - alta: solo avvisi
 - sarebbe bella una api da chiamare
+- mime type text/x-algol68??? http://trasparenza.mise.gov.it/lista-trasparenza/mise2017.xml
 - warning da mostrare se vengono usate le scelte contraente vecchie
 - una roba che si può aggiungere è il totale del conteggio dei soldi fra le statistiche
+- attenzione alle richieste dello schema XSD per l'intestazione: segno gli errori anche per quelli? http://www.comune.cercivento.ud.it/fileadmin/user_cercivento/Amministrazione_trasparente/11_Bandi_di_gara_e_contratti/AFFIDAMENTI/manuale4.xml
 - report automatico da passare come pdf dei risultati trovati
 - scrivere tutti i test per le funzioni
 - nelle info scrivere delle FAQ, tipo cosa è un tag, cosa un cig, cosa la iso ecc.
+- ma possibile che ci siano così tanti cf e piva non validi???
+    - https://www.comune.altavillasilentina.sa.it/oldsite/images/stories/ANAC/Elenco_Gare_Comune_di_Altavilla_Silentina__SA__2018.xml
+- file vuoti funzionano o no???
+    - http://www.servizipubblicaamministrazione.it/siti/cntlplgr729/l190/DataSetL1902019.xml
 - aggiungere il controllo di mime type per i file prodotti con excel -> non facile, passano il mime type test
     - www.comunefosdinovo.it/download_2015_comune.xml?h=634ed9133d133968ddf82630d55c486868c2c7bb
     - http://www.bonificanurra.it/pubblicazioni/tabella7.xml
     - http://www.aeronautica.difesa.it/atticontr/Documents/LG_190_2014_80115410153.xml
     - probabilmente da programma simil excel https://www.cbsm.it/public/allegati/testi/150331171237_AVCP_ANTICORRUZIONE_De_Ferrari.xml
     - http://www.comune.urbino.pu.it/fileadmin/docs/gazzettamministrativa/004/a4/02/Dotazione%20organica%20al%2031-12-2015.xml
-- se la lista di lotti con errori è molto lunga magari servirebbe una preview e poi puoi allargare
-    - es http://www.vcotrasporti.it/userdata/Gara%20Assicurazioni/2020-2022/GARA%20BUONI%20PASTO/ANNO%202019%20(file%20XLM).xml
-    - https://www.isiaroma.it/file-amministrazione/Dati-contratti-pubblici-ISIA-ROMA-2017-Legge-n.190-del-6-novembre-2012.xml
 - gli aggiudicatari sono obbligatori? non credo!
 - potrebbe servire gestire i tag in lowercase
 - aggiungere la gestione dell'identificativo fiscale estero
@@ -53,11 +57,16 @@ la classe che è la roba che cambia nella struttura del div [AM]
 - richiesta troppo grossa (la post dovrebbe gestirlo)
 - mettere il focus sulla barra di ricerca
 - analisi dell'XSD
+- quando sono sopra il testo dell'xml evidenziato perché c'è un errore vorrei poter andare a leggere qual era questo errore (link al messaggio, o in qualche modo il messaggio segue il testo); ho usato una parte di lint e poi ho fatto da sola con semantic ui perché non c'era verso di usare i simboli dell'addon lint
 - aggiungere più informazioni negli errori con un "approfondisci"
 - allargare la buca del link!
 - raggruppamento di errori simili
 - aggiungere il numero di lotto nei messaggio
 - sul link al mousover lo stile deve essere cursor [AM]
+- si potrebbe far apparire l'evidenziazione sull'aggiudicatario/partecipante se gli manca un pezzo interno? invece che spammarlo sul lotto?
+- se la lista di lotti con errori è molto lunga magari servirebbe una preview e poi puoi allargare
+    - es http://www.vcotrasporti.it/userdata/Gara%20Assicurazioni/2020-2022/GARA%20BUONI%20PASTO/ANNO%202019%20(file%20XLM).xml
+    - https://www.isiaroma.it/file-amministrazione/Dati-contratti-pubblici-ISIA-ROMA-2017-Legge-n.190-del-6-novembre-2012.xml
 - id degli errori (così che sia più corta la sintassi per arrivarci)
 - se una roba è mancante ma non c'è la riga, dovrei per lo meno dire in che lotto dovrebbe essere!
 - se analizzo una roba, ma non clicco procedi e poi ne analizzo un'altra si accodano uno dopo l'altra
