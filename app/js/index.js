@@ -73,7 +73,7 @@ var loadAnalysis = function (url) {
     pageStatus('homepage')
     pageStatus('loading')
     $.ajax({
-        url: "/api/show/xml-from-site?url=" + encodeURI(url),
+        url: "/api/show/xml-from-site?url=" + encodeURIComponent(url),
         type: 'GET',
         error: function(e) {
             // non è stato possibile arrivare all'analisi per un x motivo
@@ -185,7 +185,7 @@ let showResults = function (data) {
 
 if (window.location.search.indexOf('?url=') > -1) {
     let url = new URL(window.location);
-    loadAnalysis(url.searchParams.get("url"));
+    loadAnalysis(url.search.slice(5));
 }
 
 $("input:text:visible:first").focus();
@@ -193,20 +193,19 @@ $("input:text:visible:first").focus();
 $('#home-name').click(() => {
     pageStatus('homepage');
     $('#custom-error').html('');
-
 });
 
 
 $('#load-site').click(() => {
     let url = $("#search-field").val();
-    window.location.href = '?url=' + encodeURI(url);
+    window.location.href = '?url=' + url;
     }
 );
 
 $("#search-field").keyup(function(event) {
     if (event.keyCode === 13) {
         let url = $("#search-field").val();
-        window.location.href = '?url=' + encodeURI(url);
+        window.location.href = '?url=' + url;
     }
 });
 
