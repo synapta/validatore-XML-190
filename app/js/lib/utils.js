@@ -11,7 +11,7 @@ exports.getWebPage = function (url, callback) {
                 callback(error, null, body);
                 return;
             }
-            if (response.statusCode === 405 || body.trim() === '02 - Configurazione non valida') {
+            if (response.statusCode === 403 || response.statusCode === 405 || body.trim() === '02 - Configurazione non valida') {
                 console.log("La post non era permessa (HTTP 405), provo con la get")
                 request.get({url: url,followAllRedirects: true, followOriginalHttpMethod: true,
                 'User-Agent': UserAgents[Math.floor(Math.random()*UserAgents.length)]}, function(error, response, body){
